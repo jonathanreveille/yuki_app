@@ -20,6 +20,9 @@ from django.contrib.auth import views as auth_views
 
 from users import views as user_views
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +34,6 @@ urlpatterns = [
     path('animals/', include('animals.urls', namespace='animals')),
     path('users/', include('users.urls', namespace='users')),
     path('schedules/', include('schedules.urls', namespace='schedules')),
+    path('sentry-debug/', trigger_error),
     ]
+
