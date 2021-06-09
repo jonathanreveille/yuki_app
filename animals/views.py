@@ -4,10 +4,6 @@ from .models import Pet
 from users.models import User
 
 from .forms import PetCreationForm
-# from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.views.generic.edit  import CreateView
-# from django.views.generic.list import ListView
-# # from django.urls import reverse_lazy
 
 # Create your views here.
 def home(request):
