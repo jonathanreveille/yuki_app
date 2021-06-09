@@ -1,0 +1,17 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+<a href="{% url 'animals:home' %}"> Go back to Home </a>
+<hr>
+
+<h1>Connect to your account </h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="Submit" value="Log in"/>
+</form>
+
+<p><a href="{% url 'register' %}">Do you need an account ?</a> </p> 

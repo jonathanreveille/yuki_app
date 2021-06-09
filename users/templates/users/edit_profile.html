@@ -1,0 +1,21 @@
+<a href="{% url 'animals:home' %}">Go back</a>
+
+<h1>Edit profile </h1>
+
+
+<form method="post" action="{% url 'users:edit_profile' %}" class="edit_profile" id="edit_profile">
+        {% csrf_token %}
+        <label> {{ user_form.username.label }}</label>
+        {{user_form.username}}
+
+        <label> {{ user_form.email.label }}</label>
+        {{user_form.email}}
+
+        <label> {{ user_form.first_name.label }}</label>
+        {{user_form.first_name}}
+
+        <label> {{ user_form.role.label }}</label>
+        {{user_form.role}}
+
+        <input type="submit" value="Save">Save changes</button>
+</form>

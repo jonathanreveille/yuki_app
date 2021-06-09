@@ -1,0 +1,9 @@
+<h1>Create a task</h1>
+
+<a href="{% url 'schedules:task_list' %}">Go back Schedule App</a>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="Submit" value="Create"/>
+</form>

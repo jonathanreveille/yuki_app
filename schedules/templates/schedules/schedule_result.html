@@ -1,0 +1,29 @@
+<p><a href="{% url 'schedules:schedule_list' %}" > Back to Search Mode </a></p>
+
+<h1> Welcome to filtered schedule </h1>
+    <h2> You were searching for {{cat_searched|capfirst}}</h2>
+    <table>
+        <tr>
+            <th> id </th>
+            <th> WHEN </th>
+            <th> TO DO </th>
+            <th> FOR </th>
+            <th> MORE INFO </th>
+        </tr>
+            
+        {% for cat in cat_schedule_found %}
+            <tr>
+                <td> {{cat.id}} </td>
+                <td> {{cat.time}} </td>
+                <td> {{cat.task}} </td>
+
+                {% for cat in cat_schedule_found.cat.all %}
+                    <td>  {{cat}} </td>
+                {% endfor %}
+
+            </tr>
+
+        {% empty %}
+            <h3> No schedule Match from your query </h3>
+        {% endfor %}
+    </table>

@@ -1,0 +1,9 @@
+<a href="{% url 'animals:home' %}">Go back</a>
+
+<h1>Create Your Animal here </h1>
+
+<form method="post" action="{% url 'animals:create_pet' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create"/>
+</form>

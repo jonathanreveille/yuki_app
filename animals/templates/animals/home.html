@@ -1,0 +1,28 @@
+<h1>Yuki Application</h1>
+
+<p>Welcome back {{request.user}}<p>
+
+{% if user.is_authenticated %}
+    <ul>
+        <li><a href="{% url 'profile' %}">Your Profile</a></li>
+        <li><a href="{% url 'animals:create_pet' %}">Create an animal</a></li>
+        <li><a href="{% url 'animals:see_pet' %}">See your pets</a></li>
+        <li><a href="{% url 'schedules:task_list' %}">See Task list</a></li>
+        <li><a href="{% url 'logout' %}">Log out</a></li>
+
+    </ul>
+{% else %}
+    <ul>
+        <li><a href="{% url 'register'%}">Create an account </a></li>
+        <li><a href="{% url 'login' %}">Log in</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+{% endif %}
+
+<div id="about">
+    <h1> This is the final project of openclassrooms</h1>
+    <p> We want to make an application which helps 
+    cat owners and catsitter to organize their day 
+    better for their cat
+    </p>
+</div>

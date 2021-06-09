@@ -1,0 +1,9 @@
+<a href="{% url 'schedules:schedule_list' %}">Go back schedule</a>
+
+
+{% for cat in schedule.cat.all %}
+    <h1> For : {{cat}} </h1>
+{% endfor %}
+
+<h2> Description of task: {{schedule.task.description}}</h2>
+<h2> Moment of the day: {{schedule.time}}</h2>

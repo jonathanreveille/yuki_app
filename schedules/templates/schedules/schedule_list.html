@@ -1,0 +1,50 @@
+<a href="{% url 'animals:home' %}">Go back</a>
+
+{% if request.user.is_authenticated %}
+    <p>{{ request.user }}</p>
+    <a href="{% url 'logout'%}"> Logout </a>
+{% else %}
+    <a href="{ url 'login' }">Login</a>
+
+{% endif %}
+
+<hr>
+
+    <h2> Set your schedules - LIST VIEW </h2>
+
+    <p><a href="{% url 'schedules:schedule_create'%}"> Need to create a Schedule ?</a></p>
+    
+    <p><a href="{% url 'schedules:schedule_search' %}" > Search Mode </a></p>
+
+
+<table>
+        <tr>
+            <th> id </th>
+            <th> WHEN </th>
+            <th> TO DO </th>
+            <th> FOR </th>
+            <th> MORE INFO </th>
+        </tr>
+        
+        {% for schedule in schedules %}
+            <tr>
+                <td> {{schedule.id}} </td>
+                <td> {{schedule.time}} </td>
+                <td> {{schedule.task}} </td>
+
+                {% for cat in schedule.cat.all %}
+                    <td>  {{cat}} </td>
+                {% endfor %}
+        
+        <td><a href="{% url 'schedules:schedule_detail' schedule.id %}">Detail</a></td>
+        <td><a href="{% url 'schedules:schedule_delete' schedule.id %}">Delete</a></td>
+
+
+            </tr>
+
+        {% empty %}
+            <h3> no schedule in list </h3>
+        {% endfor %}
+    </table>
+
+

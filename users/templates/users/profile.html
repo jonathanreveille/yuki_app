@@ -1,0 +1,15 @@
+<div> <a href = "{% url 'home' %}">Go back</a> </div>
+
+
+<h1> Your Profile </h1>
+<h2>{{ user.get_full_name }}</h2>
+
+    <ul>
+        <li> Username: {{ user.username }}</li>
+        <li> Role: {{ user.role }}</li>
+        <li>{{user.avatar}}</li>
+    </ul>
+
+
+
+    <div> <a href = "{% url 'users:edit_profile' %}">Edit Profile</a> </div>

@@ -1,0 +1,48 @@
+<a href="{% url 'animals:home' %}">Go back</a>
+
+{% if request.user.is_authenticated %}
+    <p>{{ request.user }}</p>
+    <a href="{% url 'logout'%}"> Logout </a>
+{% else %}
+    <a href="{ url 'login' }">Login</a>
+
+{% endif %}
+
+<hr>
+
+<h1> Tasks - My cat's todo list application</h1>
+
+    <ul>
+        <li><a href="{% url 'schedules:task_create' %}"> Create a new task ?</a></li>
+        <li><a href="{% url 'schedules:schedule_list'%}"> See your schedules ?</a></li>
+    </ul>
+    
+    <table>
+        <tr>
+            <th> id task </th>
+            <th> Task items </th>
+            <th> Created by </th>
+            <th> View </th>
+            <th> Edit </th>
+            <th> Delete </th>
+        </tr>
+
+        {% for task in tasks %}
+        <tr>
+            <td> {{task.id}}</td>
+            <td> {{task.title}}</td>
+            <td> {{task.user}} </td>
+
+            <td><a href="{% url 'schedules:task' task.id%}">View</a></td>
+
+            <td><a href="{% url 'schedules:task_update' task.id%}">Edit</a></td>
+
+            <td><a href="{% url 'schedules:task_delete' task.id %}">Delete</a></td>
+
+        </tr>
+        {% empty %}
+            <h3> no items in list </h3>
+        {% endfor %}
+    </table>
+
+
