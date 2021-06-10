@@ -12,10 +12,15 @@
 
     <h2> Set your schedules - LIST VIEW </h2>
 
-    <p><a href="{% url 'schedules:schedule_create'%}"> Need to create a Schedule ?</a></p>
-    
-    <p><a href="{% url 'schedules:schedule_search' %}" > Search Mode </a></p>
+    <ul>
+        <li><a href="{% url 'schedules:schedule_create'%}"> Need to create a Schedule ?</a></li>
+    </ul>
 
+    <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal">
+        {% csrf_token %}
+        {{form}}
+        <input type='submit' value='search'>
+    </form>
 
 <table>
         <tr>
@@ -28,7 +33,7 @@
         
         {% for schedule in schedules %}
             <tr>
-                <td> {{schedule.id}} </td>
+                <td> {{schedule.id}} </td>  
                 <td> {{schedule.time}} </td>
                 <td> {{schedule.task}} </td>
 

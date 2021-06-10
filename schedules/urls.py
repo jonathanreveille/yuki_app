@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import TaskList, TaskDetail, TaskCreate, TaskUpdate, TaskDelete
-from .views import  SchedulePetList, SchedulePetCreate, ScheduleDetailView, ScheduleDeleteView 
+from .views import  SchedulePetList, SchedulePetCreate, ScheduleDetailView, ScheduleDeleteView
 
 app_name = "schedules"
 
@@ -19,8 +19,6 @@ urlpatterns = [
     path('schedule_create/', SchedulePetCreate.as_view(), name="schedule_create"),
     path('schedule/<int:pk>', ScheduleDetailView.as_view(), name='schedule_detail'),
     path('schedule_delete/<int:pk>', ScheduleDeleteView.as_view(), name='schedule_delete'),
-    path('schedule_search/', views.search, name="schedule_search"),
-]
+    path('schedule_search/', views.schedule_search, name="schedule_search"),
 
-#ScheduleUpdateView,
-    # path('schedule_update/<int:pk>', ScheduleUpdateView.as_view(), name='schedule_update'),
+]

@@ -9,7 +9,6 @@
             <th> id </th>
             <th> WHEN </th>
             <th> TO DO </th>
-            <th> FOR </th>
             <th> MORE INFO </th>
         </tr>
             
@@ -18,6 +17,7 @@
                 <td> {{cat.id}} </td>
                 <td> {{cat.time}} </td>
                 <td> {{cat.task}} </td>
+                <td> {{cat.task.description}} </td>
 
                 {% for cat in cat_schedule_found.cat.all %}
                     <td>  {{cat}} </td>
