@@ -1,5 +1,7 @@
 <h1>Yuki Application</h1>
 
+<hr>
+
 <p>Welcome back {{request.user}}<p>
 
 {% if user.is_authenticated %}
@@ -8,6 +10,8 @@
         <li><a href="{% url 'animals:create_pet' %}">Create an animal</a></li>
         <li><a href="{% url 'animals:see_pet' %}">See your pets</a></li>
         <li><a href="{% url 'schedules:task_list' %}">See Task list</a></li>
+        <li><a href="{% url 'schedules:schedule_list'%}"> See your schedules</a></li>
+        <li><a href="{% url 'healthbook:healthbook_list'%}"> See healthbook </a></li>
         <li><a href="{% url 'logout' %}">Log out</a></li>
 
     </ul>

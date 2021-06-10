@@ -1,21 +1,25 @@
 <h1>Here are your pets</h1>
 
 <a href="{% url 'animals:home' %}">Go back</a>
+<hr>
 
 {% for pet in user_pets %}
     <ul>
-        <li>Id : {{pet.id}}</li>
+        {% comment %} <li>Id : {{pet.id}}</li> {% endcomment %}
         <li>Name : {{pet.name}}</li>
         <li>Age : {{pet.age}}</li>
         <li>Weight : {{pet.weight}}</li>
+        <li><a href="{% url 'animals:update_pet' pet.id %}">Update {{pet.name}} info</a></li>
+        <li><a href="{% url 'animals:delete_pet' pet.id %}">Delete {{pet.name}}</a></li>
     </ul>
-    
+
 {%empty%}
 
     <p> It seems like you dont have any pets yet</p>
     <a href="{% url 'animals:create_pet' %}"> Add a pet </a>
 
 {% endfor %}
+
 
 
 

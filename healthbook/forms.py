@@ -2,7 +2,7 @@ from django import forms
 from django.forms import CheckboxSelectMultiple
 
 from animals.models import Pet
-from .models import Task, Schedule
+from .models import HealthBook
 
 
 class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -10,7 +10,8 @@ class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
         """ Customises the labels for checkboxes"""
         return "%s" % pet.name
 
-class CreateScheduleForPet(forms.ModelForm):
+
+class CreateHealthBookForPet(forms.ModelForm):
     """method to create a custom form
     to create a schedule for a cat
     The idea; is that the user can only see
@@ -21,24 +22,19 @@ class CreateScheduleForPet(forms.ModelForm):
         of the current user are given as options"""
 
         self.request = kwargs.pop('request')
-        super(CreateScheduleForPet, self).__init__(*args, **kwargs)
+        super(CreateHealthBookForPet, self).__init__(*args, **kwargs)
         
         self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 
-        self.fields['task'].queryset = Task.objects.filter(
-            user=self.request.user)
-
     class Meta:
 
-        model = Schedule
-        fields = ('pet', 'task', 'time',)
+        model = HealthBook
+        fields = ('pet', 'sterilize', 'vaccine',
+                    'last_vaccine','next_vaccine',
+                    'veterinary_name','veterinary_phone',)
 
         pet = CustomModelMultipleChoiceField(
         queryset=None,
         widget=CheckboxSelectMultiple
         )
-
-
-class SearchPetScheduleForm(forms.Form):
-    query_search = forms.CharField(label="Animal name",max_length=200)

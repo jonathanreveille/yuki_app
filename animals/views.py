@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .models import Pet
-from users.models import User
-
 from .forms import PetCreationForm
 
 # Create your views here.
@@ -10,6 +12,7 @@ def home(request):
     """method to get homepage"""
     return render(request, 'animals/home.html',)
 
+@login_required
 def create_pet(request):
     """method to create animals
     from the user"""
@@ -38,8 +41,9 @@ def create_pet(request):
 
         form = PetCreationForm()
 
-    return render(request, 'animals/create_animal.html', {'form':form})
+    return render(request, 'animals/pet_form.html', {'form':form})
 
+@login_required
 def see_pet(request):
     """view to allow the user
     to see his pets"""
@@ -52,3 +56,19 @@ def see_pet(request):
 
     return render(request, 'animals/see_pet.html', context)
 
+
+class PetUpdateView(LoginRequiredMixin, UpdateView):
+    """update a task"""
+    
+    model = Pet
+    fields = ('name','age','weight',)
+    success_url = reverse_lazy('animals:see_pet')
+
+
+class PetDeleteView(LoginRequiredMixin, DeleteView):
+    """update a task"""
+
+    model = Pet
+    content_object_name = 'pet'
+    template_name = 'animals/pet_confirm_delete.html'
+    success_url = reverse_lazy('animals:see_pet')

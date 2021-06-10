@@ -53,7 +53,7 @@ class ScheduleModelUnitTest(TestCase):
             task = self.task,
             time = self.tod
         )
-        self.schedule.cat.add(self.pet)
+        self.schedule.pet.add(self.pet)
 
 
     def test_if_user_owns_task(self):

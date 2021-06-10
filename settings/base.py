@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'animals.apps.AnimalsConfig',
     'users.apps.UsersConfig',
     'schedules.apps.SchedulesConfig',
+    'healthbook.apps.HealthbookConfig',
 ]
 
 MIDDLEWARE = [

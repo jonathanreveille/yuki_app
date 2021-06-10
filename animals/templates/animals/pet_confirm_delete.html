@@ -6,7 +6,7 @@
 <form method="post">
     {% csrf_token %}
         <p> Are you sure you want to delete this task ? </p>
-        <p>{{schedule.task}}</p>
+        <p>{{pet.name}}</p>
     <input type="submit" value="Delete"/>
 </form>
 

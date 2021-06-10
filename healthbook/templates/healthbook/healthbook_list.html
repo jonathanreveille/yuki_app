@@ -1,0 +1,23 @@
+<p><a href="{% url 'animals:home' %}"></a></p>
+
+<p>{{request.user}}</p>
+
+<hr>
+    {% comment %} {{ color }} test {% endcomment %}
+
+{% for info in healthbook %}
+    <ul>
+        <h2> {{ info.pet }}'s Healthbook</h2>
+        <li> Sterilize : {{ info.get_sterilize_display }} </li>
+        <li> Vaccine : {{ info.get_vaccine_display }} </li>
+        <li> Last vaccine : {{ info.last_vaccine }} </li>
+        <li> Next vaccine : {{ info.next_vaccine }} </li>
+        <li> Veterinary name : {{ info.veterinary_name }} </li>
+        <li> Veterinary phone : {{ info.veterinary_phone }} </li>
+    </ul>
+
+{% empty %}
+    <p> You have no data about the health of your pet </p>
+    <br/>
+    <p><a href="{% url 'healthbook:healthbook_create' %}">Add information in pet's HealthBook</a></p>
+{% endfor %}

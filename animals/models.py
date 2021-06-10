@@ -1,6 +1,12 @@
 from django.db import models
 from django.conf import settings
+from enum import Enum
 
+
+class YesOrNoChoice(Enum):
+    """choice for user when creating animal"""
+    YES = "Yes"
+    NO = "No"
 
 class Specie(models.Model):
     """table that defines the type
@@ -22,3 +28,4 @@ class Pet(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
