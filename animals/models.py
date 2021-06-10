@@ -26,7 +26,6 @@ class Pet(models.Model):
     age =  models.BigIntegerField(null=True, blank=True)
     weight = models.FloatField(max_length=6, null=True, blank=True)
 
-
     def __str__(self):
         return f"{self.name}"
 
