@@ -6,9 +6,9 @@ from .models import Task, Schedule
 
 
 class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
-    def label_from_instance(self, cat):
+    def label_from_instance(self, pet):
         """ Customises the labels for checkboxes"""
-        return "%s" % cat.name
+        return "%s" % pet.name
 
 class CreateScheduleForPet(forms.ModelForm):
     """method to create a custom form
@@ -23,7 +23,7 @@ class CreateScheduleForPet(forms.ModelForm):
         self.request = kwargs.pop('request')
         super(CreateScheduleForPet, self).__init__(*args, **kwargs)
         
-        self.fields['cat'].queryset = Pet.objects.filter(
+        self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 
         self.fields['task'].queryset = Task.objects.filter(
@@ -32,9 +32,9 @@ class CreateScheduleForPet(forms.ModelForm):
     class Meta:
 
         model = Schedule
-        fields = ('cat', 'task', 'time',)
+        fields = ('pet', 'task', 'time',)
 
-        cat = CustomModelMultipleChoiceField(
+        pet = CustomModelMultipleChoiceField(
         queryset=None,
         widget=CheckboxSelectMultiple
         )

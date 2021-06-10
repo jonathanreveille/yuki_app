@@ -114,7 +114,7 @@ class SchedulePetList(LoginRequiredMixin, ListView):
         """equivalent to context dict to use variables"""
         context = super().get_context_data(**kwargs)
         context["schedules"] = Schedule.objects.filter(
-            cat__owner=self.request.user
+            pet__owner=self.request.user
             ).order_by('time')
         context["form"] = SearchPetScheduleForm()
         return context
@@ -129,15 +129,15 @@ def schedule_search(request):
         form = SearchPetScheduleForm(request.GET)
 
         if form.is_valid():
-            cat = form.cleaned_data.get("query_search")
-            cat_schedule_found = Schedule.objects.filter(
-                cat__name__startswith = cat,
-                cat__owner= request.user,
+            pet = form.cleaned_data.get("query_search")
+            pet_schedule_found = Schedule.objects.filter(
+                pet__name__startswith = pet,
+                pet__owner= request.user,
             )
 
             context = {
-                'cat_searched': cat,
-                'cat_schedule_found':cat_schedule_found
+                'pet_searched': pet,
+                'pet_schedule_found':pet_schedule_found
             }
 
             return render(

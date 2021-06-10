@@ -4,7 +4,6 @@ from enum import Enum
 
 from .managers import ScheduleManager
 
-
 class CategoryChoice(Enum):
     """category of tasks, it determines
     what is the action of the task"""
@@ -12,7 +11,6 @@ class CategoryChoice(Enum):
     CLEANING = "Cleaning"
     FOOD = "Food"
     MEDICATION = "Medication"
-
 
 # Create your models here.
 class Task(models.Model):
@@ -37,7 +35,7 @@ class Task(models.Model):
 
 
 class Schedule(models.Model):
-    cat = models.ManyToManyField('animals.Pet')
+    pet = models.ManyToManyField('animals.Pet')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
     time = models.ForeignKey('schedules.TimeOfDay', on_delete=models.CASCADE, null=True,blank=True)
 
@@ -55,4 +53,3 @@ class TimeOfDay(models.Model):
 
     def __str__(self):
         return f"{self.time}"
-

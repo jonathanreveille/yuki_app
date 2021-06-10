@@ -12,15 +12,17 @@
 
     <h2> Set your schedules - LIST VIEW </h2>
 
-    <ul>
-        <li><a href="{% url 'schedules:schedule_create'%}"> Need to create a Schedule ?</a></li>
-    </ul>
-
     <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal">
         {% csrf_token %}
         {{form}}
         <input type='submit' value='search'>
     </form>
+
+    <ul>
+        <li><a href="{% url 'schedules:schedule_create'%}"> Need to create a Schedule ?</a></li>
+    </ul>
+
+
 
 <table>
         <tr>
@@ -37,8 +39,8 @@
                 <td> {{schedule.time}} </td>
                 <td> {{schedule.task}} </td>
 
-                {% for cat in schedule.cat.all %}
-                    <td>  {{cat}} </td>
+                {% for pet in schedule.cat.all %}
+                    <td>  {{pet}} </td>
                 {% endfor %}
         
         <td><a href="{% url 'schedules:schedule_detail' schedule.id %}">Detail</a></td>
@@ -48,8 +50,15 @@
             </tr>
 
         {% empty %}
-            <h3> no schedule in list </h3>
+
+            <p> No schedule in list yet </p>
+
+            <h3>
+                <a href="{% url 'schedules:task_create' %}">You need to create task to create a schedule </a>
+            </h3>
+
         {% endfor %}
+
     </table>
 
 

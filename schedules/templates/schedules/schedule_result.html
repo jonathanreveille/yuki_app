@@ -3,7 +3,7 @@
 <hr>
 
 <h1> Welcome to filtered schedule </h1>
-    <h2> You were searching for {{cat_searched|capfirst}}</h2>
+    <h2> You were searching for {{pet_searched|capfirst}}</h2>
     <table>
         <tr>
             <th> id </th>
@@ -12,15 +12,15 @@
             <th> MORE INFO </th>
         </tr>
             
-        {% for cat in cat_schedule_found %}
+        {% for pet in pet_schedule_found %}
             <tr>
-                <td> {{cat.id}} </td>
-                <td> {{cat.time}} </td>
-                <td> {{cat.task}} </td>
-                <td> {{cat.task.description}} </td>
+                <td> {{pet.id}} </td>
+                <td> {{pet.time}} </td>
+                <td> {{pet.task}} </td>
+                <td> {{pet.task.description}} </td>
 
-                {% for cat in cat_schedule_found.cat.all %}
-                    <td>  {{cat}} </td>
+                {% for pet in pet_schedule_found.cat.all %}
+                    <td>  {{pet}} </td>
                 {% endfor %}
 
             </tr>
