@@ -1,0 +1,14 @@
+<h1>Hello create</h1>
+
+<p><a href="{% url 'healthbook:medication_list' %}"> Go back to Medication list</a></p>
+
+<hr>
+
+
+<h1> Create your pet's Medication treatment ! </h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='Save'/>
+    <form>

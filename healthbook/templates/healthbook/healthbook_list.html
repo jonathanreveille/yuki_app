@@ -1,23 +1,26 @@
-<p><a href="{% url 'animals:home' %}"></a></p>
+<p><a href="{% url 'animals:home' %}">Go back homepage </a></p>
 
 <p>{{request.user}}</p>
 
 <hr>
     {% comment %} {{ color }} test {% endcomment %}
 
-{% for info in healthbook %}
+{% for book in healthbook %}
+    
     <ul>
-        <h2> {{ info.pet }}'s Healthbook</h2>
-        <li> Sterilize : {{ info.get_sterilize_display }} </li>
-        <li> Vaccine : {{ info.get_vaccine_display }} </li>
-        <li> Last vaccine : {{ info.last_vaccine }} </li>
-        <li> Next vaccine : {{ info.next_vaccine }} </li>
-        <li> Veterinary name : {{ info.veterinary_name }} </li>
-        <li> Veterinary phone : {{ info.veterinary_phone }} </li>
+        <h2> {{ book.pet }}'s Healthbook</h2>
+        <li> Sterilize : {{ book.get_sterilize_display }} </li>
+        <li> Vaccine : {{ book.get_vaccine_display }} </li>
+        <li> Last vaccine : {{ book.last_vaccine }} </li>
+        <li> Next vaccine : {{ book.next_vaccine }} </li>
+        <li> Veterinary name : {{ book.veterinary_name }} </li>
+        <li> Veterinary phone : {{ book.veterinary_phone }} </li>
     </ul>
+
+    <p><a href="{% url 'healthbook:healthbook_update' book.id %}">Update Healthbook</a></p>
 
 {% empty %}
     <p> You have no data about the health of your pet </p>
     <br/>
-    <p><a href="{% url 'healthbook:healthbook_create' %}">Add information in pet's HealthBook</a></p>
+    <p><a href="{% url 'healthbook:healthbook_create' %}">Add information for pet's HealthBook</a></p>
 {% endfor %}
