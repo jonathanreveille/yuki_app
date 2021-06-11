@@ -1,11 +1,12 @@
-<p><a href="{% url 'healthbook:healthbook_list' %}"></a></p>
+<p><a href="{% url 'healthbook:healthbook_list' %}"> Go back to Healthbook list</a></p>
 
 <hr>
+
 
 <h1> Create your pet's Healthbook ! </h1>
 
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type='submit' value='Create'/>
+        <input type='submit' value='Save'/>
     <form>

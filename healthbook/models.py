@@ -42,9 +42,10 @@ class Medication(models.Model):
     
     pet = models.ForeignKey('animals.Pet', on_delete=models.CASCADE, related_name="pet_medication")
     med_name = models.CharField(max_length=100)
-    med_start = models.DateField(null=True, default="Everyday")
+    med_start = models.DateField(null=True)
     med_end = models.DateField(null=True)
     time = models.ForeignKey('schedules.TimeOfDay',
                             on_delete=models.CASCADE,
                             related_name="time_medication",
                             verbose_name="time of day for medication")
+    dosage = models.CharField(max_length=300, null=True, blank=True)
