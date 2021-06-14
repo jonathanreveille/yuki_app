@@ -1,0 +1,39 @@
+<a href="{% url 'animals:home' %}">Go back</a>
+
+<h1> {{ request.user }} inbox </h1>
+
+<hr>
+
+<a href="{% url 'messenger:message_create' %}">Send message</a>
+
+    <table>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>subject</th>
+            <th>content</th>
+            <th>is_read</th>
+            <th>timestamp</th>
+        </tr>
+
+{% for message in messages %}
+   
+
+        <tr>
+            <td> {{ message.sender }} </td>
+            <td> {{ message.receiver }} </td>
+            <td> {{ message.subject }} </td>
+            <td> {{ message.content }} </td>
+            <td> {{ message.is_read }} </td>
+            <td> {{ message.timestamp }}</td>
+            <td><a href="{% url 'messenger:message_detail' message.id %}"> View </a></td>
+            <td><a href="{% url 'messenger:message_delete' message.id %}"> Delete ?</a></td>
+        </tr>
+
+{% empty %}
+
+   <p> You have no messages in your inbox ! Come again later </p>
+
+{% endfor %}
+
+ </table>
