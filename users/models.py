@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 
 class Role(models.Model):
@@ -25,11 +26,24 @@ class User(AbstractUser):
                         on_delete=models.CASCADE,
                         related_name="role",
                         null=True, blank=True)
-                        
-    # TO IMPLEMENT CATSITTERS
-    #host_capacity = models.IntegerField(max_length=10, null=True, blank=True)
-    #following = models..??
-    #followers = models...??
+
+    host_capacity = models.IntegerField(null=True, blank=True) # NEW
+    location = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return f'{self.username}'
+
+class Relationship(models.Model):
+
+    follower = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                related_name="follower")
+
+    followed = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                related_name="followed")
+                                
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.follower} added {self.followed}'
