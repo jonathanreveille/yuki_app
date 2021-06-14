@@ -35,6 +35,7 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
     path('schedules/', include('schedules.urls', namespace='schedules')),
     path('healthbook/', include('healthbook.urls', namespace='healthbook')),
+    path('messenger/', include('messenger.urls', namespace="messenger")),
     path('sentry-debug/', trigger_error),
     ]
 

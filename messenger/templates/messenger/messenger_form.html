@@ -1,0 +1,11 @@
+<h1>Create a Message</h1>
+
+<hr>
+
+<a href="{% url 'messenger:message_list' %}">Go back Messenger App</a>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="Submit" value="Send"/>
+</form>
