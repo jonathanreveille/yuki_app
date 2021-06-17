@@ -1,3 +1,6 @@
+{% load crispy_forms_tags %}
+
+
 <p><a href="{% url 'healthbook:healthbook_list' %}"> Go back to Healthbook list</a></p>
 
 <hr>
@@ -7,6 +10,6 @@
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy}}
         <input type='submit' value='Save'/>
     <form>
