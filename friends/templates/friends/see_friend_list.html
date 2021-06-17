@@ -1,0 +1,18 @@
+<a href="{% url 'animals:home' %}">Go back </a>
+
+<hr>
+
+{% for friend in friends %}
+    <ul>    
+        <li> friend name = {{friend.friend}} </li>
+        <li> friend id = {{friend.friend.id}} </li>
+
+        <li> user : {{friend.user}} </li>
+         <li> user_id : {{friend.user.id}} </li>
+         <li> friend_list id : {{friend.id}} </li>
+
+    </ul>
+
+    {% empty %}
+    <h1> sorry no friends yet </h1>
+{% endfor %}

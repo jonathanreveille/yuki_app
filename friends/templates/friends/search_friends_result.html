@@ -1,0 +1,17 @@
+<a href="{% url 'friends:search_for_friends' %}">Go back</a>
+
+<hr>
+
+<h1> Search Result page 'HOLAAAAAA' </h1>
+
+{% for user in users_found %}
+    {% if user != request.user %}
+    <ul>
+        <li> {{user.username}} 
+            <a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a>
+        </li>
+    </ul>
+    {% endif %}
+{% empty %}
+    <p> Sorry, no one is registered under this name {{user_search}}</p>
+{% endfor %}
