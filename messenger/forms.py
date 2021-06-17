@@ -27,9 +27,10 @@ class CreateMessageForUser(forms.ModelForm):
         self.fields['sender'].queryset = User.objects.filter(
             username=self.request.user)
 
-        # self.fields['receiver'].queryset = FriendList.objects.filter(
-        # user=self.request.user)
+        f = FriendList.objects.get(user=self.request.user)
+        friend = f.friend.username
 
+        self.fields['receiver'].queryset = User.objects.filter(username=friend)
 
     class Meta:
 
@@ -57,10 +58,12 @@ class CreateReplyMessageForUser(forms.ModelForm):
         
         self.fields['sender'].queryset = User.objects.filter(
             username = self.request.user)
-            #change sender to receiver when User can be friends
 
-        # self.fields['receiver'].queryset = FriendList.objects.filter(
-        #     user=self.request.user)
+        f = FriendList.objects.get(user=self.request.user)
+
+        friend = f.friend.username
+
+        self.fields['receiver'].queryset = User.objects.filter(username=friend)
 
     class Meta:
 

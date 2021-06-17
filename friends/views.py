@@ -48,7 +48,9 @@ def search_friends_result(request):
         return render(request, 'friends/search_friends_result.html', context)
 
     else:
+        
         form = SearchForFriendForm()
+
     return render(request, 'friends/search_friends.html', {'form':form})
 
 
@@ -154,6 +156,11 @@ def delete_friend(request):
         user =  request.POST['user']
         friend = request.POST['to_delete_user']
 
+        #delete the friend request so user can add each other again
+        fr = FriendRequest.objects.filter(sender=user, receiver=friend) 
+        fr.delete()
+
+        #delete the relationship for each user
         fl = FriendList.objects.filter(user=user, friend=friend) #delete for user
         fl_friend = FriendList.objects.filter(user=friend, friend=user) #delete for friend
         fl.delete()
