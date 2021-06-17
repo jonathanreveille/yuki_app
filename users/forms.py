@@ -18,5 +18,8 @@ class UserChangeForm(auth_forms.UserChangeForm):
 
     class Meta(auth_forms.UserChangeForm.Meta):
         model = get_user_model()
-        fields = ('username', 'email', 'first_name', 'role')
+        fields = ('username', 'email', 'first_name', 'role', 'host_capacity', 'location', 'avatar', 'postal_code')
 
+
+# class SearchForUserForm(forms.Form):
+#     query_search_user = forms.CharField(label="location",max_length=200)

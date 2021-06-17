@@ -20,7 +20,8 @@ class User(AbstractUser):
 
     email = models.EmailField('user email', max_length=255, unique=True)
     location = models.CharField(max_length=30, blank=True)
-    avatar = models.ImageField(upload_to="avatars/", default='avatar_profile.jpg')
+
+    avatar = models.ImageField(upload_to="static/img/", default='avatar_profile.jpg')
 
     role = models.ForeignKey('users.Role',
                         on_delete=models.CASCADE,
@@ -29,21 +30,8 @@ class User(AbstractUser):
 
     host_capacity = models.IntegerField(null=True, blank=True) # NEW
     location = models.CharField(max_length=100, null=True)
+    postal_code = models.IntegerField(null=True, blank=True)
+    friends = models.ManyToManyField('users.User', blank=True)
 
     def __str__(self):
         return f'{self.username}'
-
-class Relationship(models.Model):
-
-    follower = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                on_delete=models.CASCADE,
-                                related_name="follower")
-
-    followed = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                on_delete=models.CASCADE,
-                                related_name="followed")
-                                
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return f'{self.follower} added {self.followed}'
