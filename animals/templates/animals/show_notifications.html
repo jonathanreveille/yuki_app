@@ -4,37 +4,36 @@
 
     <div class="dropdown-menu">
         {% for notification in notifications %}
-
             {% if notification.friend_request %}
-                    {% if notification.notification_type == 1 %}
+
+                {% if notification.notification_type == 1 %}
                     
                     <div class="dropdown-item-parent">
-
-                        <a href=""> You got a friend request from {{notification.from_user}}</a>
+                        <a href="{% url 'animals:friend_request_notification' notification.pk notification.friend_request.pk %}"> You got a friend request from {{notification.from_user}}</a>
                         <span class="dropdown" close>&times </span>
                     </div>
 
-                    {% elif notifications.notification_type == 2 %}
+                {% elif notification.notification_type == 2 %}
                                 
                     <div class="dropdown-item-parent">
-
-                        <a href=""> You got a message from {{notification.from_user}}</a>
+                        <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}">> You got a message from {{notification.from_user}}</a>
                         <span class="dropdown" close>&times </span>
                     </div>
-                    {% endif %}
 
-            {% elif notifications.message %}
+                {% endif %}
 
-                {% if notifications.notification_type == 2 %}
+            {% elif notification.message %}
+
+                {% if notification.notification_type == 2 %}
+
                 <div class="dropdown-item-parent">
-
-                    <a href=""> You got a message from {{notification.from_user}}</a>
+                    <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}"> You got a message from {{notification.from_user}}</a>
                     <span class="dropdown" close>&times </span>
                 </div>
-                {% endif %}}f
+
+                {% endif %}
 
             {% endif %}
-
         {% endfor %}
 
     </div>

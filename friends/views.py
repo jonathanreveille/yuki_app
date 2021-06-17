@@ -1,3 +1,4 @@
+from notifications.models import Notification
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -11,6 +12,7 @@ from django.contrib import messages
 from .forms import SearchForFriendForm
 from users.models import User
 from .models import  FriendRequest, FriendList
+from notifications.models import Notification
 
 
 @login_required
@@ -70,9 +72,18 @@ def send_friend_request(request, pk):
 
     if created:
         friend_request.save()
+        notification = Notification.objects.create(notification_type=1, from_user=request.user, to_user=receiver, friend_request=friend_request)
     
     return render(request, 'animals/home.html')
 
+
+class FriendRequestDetailView(LoginRequiredMixin, DetailView):
+    """view to see the unique friend request"""
+
+    model = FriendRequest
+    context_object_name = 'friend_request'
+    template_name = 'friends/friend_request_detail.html'
+ 
 
 class FriendRequestListView(LoginRequiredMixin, ListView):
     """list to see all pending friends requests"""

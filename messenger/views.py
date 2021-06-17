@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 from .models import Messenger
 from .forms import CreateMessageForUser, CreateReplyMessageForUser
+from notifications.models import Notification
 
 
 # Create your views here.
@@ -33,6 +34,7 @@ class MessengerCreateView(LoginRequiredMixin,CreateView):
     form_class = CreateMessageForUser
     template_name = 'messenger/messenger_form.html'
     success_url = reverse_lazy('messenger:message_list')
+
 
     def form_valid(self, form):
         """check if the form is valid"""
