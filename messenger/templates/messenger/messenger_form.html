@@ -1,11 +1,13 @@
+{% load crispy_forms_tags %}
+
 <h1>Create a Message</h1>
 
 <hr>
 
-<a href="{% url 'messenger:message_list' %}">Go back Messenger App</a>
+<a href="{% url 'messenger:message_list' %}"> Go back Messenger App</a>
 
-<form method="post" action="">
+<form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <input type="Submit" value="Send"/>
 </form>
