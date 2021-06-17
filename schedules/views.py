@@ -133,7 +133,7 @@ def schedule_search(request):
             pet_schedule_found = Schedule.objects.filter(
                 pet__name__startswith = pet,
                 pet__owner= request.user,
-            )
+            ).order_by('time')
 
             context = {
                 'pet_searched': pet,
