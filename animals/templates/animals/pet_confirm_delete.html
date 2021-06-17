@@ -1,11 +1,12 @@
-<a href="{% url 'schedules:schedule_list' %}">Go back</a>
+<a href="{% url 'friends:see_friends' %}">Go back</a>
+
 <hr>
 
-<h1>Delete schedule page</h1>
+<h1> Delete friend page</h1>
 
 <form method="post">
     {% csrf_token %}
-        <p> Are you sure you want to delete this task ? </p>
+        <p> Are you sure you want to delete this pet? </p>
         <p>{{pet.name}}</p>
     <input type="submit" value="Delete"/>
 </form>

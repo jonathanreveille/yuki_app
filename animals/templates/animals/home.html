@@ -1,3 +1,5 @@
+{% load custom_tags %}
+
 <h1>Yuki Application</h1>
 
 <hr>
@@ -13,15 +15,33 @@
         <li><a href="{% url 'schedules:schedule_list'%}"> See your schedules</a></li>
         <li><a href="{% url 'healthbook:healthbook_list'%}"> See healthbook </a></li>
         <li><a href="{% url 'healthbook:healthbook_create' %}">Add information for pet's HealthBook</a></li>
-
         <li><a href="{% url 'healthbook:medication_list'%}">See Medication Treatment</a></li>
         <li><a href="{% url 'healthbook:medication_create'%}">Create Medication Treatment</a></li>
-
         <li><a href="{% url 'messenger:message_list'%}">Inbox - Messages List</a></li>
+
+        <li><a href="{% url 'friends:search_for_friends' %}">Search for friends</a></li>
+        <li><a href="{% url 'friends:see_friend_request_list' %}">See friend requests</a></li>
+        <li><a href="{% url 'friends:see_friends' %}">See friends</a></li>
+
+        <li><a href="{% url 'friends:delete_mutual_friend' %}">Delete a Friend</a></li>
+
 
         <li><a href="{% url 'logout' %}">Log out</a></li>
 
+        <li>
+            {% show_notifications %}
+        </li> 
+
     </ul>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                <h3>{{ message }}</h3>
+            </div>
+        {% endfor %}
+    {% endif %}
+
 {% else %}
     <ul>
         <li><a href="{% url 'register'%}">Create an account </a></li>
@@ -31,7 +51,7 @@
 {% endif %}
 
 <div id="about">
-    <p> We made thisapplication that helps 
+    <p> We made this application that helps 
     cat owners and catsitter to organize their day 
     better for their cats
     </p>
