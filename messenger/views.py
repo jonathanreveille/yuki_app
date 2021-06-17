@@ -47,6 +47,7 @@ class MessengerCreateView(LoginRequiredMixin,CreateView):
         kwargs['request'] = self.request
         return kwargs
 
+
 class MessengerDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Messenger
