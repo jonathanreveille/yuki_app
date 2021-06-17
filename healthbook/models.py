@@ -1,7 +1,11 @@
 from django.db import models
+from enum import Enum
 
-from animals.models import YesOrNoChoice
 
+class YesOrNoChoice(Enum):
+    """choice for user when creating animal"""
+    YES = "Yes"
+    NO = "No"
 
 class HealthBook(models.Model):
     """this table stores the general health

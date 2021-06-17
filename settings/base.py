@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'schedules.apps.SchedulesConfig',
     'healthbook.apps.HealthbookConfig',
     'messenger.apps.MessengerConfig',
+    'friends.apps.FriendsConfig',
+    'notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [

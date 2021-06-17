@@ -1,0 +1,41 @@
+<div class="dropdown">
+
+    <span> Notifications : {{ notifications.count }} </span>
+
+    <div class="dropdown-menu">
+        {% for notification in notifications %}
+
+            {% if notification.friend_request %}
+                    {% if notification.notification_type == 1 %}
+                    
+                    <div class="dropdown-item-parent">
+
+                        <a href=""> You got a friend request from {{notification.from_user}}</a>
+                        <span class="dropdown" close>&times </span>
+                    </div>
+
+                    {% elif notifications.notification_type == 2 %}
+                                
+                    <div class="dropdown-item-parent">
+
+                        <a href=""> You got a message from {{notification.from_user}}</a>
+                        <span class="dropdown" close>&times </span>
+                    </div>
+                    {% endif %}
+
+            {% elif notifications.message %}
+
+                {% if notifications.notification_type == 2 %}
+                <div class="dropdown-item-parent">
+
+                    <a href=""> You got a message from {{notification.from_user}}</a>
+                    <span class="dropdown" close>&times </span>
+                </div>
+                {% endif %}}f
+
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+</div>

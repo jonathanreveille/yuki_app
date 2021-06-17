@@ -1,3 +1,5 @@
+{% load static %}
+
 <div> <a href = "{% url 'home' %}">Go back</a> </div>
 
 <hr>
@@ -6,11 +8,12 @@
 <h2>{{ user.get_full_name }}</h2>
 
     <ul>
+        <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
         <li> Username: {{ user.username }}</li>
         <li> Role: {{ user.role }}</li>
-        <li>{{user.avatar}}</li>
+        <li> Hosting capacity : {{ user.host_capacity }}</li>
+        <li> Location : {{ user.location }}</li>
+        <li> Postal Code : {{ user.postal_code }}</li>
     </ul>
 
-
-
-    <div> <a href = "{% url 'users:edit_profile' %}">Edit Profile</a> </div>
+    <div> <a href = "{% url 'users:edit_profile' %}">Edit Profile</a></div>

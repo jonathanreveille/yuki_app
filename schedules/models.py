@@ -42,7 +42,7 @@ class Schedule(models.Model):
     objects = ScheduleManager()
 
     def __str__(self):
-        return f"{self.cat.all()}"
+        return f"{self.pet.all()}"
 
     class Meta:
         ordering = ["id"]

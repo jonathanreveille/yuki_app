@@ -1,8 +1,10 @@
+from friends.models import FriendList
 from django import forms
 from django.forms import CheckboxSelectMultiple
 
 from users.models import User
 from .models import Messenger
+from friends.models import FriendList
 
 
 class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -24,6 +26,9 @@ class CreateMessageForUser(forms.ModelForm):
         
         self.fields['sender'].queryset = User.objects.filter(
             username=self.request.user)
+
+        # self.fields['receiver'].queryset = FriendList.objects.filter(
+        # user=self.request.user)
 
 
     class Meta:
@@ -52,53 +57,17 @@ class CreateReplyMessageForUser(forms.ModelForm):
         
         self.fields['sender'].queryset = User.objects.filter(
             username = self.request.user)
+            #change sender to receiver when User can be friends
 
-        # self.fields['receiver'].queryset = Messenger.objects.filter(
-        #     receiver__username=self.request.user)
-
-# ERROR MUST BE AN INSTANCE OF USER AND NOT MESSENGER 
-
+        # self.fields['receiver'].queryset = FriendList.objects.filter(
+        #     user=self.request.user)
 
     class Meta:
 
         model = Messenger
-        fields = ('sender','receiver', 'subject', 'content',)
+        fields = ('sender','receiver', 'subject', 'content',) # take out sender once relationships exists
 
         follower = CustomModelMultipleChoiceField(
         queryset=None,
         widget=CheckboxSelectMultiple
         )
-
-
-    # def get_object(self, queryset=None):
-    #     return Messenger.objects.get(subject=self.kwargs.get("subject"))
-
-
-# class CreateReplyMessageForUser(forms.ModelForm):
-#     """method to create a custom form
-#     to create a schedule for a cat
-#     The idea; is that the user can only see
-#     his objects"""
-
-#     def __init__(self, *args, **kwargs):
-#         """ Grants access to the request object so that only members
-#         of the current user are given as options"""
-
-#         self.request = kwargs.pop('request')
-#         super(CreateReplyMessageForUser, self).__init__(*args, **kwargs)
-        
-#         self.fields['sender'].queryset = User.objects.filter(
-#             username = self.request.user)
-        
-#         self.fields['receiver'].queryset = Messenger.objects.filter(
-#             receiver = self.request.user)
-
-#     class Meta:
-
-#         model = Messenger
-#         fields = ('sender','receiver', 'subject', 'content',)
-
-#         follower = CustomModelMultipleChoiceField(
-#         queryset=None,
-#         widget=CheckboxSelectMultiple
-#         )
