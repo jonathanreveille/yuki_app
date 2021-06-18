@@ -1,0 +1,20 @@
+<a href='{% url "animals:home"%}'>Go back Home</a>
+
+<p>Logged in as : {{request.user}}</p>
+
+<hr>
+    {% if  friend_request %}
+        <h1> To : {{friend_request.sender}}</h1>
+        <h1> From : {{friend_request.receiver}}</h1>
+        <h3> Time : {{friend_request.timestamp}} </h3>
+        <p> Is active : {{ friend_request.is_active }} </p>
+
+    <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
+        <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
+    </form>
+
+    {% endif %}
+
+
