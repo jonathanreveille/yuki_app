@@ -14,9 +14,10 @@
                     </div>
 
                 {% elif notification.notification_type == 2 %}
-                                
+
+
                     <div class="dropdown-item-parent">
-                        <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}">> You got a message from {{notification.from_user}}</a>
+                        <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}">> You got a message by {{notification.from_user}}</a>
                         <span class="dropdown" close>&times </span>
                     </div>
 
@@ -26,8 +27,9 @@
 
                 {% if notification.notification_type == 2 %}
 
+
                 <div class="dropdown-item-parent">
-                    <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}"> You got a message from {{notification.from_user}}</a>
+                    <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}"> You got message by {{notification.from_user}}</a>
                     <span class="dropdown" close>&times </span>
                 </div>
 
