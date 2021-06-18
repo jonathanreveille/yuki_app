@@ -1,9 +1,10 @@
 <a href='{% url "messenger:message_list"%}'>Go back inbox </a>
-<hr>
+    
+    <hr>
 
-<h1>Sender : {{message.sender}}</h1>
-<h1>receiver : {{message.receiver}}</h1>
-<h3>Subject : {{message.subject}}</h3>
-<p> {{ message.content }} </p>
+    <h1>Sender : {{message.sender}}</h1>
+    <h1>receiver : {{message.receiver}}</h1>
+    <h3>Subject : {{message.subject}}</h3>
+    <p> {{ message.content }} </p>
 
 <a href="{% url 'messenger:message_reply' message.id%}">Reply</a>
