@@ -121,8 +121,10 @@ def accept_friend_request(request):
         sender_id = request.POST['from_user']
         receiver_id = request.POST['to_user']
 
-        sender = User.objects.get(id=sender_id)
-        receiver = User.objects.get(id=receiver_id)
+        sender = User.objects.get(id=sender_id) #get user
+        receiver = User.objects.get(id=receiver_id) #get friend
+        sender.friends.add(receiver)  # add_receiver
+        receiver.friends.add(sender) # add_sender
 
         friends = FriendList.objects.get_or_create(
             user = receiver,
@@ -142,7 +144,7 @@ def accept_friend_request(request):
                                                     sender=sender_id)
         friend_added.update(is_active=False)
 
-        messages.success(request, "You accepted your last friend requests")
+        messages.success(request, "You have accepted your friend requests")
 
     return render(request, 'animals/home.html', context)
 
@@ -167,15 +169,21 @@ def delete_friend(request):
         user =  request.POST['user']
         friend = request.POST['to_delete_user']
 
-        #delete the friend request so user can add each other again
+        # delete the friend request so user can add each other again
         fr = FriendRequest.objects.filter(sender=user, receiver=friend) 
         fr.delete()
 
-        #delete the relationship for each user
+        # delete the relationship for each user
         fl = FriendList.objects.filter(user=user, friend=friend) #delete for user
         fl_friend = FriendList.objects.filter(user=friend, friend=user) #delete for friend
         fl.delete()
         fl_friend.delete()
+
+        # remove the friend for the User for 'friends' attribute
+        sender = User.objects.get(id=user)
+        receiver = User.objects.get(id=friend)
+        sender.friends.remove(receiver)  # delete_friend_of_user
+        receiver.friends.remove(sender) # delete_user_for_friend
 
         messages.success(request, "You have deleted your friend")
 

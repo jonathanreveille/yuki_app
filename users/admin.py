@@ -9,7 +9,7 @@ class UserAdmin(AuthUserAdmin):
     add_form = UserCreationForm
     form = UserChangeForm
     model = User
-    list_display = ('username', 'email', 'first_name', 'is_staff')
+    list_display = ('username', 'email', 'first_name', 'is_staff', 'location', 'role')
 
 
 # Register your models here.

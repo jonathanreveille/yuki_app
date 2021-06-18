@@ -14,6 +14,7 @@
             <th>content</th>
             <th>is_read</th>
             <th>timestamp</th>
+            <th> id </th>
         </tr>
 
 {% for message in messages %}
@@ -26,6 +27,7 @@
             <td> {{ message.content }} </td>
             <td> {{ message.is_read }} </td>
             <td> {{ message.timestamp }}</td>
+            <td> {{ message.id }}</td>
             <td><a href="{% url 'messenger:message_detail' message.id %}"> View </a></td>
             <td><a href="{% url 'messenger:message_delete' message.id %}"> Delete ?</a></td>
         </tr>
