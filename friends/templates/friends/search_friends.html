@@ -1,4 +1,8 @@
+{% load crispy_forms_tags %}
+
+
 <h1> Search for a friend </h1>
+
 
 <form action="{% url 'friends:search_friends_result'%}">
     {% csrf_token %}

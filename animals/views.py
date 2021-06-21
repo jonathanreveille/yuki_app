@@ -13,10 +13,14 @@ from friends.forms import SearchForFriendForm
 from users.models import User
 from friends.models import FriendRequest #new line
 from messenger.models import Messenger
+from friends.forms import SearchForFriendForm
+
 
 # Create your views here.
 def home(request):
     """view method to see homepage"""
+    ## NEXT DEVELOPMENT : PUT THE SEARCHBAR 
+    ## WITH CONTEXT PROCESSORS EVERYWHERE
     return render(request, 'animals/home.html')
 
 @login_required

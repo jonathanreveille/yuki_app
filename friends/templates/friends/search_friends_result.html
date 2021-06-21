@@ -1,9 +1,25 @@
 {% load static %}
-<a href="{% url 'friends:search_for_friends' %}">Go back</a>
+
+
+<head>
+<link rel="icon" type="image/x-icon" href="/static/dist/assets/img/favicon.ico" />
+</head>
+
+<a href="{% url 'animals:home' %}">Go back</a>
 
 <hr>
 
-<h1> Search Result page 'HOLAAAAAA' </h1>
+<h1> Search for a friend </h1>
+
+<form action="{% url 'friends:search_friends_result'%}" method="get" class="query_friend_search">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Search"/>
+</form>
+
+<hr>
+
+<h1> Search Result </h1>
 
 {% for user in users_found %}
 
@@ -17,7 +33,7 @@
                <li><a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a></li>
 
             {% elif user in request.user.friends.all %}
-                <li><a href="">Profile</a></li>
+                <li><a href="">Already in your friends</a></li>
             {% endif %}
 
             </li>
@@ -33,18 +49,17 @@
 
 
 
-    {% comment %} {% if user == request.user %}
-    <ul>
-        <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
-        <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
-            <a href="">This is you</a>
-        </li>
-    </ul> {% endcomment %}
-{% comment %} 
-    {% elif user in request.user.friends %}
-        <ul>
-            <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
-            <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
-                <a href="">Profile</a>
-            </li>
-        </ul> {% endcomment %}
+<script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+<script>
+    const autocomplete_url = "{% url 'autocomplete:complete' %}"
+
+    $(".user_search").autocomplete(
+        {
+            source: autocomplete_url,
+            minLength: 2,
+        }
+    );
+</script>

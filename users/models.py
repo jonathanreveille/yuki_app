@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.conf import settings
 
 
@@ -11,6 +11,17 @@ class Role(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class UsersManager(BaseUserManager):
+    
+    def get_all_by_term(self, term):
+        """method for autocomplete method to search in 
+        db while user is typing his query search"""
+
+        self.users = User.objects.all()
+        return self.users.filter(username__icontains=term)
+
 
 class User(AbstractUser):
     """table that inherits from AbstractUser
@@ -33,5 +44,8 @@ class User(AbstractUser):
     postal_code = models.IntegerField(null=True, blank=True)
     friends = models.ManyToManyField('users.User', blank=True)
 
+    objects = UsersManager()
+
     def __str__(self):
         return f'{self.username}'
+    

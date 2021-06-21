@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'messenger.apps.MessengerConfig',
     'friends.apps.FriendsConfig',
     'notifications.apps.NotificationsConfig',
+    'autocomplete.apps.AutocompleteConfig',
 ]
 
 MIDDLEWARE = [

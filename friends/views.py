@@ -23,7 +23,11 @@ def search_for_friends(request):
 
     form = SearchForFriendForm()
 
-    return render(request, 'friends/search_friends.html', {'form':form})
+    context = {
+        'form' : form,
+        }
+
+    return render(request, 'friends/search_friends_result.html', context)
 
 
 @login_required
@@ -43,6 +47,7 @@ def search_friends_result(request):
             context = {
                 'user_search' : user_search,
                 'users_found': users_found,
+                'form':form,
             }
 
         return render(request, 'friends/search_friends_result.html', context)
@@ -51,12 +56,12 @@ def search_friends_result(request):
         
         form = SearchForFriendForm()
 
-    return render(request, 'friends/search_friends.html', {'form':form})
+    return render(request, 'friends/search_friends_result.html', {'form':form})
 
 
 @login_required
 def send_friend_request(request, pk):
-    """view that allows the user to click 
+    """view that allows the user to click
     on send request link to add send a friend
     request"""
 
@@ -91,7 +96,7 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
     template_name = 'friends/friend_request_list.html'
 
     def get_context_data(self, **kwargs):
-        """equivalent to context dict to use variables"""
+        """Equivalent to context dict to use variables"""
         
         context = super().get_context_data(**kwargs)
         context["friend_requests"] = FriendRequest.objects.filter(
@@ -111,7 +116,7 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
 
 @login_required
 def accept_friend_request(request):
-    """view to accept a friend request,  only
+    """view to accept a friend request, only
     friend request with  is_active = True are shown
     to the user"""
 
@@ -119,8 +124,8 @@ def accept_friend_request(request):
         sender_id = request.POST['from_user']
         receiver_id = request.POST['to_user']
 
-        sender = User.objects.get(id=sender_id) #get user
-        receiver = User.objects.get(id=receiver_id) #get friend
+        sender = User.objects.get(id=sender_id) # get user
+        receiver = User.objects.get(id=receiver_id) # get friend
         sender.friends.add(receiver)  # add_receiver
         receiver.friends.add(sender) # add_sender
 
@@ -148,6 +153,7 @@ def accept_friend_request(request):
 
 
 class FriendListView(LoginRequiredMixin, ListView):
+    """view for the user to see his list of friends"""
 
     model = FriendList
     context_object_name = 'friends'
@@ -196,112 +202,3 @@ def delete_friend(request):
 
     return render(request, 'friends/friend_delete.html', context)
 
-
-
-
-
-
-
-
-
-# class FriendListDelete(LoginRequiredMixin, DeleteView):
-#     """view to unfriend a friend in the
-#     user list of friends"""
-    
-#     model = FriendList
-#     context_object_name = 'friend'
-#     template_name = 'friends/friend_confirm_delete.html'
-    
-#     def post(self,request, pk):
-#         fl = FriendList.objects.filter(id=pk)
-#         friend = fl.filter(friend=request.user.friend.id)
-#         relationship = FriendList.objects.filter(username__icontains=request.user,
-#                                                 friend = friend)
-#         relationship.delete()
-#         return reverse_lazy('friends:see_friends')
-
-
-
-#####################################################################
-#     if request.method == "POST":
-#         sender_id = request.POST['from_user']
-#         receiver_id = request.POST['to_user']
-
-#         sender = User.objects.get(id=sender_id)
-#         receiver = User.objects.get(id=receiver_id)
-
-#         friends = FriendList.objects.get_or_create(
-#             user = receiver,
-#             friend = sender,
-#         )
-
-#         FriendList.objects.get_or_create(
-#             user = sender,
-#             friend = receiver,
-#         )
-
-#         context = {
-#             'friends' : friends
-#         }
-
-#         friend_added = FriendRequest.objects.filter(receiver=request.user,
-#                                                     sender=sender_id)
-#         friend_added.update(is_active=False)
-
-#         messages.success(request, "You accepted your last friend requests")
-
-#     return render(request, 'animals/home.html', context)
-
-
-
-    # def post(self, request, pk, *args, **kwargs):
-    #     friend_list = FriendList.objects.filter(pk=pk)
-    #     user_profile = get_object_or_404(FriendList, id=request.user.id)
-    #     friend_profile = friend_list.friend
-    #     user_profile.friend.remove(friend_list.friend) # A removes B
-    #     friend_profile.friend.remove(user_profile) # B removes A
-    #     return reverse_lazy('friends:see_friends')
-
-
-        # relation = FriendList.objects.filter(id=pk)
-        # user_profile = relation.user 
-        # friend_profile = relation.friend
-        # user_profile.remove(friend_profile)
-        # friend_profile.remove(user_profile)
-        # return 
-
-
-        # self.user_profile = request.user
-        # self.friend_profile = User.objects.get(pk=pk) # Profile instance has the same id as user
-        # self.user_profile.friends.remove(self.friend_profile) # A removes B
-        # self.friend_profile.friends.remove(self.user_profile) # B removes A
-        
-
-    # def delete(self, request, *args, **kwargs):
-    #     """
-    #     Call the delete() method on the fetched object and then redirect to the
-    #     success URL.
-    #     """
-
-    #     self.object = self.get_object()
-    #     success_url = self.get_success_url()
-    #     self.object.delete()
-    #     return HttpResponseRedirect(success_url)
-
-# def delete_friend(request, pk):
-#     """method to delete a friend for the user
-#     and for the friend"""
-
-#     user_profile = request.user
-#     friend_profile = User.objects.get(pk=pk) # Profile instance has the same id as user
-#     user_profile.friends.remove(friend_profile) # A removes B
-#     friend_profile.friends.remove(user_profile) # B removes A
-#     return reverse_lazy('friends:see_friends')
-
-
-
-#     def get_queryset(self, friend_id):
-#         user_profile = self.request.user
-#         friend_profile = get_object_or_404(User, pk=friend_id)
-#         user_profile.friends.remove(friend_profile)
-#         friend_profile.friends.remove(user_profile)
