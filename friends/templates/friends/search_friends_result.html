@@ -1,3 +1,4 @@
+{% load static %}
 <a href="{% url 'friends:search_for_friends' %}">Go back</a>
 
 <hr>
@@ -7,7 +8,8 @@
 {% for user in users_found %}
     {% if user != request.user %}
     <ul>
-        <li> {{user.username}} 
+        <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
+        <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
             <a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a>
         </li>
     </ul>

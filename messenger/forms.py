@@ -58,7 +58,7 @@ class CreateReplyMessageForUser(forms.ModelForm):
         
         self.fields['sender'].queryset = User.objects.filter(
             username = self.request.user)
-
+        
         user = User.objects.get(username__startswith=self.request.user)
         self.fields['receiver'].queryset = user.friends
 
@@ -66,7 +66,7 @@ class CreateReplyMessageForUser(forms.ModelForm):
     class Meta:
         
         model = Messenger
-        fields = ('sender','receiver', 'subject', 'content',) # take out sender once relationships exists
+        fields = ('sender','receiver', 'subject', 'content',)
 
         follower = CustomModelMultipleChoiceField(
         queryset=None,

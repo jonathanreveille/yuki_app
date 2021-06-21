@@ -8,6 +8,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist, FieldError
 
 from .forms import SearchForFriendForm
 from users.models import User
