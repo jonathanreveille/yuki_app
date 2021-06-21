@@ -6,14 +6,45 @@
 <h1> Search Result page 'HOLAAAAAA' </h1>
 
 {% for user in users_found %}
+
     {% if user != request.user %}
+        
+        <ul>
+            <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
+            <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
+            
+            {% if user not in request.user.friends.all %}
+               <li><a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a></li>
+
+            {% elif user in request.user.friends.all %}
+                <li><a href="">Profile</a></li>
+            {% endif %}
+
+            </li>
+        </ul>
+    
+    {% endif %}
+
+{% empty %}
+
+    <p> Sorry, no one is registered under this name {{user_search}}</p>
+
+{% endfor %}
+
+
+
+    {% comment %} {% if user == request.user %}
     <ul>
         <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
         <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
-            <a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a>
+            <a href="">This is you</a>
         </li>
-    </ul>
-    {% endif %}
-{% empty %}
-    <p> Sorry, no one is registered under this name {{user_search}}</p>
-{% endfor %}
+    </ul> {% endcomment %}
+{% comment %} 
+    {% elif user in request.user.friends %}
+        <ul>
+            <li> Avatar: <img src="{% static 'img' %}/{{user.avatar}}"/></li>
+            <li>{{ user.role }} : {{user.username}} - in {{user.location}} - host_capacity : {{user.host_capacity}}
+                <a href="">Profile</a>
+            </li>
+        </ul> {% endcomment %}

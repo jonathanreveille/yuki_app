@@ -31,9 +31,6 @@ def search_friends_result(request):
     """view to see the results of from the
     user's query"""
 
-    # AMELIORER CETTE METHODE POUR VOIR QUE LES PERSONNES QUI
-    # NE SONT PAS ENCORE DANS NOTRE LISTE d'AMI
-
     context = {}
 
     if request.method == "GET":
@@ -45,7 +42,7 @@ def search_friends_result(request):
 
             context = {
                 'user_search' : user_search,
-                'users_found': users_found, 
+                'users_found': users_found,
             }
 
         return render(request, 'friends/search_friends_result.html', context)

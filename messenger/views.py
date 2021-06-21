@@ -10,7 +10,6 @@ from .models import Messenger
 from .forms import CreateMessageForUser, CreateReplyMessageForUser
 from notifications.models import Notification
 
-
 # Create your views here.
 class MessengerListView(LoginRequiredMixin,ListView):
     
