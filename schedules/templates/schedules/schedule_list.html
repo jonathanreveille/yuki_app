@@ -29,6 +29,7 @@
             <th> id </th>
             <th> WHEN </th>
             <th> TO DO </th>
+            <th> For </th>
             <th> detail </th>
             <th> delete  </th>
         </tr>
@@ -39,7 +40,7 @@
                 <td> {{schedule.time}} </td>
                 <td> {{schedule.task}} </td>
 
-                {% for pet in schedule.cat.all %}
+                {% for pet in schedule.pet.all %}
                     <td>  {{pet}} </td>
                 {% endfor %}
         

@@ -41,4 +41,4 @@ class CreateScheduleForPet(forms.ModelForm):
 
 
 class SearchPetScheduleForm(forms.Form):
-    query_search = forms.CharField(label="Animal name",max_length=200)
+    query_search = forms.CharField(label="Type animal name for full schedule",max_length=200)

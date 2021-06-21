@@ -7,22 +7,19 @@
     <table>
         <tr>
             <th> id </th>
-            <th> WHEN </th>
-            <th> TO DO </th>
+            <th> TIME </th>
+            <th> SUBJECT </th>
             <th> MORE INFO </th>
+            <th> FOR </th>
         </tr>
             
         {% for pet in pet_schedule_found %}
             <tr>
-                <td> {{pet.id}} </td>
-                <td> {{pet.time}} </td>
-                <td> {{pet.task}} </td>
-                <td> {{pet.task.description}} </td>
-
-                {% for pet in pet_schedule_found.cat.all %}
-                    <td>  {{pet}} </td>
-                {% endfor %}
-
+                <td>{{pet.id}}</td>
+                <td>{{pet.time}}</td>
+                <td>{{pet.task}}</td>
+                <td>{{pet.task.description}}</td>
+                <td>{{pet_searched}}</td>
             </tr>
 
         {% empty %}

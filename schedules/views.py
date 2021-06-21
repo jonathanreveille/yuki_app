@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
@@ -140,12 +140,30 @@ def schedule_search(request):
                 'pet_schedule_found':pet_schedule_found
             }
 
-            return render(
-                request, 'schedules/schedule_result.html', context
-                )
+            return render(request, 'schedules/schedule_result.html', context)
     else:
         form = SearchPetScheduleForm()
 
     return render(
         request, 'schedules/schedule_search.html', {'form' : form}
         )
+        
+# Will need to implement a way of showing the full schedule of the cat 
+# when we click on it 
+
+# @login_required
+# def see_pet_schedule(request, pet_id):
+#     """view about detail page of a product"""
+
+#     pet_schedule = Schedule.objects.filter(
+#         pet__id = pet_id,
+#         pet__owner = request.user,
+#     ).order_by('time')
+
+#     context = {
+#         'pet_schedule': pet_schedule
+#         }
+
+#     return render(request, 'schedules/pet_schedule.html', context)
+
+ 
