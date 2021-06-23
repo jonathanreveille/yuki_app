@@ -11,34 +11,37 @@
     <section class="page-section bg-secondary">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8"> 
+                <div class="col-lg-8 text-center"> 
                     <a class="button-custom" href="{% url 'home' %}">Go back</a>
                     <hr>
                     <h1> Your Profile </h1>
-                    <h2>{{ user.get_full_name }}</h2>
 
                         <ul>
-                            <li> Avatar: <img src="{% static 'dist/assets/img' %}/{{user.avatar}}"/></li>
-                            <li> Username: {{ user.username }}</li>
-                            <li> Role: {{ user.role }}</li>
-                            <li> Hosting capacity : {{ user.host_capacity }}</li>
-                            <li> Location : {{ user.location }}</li>
-                            <li> Postal Code : {{ user.postal_code }}</li>
-                            <li> Friends  : {{ user.friends.all }}</li>
+                            <div class="avatar-profile"><img src="{% static 'dist/assets/img' %}/{{user.avatar}}"/></div>
+                            <div> Username: {{ user.username }}</div>
+                            <div> Name: {{ user.get_full_name }}</div>
+                            <div> Role: {{ user.role }}</div>
+                            <div> Hosting capacity : {{ user.host_capacity }}</div>
+                            <div> Location : {{ user.location }}</div>
+                            <div> Postal Code : {{ user.postal_code }}</div>
+                        </ul>   
 
-                            {% for friend in user.friends.al %}
-                            <li> Friends  : {{ friend.username }}</li>
-                            {%empty%}
-                                <p> <a href="{% url 'friends:search_for_friends' %}">Create yourself a network </p>
-                            {% endfor %}
-                        </ul>
+                    {% if user.is_authenticated %}
                     <div> <a href = "{% url 'users:edit_profile' %}">Edit Profile</a></div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
     </section>
 
 {% endblock content %}
+
+{% comment %} {% for friend in user.friends.all %}
+<div> Friends : {{ friend.username }}</div>
+{%empty%}
+    <div> <a href="{% url 'friends:search_for_friends' %}">Create yourself a network</a></div>
+{% endfor %} {% endcomment %}
 
 
 

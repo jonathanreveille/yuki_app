@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %} Task detail! {% endblock title %}
+{% block title %} Edit Friend List! {% endblock title %}
 
 
 {% block content %}
@@ -14,23 +14,31 @@
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
                     <hr>
 
-                    <h1> Delete a friend ? </h1>
+                    <h1> Edit Friend List </h1>
 
                     {% for friend  in friends %}
-                    <ul>
-                        <li> Active user : {{friend.user}} - id :{{friend.user.id}}</li>
-                        <li> friend name = {{friend.friend}} - To delete </li>
-                        <li> friend id = {{friend.friend.id}} </li>
+
+                    <div class="profile-box">
+
+                        <div class="avatar-profile">
+                                <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
+                            </div>
+                        <div class="profile-card">
+                            <div> Active user : {{friend.user}} - id :{{friend.user.id}}</div>
+                            <div> friend name = {{friend.friend}} - To delete </div>
+                            <div> friend id = {{friend.friend.id}} </div>
+                        </div>
 
                         <form method="post" action="{% url 'friends:delete_mutual_friend' %}">
                             {% csrf_token %}
                             <button type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
                             <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>                
                         </form>
-                    </ul>
 
-                        {% empty %}
-                        <h1> sorry no friend yet in your account </h1>
+                    </div>
+
+                    {% empty %}
+                    <h1> sorry no friend yet in your account </h1>
                         
                     {% endfor %}
 

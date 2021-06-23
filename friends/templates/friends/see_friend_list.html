@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %} Task detail! {% endblock title %}
+{% block title %} Friend List! {% endblock title %}
 
 
 {% block content %}
@@ -12,21 +12,33 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8"> 
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <a class="button-custom" href="{% url 'friends:delete_mutual_friend' %}">Edit list</a>
                     <hr>
+
                     {% for friend in friends %}
-                        <ul>
-                            <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
-                            <li> friend name = {{friend.friend}} </li>
-                            <li> friend id = {{friend.friend.id}} </li>
-                            <li> user : {{friend.user}} </li>
-                            <li> user_id : {{friend.user.id}} </li>
-                            <li> friend_list id : {{friend.id}} </li>
 
-                        </ul>
+                    <div class="profile-box">
 
-                        {% empty %}
+                        <div class="avatar-profile">
+                                <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
+                            </div>
+
+                            <div class="profile-card">
+                                <div> Role = {{friend.friend.role}}</div>
+                                <div> friend name = {{friend.friend}}</div>
+                                <div> friend id = {{friend.friend.id}}</div>
+                                <div> user : {{friend.user}}</div>
+                                <div> user_id : {{friend.user.id}}</div>
+                                <div> friend_list id : {{friend.id}}</div>
+                                <div> Hosting Capacity : {{friend.friend.host_capacity }}</div>
+                            </div>
+
+                    </div>
+
+                    {% empty %}
                         <h1> sorry no friends yet </h1>
                     {% endfor %}
+
                 </div>
             </div>
         </div>

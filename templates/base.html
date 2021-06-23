@@ -21,6 +21,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'dist/css/styles.css' %}" rel="stylesheet" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
     </head>
 
     <body id="page-top">
@@ -34,14 +36,13 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                 {% if user.is_authenticated %}
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Your Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'messenger:message_list'%}">Inbox</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:search_for_friends' %}">Search for friends</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friend_request_list' %}">Friend requests</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friends' %}">Friend list</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:delete_mutual_friend' %}">Edit Friend List</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Log out</a></li>
-                        <li class="nav-item">{% show_notifications %}</li> 
+                        <li class="nav-item"><div class="nav-link">{% show_notifications %}</div></li> 
+                        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}" title="Profile"><i class="fas fa-user"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'messenger:message_list'%}" title="Inbox"><i class="fas fa-inbox"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:search_for_friends' %}" title="Search for users"><i class="fas fa-search"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friend_request_list' %}" title="Friend requests"><i class="fas fa-plus-square"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friends' %}" title="Friend list"><i class="fas fa-users"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" title="Sign out"><i class="fas fa-sign-out-alt"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -66,7 +67,15 @@
     {% endblock header %}
 
     {% block content %}
-    <!-- Content -->
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <h3>{{ message }}</h3>
+                </div>
+            {% endfor %}
+        {% endif %}
+
     {% endblock content %}
 
     {% block footer %}
@@ -76,6 +85,7 @@
     </footer>
     {% endblock footer %}
 
+    {% block scripts %}
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- SimpleLightbox plugin JS-->
@@ -87,14 +97,9 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+{% endblock scripts %}
+
     </body>
 </html>
-
-
-    {% comment %} {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                <h3>{{ message }}</h3>
-            </div>
-        {% endfor %}
-    {% endif %} {% endcomment %}
