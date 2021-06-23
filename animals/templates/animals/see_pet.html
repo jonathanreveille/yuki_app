@@ -1,24 +1,43 @@
-<h1>Here are your pets</h1>
+{% extends "base.html" %}
 
-<a href="{% url 'animals:home' %}">Go back</a>
-<hr>
+{% load static %}
+{% load custom_tags %}
 
-{% for pet in user_pets %}
-    <ul>
-        {% comment %} <li>Id : {{pet.id}}</li> {% endcomment %}
-        <li>Name : {{pet.name}}</li>
-        <li>Age : {{pet.age}}</li>
-        <li>Weight : {{pet.weight}}</li>
-        <li><a href="{% url 'animals:update_pet' pet.id %}">Update {{pet.name}} info</a></li>
-        <li><a href="{% url 'animals:delete_pet' pet.id %}">Delete {{pet.name}}</a></li>
-    </ul>
+{% block title %} Task detail! {% endblock title %}
 
-{%empty%}
 
-    <p> It seems like you dont have any pets yet</p>
-    <a href="{% url 'animals:create_pet' %}"> Add a pet </a>
+{% block content %}
 
-{% endfor %}
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom"  href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+                        <h1>Here are your pets</h1>
+                        {% for pet in user_pets %}
+                        <ul>
+                            {% comment %} <li>Id : {{pet.id}}</li> {% endcomment %}
+                            <li>{{pet.name|capfirst}}</li>
+                            <li>Age : {{pet.age}}</li>
+                            <li>Weight : {{pet.weight}}</li>
+                            <br/>
+                            <a class="button-custom"  href="{% url 'animals:update_pet' pet.id %}">Update {{pet.name|capfirst}} info</a></li>
+                            <a class="button-custom"  href="{% url 'animals:delete_pet' pet.id %}">Delete {{pet.name|capfirst}}</a></li>
+                        </ul>
+                        {%empty%}
+                        <p> It seems like you dont have any pets yet</p>
+                        <a href="{% url 'animals:create_pet' %}"> Add a pet </a>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+
 
 
 

@@ -1,20 +1,38 @@
-<a href='{% url "animals:home"%}'>Go back Home</a>
+{% extends "base.html" %}
 
-<p>Logged in as : {{request.user}}</p>
+{% load static %}
+{% load custom_tags %}
 
-<hr>
-    {% if  friend_request %}
-        <h1> To : {{friend_request.sender}}</h1>
-        <h1> From : {{friend_request.receiver}}</h1>
-        <h3> Time : {{friend_request.timestamp}} </h3>
-        <p> Is active : {{ friend_request.is_active }} </p>
+{% block title %} Friend Request Detail! {% endblock title %}
 
-    <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
-        <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
-    </form>
+{% block content %}
 
-    {% endif %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+                    {% if friend_request %}
+                        <h1> To : {{friend_request.sender}}</h1>
+                        <h1> From : {{friend_request.receiver}}</h1>
+                        <h3> Time : {{friend_request.timestamp}} </h3>
+                        <p> Is active : {{ friend_request.is_active }} </p>
+
+                    <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
+                        <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+
+
+
 
 

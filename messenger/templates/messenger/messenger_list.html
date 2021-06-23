@@ -1,41 +1,63 @@
-<a href="{% url 'animals:home' %}">Go back</a>
+{% extends "base.html" %}
 
-<h1> {{ request.user }} inbox </h1>
+{% load static %}
+{% load custom_tags %}
 
-<hr>
+{% block title %} Task detail! {% endblock title %}
 
-<a href="{% url 'messenger:message_create' %}">Send message</a>
 
-    <table>
-        <tr>
-            <th>From</th>
-            <th>To</th>
-            <th>subject</th>
-            <th>content</th>
-            <th>is_read</th>
-            <th>timestamp</th>
-            <th> id </th>
-        </tr>
+{% block content %}
 
-{% for message in messages %}
-   
 
-        <tr>
-            <td> {{ message.sender }} </td>
-            <td> {{ message.receiver }} </td>
-            <td> {{ message.subject }} </td>
-            <td> {{ message.content }} </td>
-            <td> {{ message.is_read }} </td>
-            <td> {{ message.timestamp }}</td>
-            <td> {{ message.id }}</td>
-            <td><a href="{% url 'messenger:message_detail' message.id %}"> View </a></td>
-            <td><a href="{% url 'messenger:message_delete' message.id %}"> Delete ?</a></td>
-        </tr>
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+                    <br/>
+                    <a class="button-custom" href="{% url 'messenger:message_create' %}">Send message</a>
+                    <br/><br/>
+                        <table>
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>subject</th>
+                                <th>content</th>
+                                <th>is_read</th>
+                                <th>timestamp</th>
+                                <th> id </th>
+                                <th> View </th>
+                                <th> Delete </th>
+                            </tr>
 
-{% empty %}
+                    {% for message in messages %}
+                    
+{% comment %} Ajouter une condition is is-read = True, on met la ligne en normal, sinon c'est bold {% endcomment %}
+                            <tr>
+                                <td> {{ message.sender }} </td>
+                                <td> {{ message.receiver }} </td>
+                                <td> {{ message.subject }} </td>
+                                <td> {{ message.content }} </td>
+                                <td> {{ message.is_read }} </td>
+                                <td> {{ message.timestamp }}</td>
+                                <td> {{ message.id }}</td>
 
-   <p> You have no messages in your inbox ! Come again later </p>
+                                <td><a href="{% url 'messenger:message_detail' message.id %}"> View </a></td>
+                                <td><a href="{% url 'messenger:message_delete' message.id %}"> Delete ?</a></td>
+                            </tr>
 
-{% endfor %}
+                    {% empty %}
 
- </table>
+                    <p> You have no messages in your inbox ! Come again later </p>
+
+                    {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+

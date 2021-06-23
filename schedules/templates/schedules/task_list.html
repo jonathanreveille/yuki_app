@@ -1,48 +1,68 @@
-<a href="{% url 'animals:home' %}">Go back</a>
+{% extends "base.html" %}
 
-{% if request.user.is_authenticated %}
-    <p>{{ request.user }}</p>
-    <a href="{% url 'logout'%}"> Logout </a>
-{% else %}
-    <a href="{ url 'login' }">Login</a>
+{% load static %}
+{% load custom_tags %}
 
-{% endif %}
-
-<hr>
-
-<h1> Tasks - My cat's todo list application</h1>
-
-    <ul>
-        <li><a href="{% url 'schedules:task_create' %}"> Create a new task </a></li>
-        <li><a href="{% url 'schedules:schedule_list'%}"> See your schedules </a></li>
-    </ul>
-    
-    <table>
-        <tr>
-            <th> id task </th>
-            <th> Task items </th>
-            <th> Created by </th>
-            <th> View </th>
-            <th> Edit </th>
-            <th> Delete </th>
-        </tr>
-
-        {% for task in tasks %}
-        <tr>
-            <td> {{task.id}}</td>
-            <td> {{task.title}}</td>
-            <td> {{task.user}} </td>
-
-            <td><a href="{% url 'schedules:task' task.id%}">View</a></td>
-
-            <td><a href="{% url 'schedules:task_update' task.id%}">Edit</a></td>
-
-            <td><a href="{% url 'schedules:task_delete' task.id %}">Delete</a></td>
-
-        </tr>
-        {% empty %}
-            <h3> no items in list </h3>
-        {% endfor %}
-    </table>
+{% block title %} Task list {% endblock title %}
 
 
+{% block content %}
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                {% comment %} + ^^ text-center : centers the text {% endcomment %}
+                    
+                <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                <a class="button-custom" href="{% url 'schedules:task_create' %}"> Create a new task </a></li>
+                
+                <hr>
+            <h1> All the tasks you can think of for your pets</h1>
+            <br/>
+
+            <table>
+ 
+            {% for task in tasks %}
+
+            <tr>
+                <td> {{task.id}}</td>
+                <td> {{task.title}}</td>
+                <td> {{task.user}} </td>
+                <td> {{task.description}} </td>
+                <td><a href="{% url 'schedules:task' task.id%}">View</a></td>
+
+                <td><a href="{% url 'schedules:task_update' task.id%}">Edit</a></td>
+
+                <td><a href="{% url 'schedules:task_delete' task.id %}">Delete</a></td>
+            </tr>
+            {% empty %}
+                <p> There are no items in your task list yet </p>
+
+            {% endfor %}
+            </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+
+           {% comment %} <tr>
+                <th> id </th>
+                <th> Title </th>
+                <th> Created </th>
+                <th> Description </th>
+                <th> View </th>
+                <th> Edit </th>
+                <th> Delete </th>
+            </tr> {% endcomment %}
+
+
+                {% comment %} {% if request.user.is_authenticated %}
+                    <p>{{ request.user }}</p>
+                    <a href="{% url 'logout'%}"> Logout </a>
+                {% else %}
+                    <a href="{ url 'login' }">Login</a>
+                {% endif %} {% endcomment %}

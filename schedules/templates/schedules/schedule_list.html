@@ -1,65 +1,78 @@
-<a href="{% url 'animals:home' %}">Go back</a>
+{% extends "base.html" %}
 
-{% if request.user.is_authenticated %}
-    <p>{{ request.user }}</p>
-    <a href="{% url 'logout'%}"> Logout </a>
-{% else %}
-    <a href="{ url 'login' }">Login</a>
+{% load static %}
+{% load custom_tags %}
 
-{% endif %}
-
-<hr>
-
-    <h2> Set your schedules - LIST VIEW </h2>
-
-    <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal">
-        {% csrf_token %}
-        {{form}}
-        <input type='submit' value='search'>
-    </form>
-
-    <ul>
-        <li><a href="{% url 'schedules:schedule_create'%}"> Create a schedule</a></li>
-        <li><a href="{% url 'schedules:task_list'%}"> See list of tasks </a></li>
-    </ul>
+{% block title %} Schedule list! {% endblock title %}
 
 
-<table>
-        <tr>
-            <th> id </th>
-            <th> WHEN </th>
-            <th> TO DO </th>
-            <th> For </th>
-            <th> detail </th>
-            <th> delete  </th>
-        </tr>
-        
-        {% for schedule in schedules %}
-            <tr>
-                <td> {{schedule.id}} </td>  
-                <td> {{schedule.time}} </td>
-                <td> {{schedule.task}} </td>
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <a class="button-custom" href="{% url 'schedules:schedule_create'%}"> Create a schedule</a>
+                    <a class="button-custom" href="{% url 'schedules:task_list'%}"> See list of tasks </a>
+                    <hr>
+                        <h2> Set your schedules - LIST VIEW </h2>
+                        <br/>
+                        <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal">
+                            {% csrf_token %}
+                            {{form}}
+                            <input type='submit' value='search'>
+                        </form>
+                        <br/>
+                    <table>
+                            {% comment %} <tr>
+                                <th> id </th>
+                                <th> WHEN </th>
+                                <th> TO DO </th>
+                                <th> For </th>
+                                <th> detail </th>
+                                <th> delete  </th>
+                            </tr> {% endcomment %}
+                            
+                        {% for schedule in schedules %}
 
-                {% for pet in schedule.pet.all %}
-                    <td>  {{pet}} </td>
-                {% endfor %}
-        
-        <td><a href="{% url 'schedules:schedule_detail' schedule.id %}">Detail</a></td>
-        <td><a href="{% url 'schedules:schedule_delete' schedule.id %}">Delete</a></td>
+                        {% comment %} <tr>
+                            <td> {{schedule.id}} </td>  
+                            <td> {{schedule.time}} </td>
+                            <td> {{schedule.task}} </td> {% endcomment %}
+
+                            <td> {{schedule.time}} </td>
+                            {% for pet in schedule.pet.all %}
+                                <td>  {{pet}} </td>
+                            {% endfor %}
+                    
+                        <td><a href="{% url 'schedules:schedule_detail' schedule.id %}">Detail</a></td>
+                        <td><a href="{% url 'schedules:schedule_delete' schedule.id %}">Delete</a></td>
+                    </tr>
 
 
-            </tr>
+                        {% empty %}
 
-        {% empty %}
+                        <p> No schedule in list yet </p>
 
-            <p> No schedule in list yet </p>
+                        <h3>
+                            <a href="{% url 'schedules:task_create' %}">You need to create task to create a schedule </a>
+                        </h3>
 
-            <h3>
-                <a href="{% url 'schedules:task_create' %}">You need to create task to create a schedule </a>
-            </h3>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
 
-        {% endfor %}
 
-    </table>
+{% comment %} 
 
+                   {% if request.user.is_authenticated %}
+                        <p>{{ request.user }}</p>
+                        <a href="{% url 'logout'%}"> Logout </a>
+                    {% else %}
+                        <a href="{ url 'login' }">Login</a>
 
+                    {% endif %} {% endcomment %}

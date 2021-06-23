@@ -1,15 +1,35 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load custom_tags %}
 {% load crispy_forms_tags %}
 
-
-<p><a href="{% url 'healthbook:healthbook_list' %}"> Go back to Healthbook list</a></p>
-
-<hr>
+{% block title %} Task detail! {% endblock title %}
 
 
-<h1> Create your pet's Healthbook ! </h1>
+{% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form|crispy}}
-        <input type='submit' value='Save'/>
-    <form>
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'healthbook:healthbook_list' %}">Go back</a>
+                    <hr>
+
+                    <h1> Create your pet's Healthbook ! </h1>
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy}}
+                            <br/>
+                            <input type='submit' value='Save'/>
+                        <form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock content %}
+
+

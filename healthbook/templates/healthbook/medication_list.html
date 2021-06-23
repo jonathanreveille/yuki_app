@@ -1,26 +1,44 @@
-<p><a href="{% url 'animals:home' %}">Go back homepage </a></p>
+{% extends "base.html" %}
 
-<p>{{request.user}}</p>
+{% load static %}
+{% load custom_tags %}
 
-<hr>
+{% block title %} Medication List! {% endblock title %}
 
-{% for treatment in medication %}
 
-    <ul>
-        <h2> {{ treatment.pet }}'s Medication</h2>
-        <li> Medication name : {{ treatment.med_name }} </li>
-        <li> Medication start : {{ treatment.med_start }} </li>
-        <li> Medication End : {{ treatment.med_end }} </li>
-        <li> Time of day : {{ treatment.time }} </li>
-        <li> Dosage : {{ treatment.dosage }} </li>
-        <li><a href="{% url 'healthbook:medication_update' treatment.id %}">Update medication treatment</a></li>
-        <li><a href="{% url 'healthbook:medication_delete' treatment.id %}">Delete medication treatment</a></li>
-    </ul>
+{% block content %}
 
-    
 
-{% empty %}
-    <p> You have no data about the medication for your pet </p>
-    <br/>
-    <p><a href="{% url 'healthbook:medication_create' %}">Add medication for your pet</a></p>
-{% endfor %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+
+                    {% for treatment in medication %}
+
+                    <ul>
+                        <h2> {{ treatment.pet|capfirst }}'s Medication</h2>
+                            <li> Medication name : {{ treatment.med_name }} </li>
+                            <li> Medication start : {{ treatment.med_start }} </li>
+                            <li> Medication End : {{ treatment.med_end }} </li>
+                            <li> Time of day : {{ treatment.time }} </li>
+                            <li> Dosage : {{ treatment.dosage }} </li>
+                            <li><a href="{% url 'healthbook:medication_update' treatment.id %}">Update medication treatment</a></li>
+                        <li><a href="{% url 'healthbook:medication_delete' treatment.id %}">Delete medication treatment</a></li>
+                    </ul>
+
+                    {% empty %}
+                    <p> You have no data about the medication for your pet </p>
+                    <br/>
+                    <p><a href="{% url 'healthbook:medication_create' %}">Add medication for your pet</a></p>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+
+

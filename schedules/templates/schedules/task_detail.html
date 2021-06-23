@@ -1,1 +1,27 @@
-<h1> Task: {{task}}</h1>
+{% extends "base.html" %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %} Task detail! {% endblock title %}
+
+
+{% block content %}
+
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'schedules:task_list' %}">Go back</a>
+                    <hr>
+
+                    <h1> Task: {{ task }}</h1>
+                    <br/>
+                    <p>{{ task.description }} </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

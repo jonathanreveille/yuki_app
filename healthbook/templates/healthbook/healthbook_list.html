@@ -1,26 +1,42 @@
-<p><a href="{% url 'animals:home' %}">Go back homepage </a></p>
+{% extends "base.html" %}
 
-<p>{{request.user}}</p>
+{% load static %}
+{% load custom_tags %}
 
-<hr>
-    {% comment %} {{ color }} test {% endcomment %}
+{% block title %} Task detail! {% endblock title %}
 
-{% for book in healthbook %}
-    
-    <ul>
-        <h2> {{ book.pet }}'s Healthbook</h2>
-        <li> Sterilize : {{ book.get_sterilize_display }} </li>
-        <li> Vaccine : {{ book.get_vaccine_display }} </li>
-        <li> Last vaccine : {{ book.last_vaccine }} </li>
-        <li> Next vaccine : {{ book.next_vaccine }} </li>
-        <li> Veterinary name : {{ book.veterinary_name }} </li>
-        <li> Veterinary phone : {{ book.veterinary_phone }} </li>
-    </ul>
 
-    <p><a href="{% url 'healthbook:healthbook_update' book.id %}">Update Healthbook</a></p>
+{% block content %}
 
-{% empty %}
-    <p> You have no data about the health of your pet </p>
-    <br/>
-    <p><a href="{% url 'healthbook:healthbook_create' %}">Add information for pet's HealthBook</a></p>
-{% endfor %}
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+
+                    {% for book in healthbook %}
+                        
+                        <ul>
+                            <h2> {{ book.pet|capfirst }}'s Healthbook</h2>
+                            <li> Sterilize : {{ book.get_sterilize_display }} </li>
+                            <li> Vaccine : {{ book.get_vaccine_display }} </li>
+                            <li> Last vaccine : {{ book.last_vaccine }} </li>
+                            <li> Next vaccine : {{ book.next_vaccine }} </li>
+                            <li> Veterinary name : {{ book.veterinary_name }} </li>
+                            <li> Veterinary phone : {{ book.veterinary_phone }} </li>
+                        </ul>
+
+                        <p><a href="{% url 'healthbook:healthbook_update' book.id %}">Update Healthbook</a></p>
+
+                    {% empty %}
+                        <p> You have no data about the health of your pet </p>
+                        <br/>
+                        <p><a href="{% url 'healthbook:healthbook_create' %}">Add information for pet's HealthBook</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

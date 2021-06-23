@@ -1,25 +1,42 @@
-<a href="{% url 'animals:home' %}">Go back </a>
+{% extends "base.html" %}
 
-<p> Logged in as : {{request.user}} <p>
+{% load static %}
+{% load custom_tags %}
 
-<hr>
+{% block title %} Task detail! {% endblock title %}
 
-<h1>Delete a friend ? Beware,once you have performed this action, you won't be able to connect again with this user</h1>
 
-{% for friend  in friends %}
-<ul>
-    <li> Active user : {{friend.user}} - id :{{friend.user.id}}</li>
-    <li> friend name = {{friend.friend}} - To delete </li>
-    <li> friend id = {{friend.friend.id}} </li>
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
 
-    <form method="post" action="{% url 'friends:delete_mutual_friend' %}">
-        {% csrf_token %}
-        <button type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
-        <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>                
-    </form>
-</ul>
+                    <h1> Delete a friend ? </h1>
 
-    {% empty %}
-    <h1> sorry no friend yet in your account </h1>
-    
-{% endfor %}
+                    {% for friend  in friends %}
+                    <ul>
+                        <li> Active user : {{friend.user}} - id :{{friend.user.id}}</li>
+                        <li> friend name = {{friend.friend}} - To delete </li>
+                        <li> friend id = {{friend.friend.id}} </li>
+
+                        <form method="post" action="{% url 'friends:delete_mutual_friend' %}">
+                            {% csrf_token %}
+                            <button type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
+                            <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>                
+                        </form>
+                    </ul>
+
+                        {% empty %}
+                        <h1> sorry no friend yet in your account </h1>
+                        
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+

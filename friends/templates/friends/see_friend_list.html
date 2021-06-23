@@ -1,18 +1,34 @@
-<a href="{% url 'animals:home' %}">Go back </a>
+{% extends "base.html" %}
 
-<hr>
+{% load static %}
+{% load custom_tags %}
 
-{% for friend in friends %}
-    <ul>    
-        <li> friend name = {{friend.friend}} </li>
-        <li> friend id = {{friend.friend.id}} </li>
+{% block title %} Task detail! {% endblock title %}
 
-        <li> user : {{friend.user}} </li>
-         <li> user_id : {{friend.user.id}} </li>
-         <li> friend_list id : {{friend.id}} </li>
 
-    </ul>
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+                    {% for friend in friends %}
+                        <ul>
+                            <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
+                            <li> friend name = {{friend.friend}} </li>
+                            <li> friend id = {{friend.friend.id}} </li>
+                            <li> user : {{friend.user}} </li>
+                            <li> user_id : {{friend.user.id}} </li>
+                            <li> friend_list id : {{friend.id}} </li>
 
-    {% empty %}
-    <h1> sorry no friends yet </h1>
-{% endfor %}
+                        </ul>
+
+                        {% empty %}
+                        <h1> sorry no friends yet </h1>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

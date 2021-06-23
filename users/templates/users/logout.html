@@ -1,11 +1,27 @@
-<h2> You are disconnected </h2>
+{% extends "base.html" %}
 
-<hr>
+{% load static %}
+{% load custom_tags %}
 
-<div>
-    <a href="{% url 'login' %}"> Connect again ?</a>
-</div>
+{% block title %} Logout ! {% endblock title %}
 
-<div>
-    <a href="{% url 'home' %}"> Back to homepage ?</a>
-</div>
+
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <h2> You are disconnected </h2>
+                    <hr>
+                        <div>
+                            <a class="button-custom" href="{% url 'login' %}"> Connect again ?</a>
+                        </div>
+
+                        <div>
+                            <a class="button-custom" href="{% url 'home' %}"> Back to homepage ?</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
