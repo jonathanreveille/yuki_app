@@ -18,9 +18,26 @@
                         <h1> For : {{ pet }} </h1>
                     {% endfor %}
 
-                    <h2> Description of task: {{ schedule.task.title }}</h2>
-                    <h2> Description of task: {{ schedule.task.description }}</h2>
-                    <h2> Moment of the day: {{ schedule.time }}</h2>
+                <div class="container-fluid message-zone">
+                    <div class="column pt-2">
+                        
+                        <div class="col-sm mb-2 pl-2">
+                            <h2> Title : {{ schedule.task.title }}</h2>
+                        </div>
+                        <div class="col-sm mb-2">
+                            <h2> Moment of the day: {{ schedule.time }}</h2>
+                        </div>
+
+                        <div class="col-sm mb-2">
+                            <h2> Description : </h2>
+                        </div>
+
+                        <div class="col-sm mb-2">
+                            <h2>{{ schedule.task.description }}</h2>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
             </div>
         </div>

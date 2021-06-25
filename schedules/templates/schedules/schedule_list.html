@@ -11,55 +11,75 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8">
-                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
-                    <a class="button-custom" href="{% url 'schedules:schedule_create'%}"> Create a schedule</a>
-                    <a class="button-custom" href="{% url 'schedules:task_list'%}"> See list of tasks </a>
-                    <hr>
-                        <h2> Set your schedules - LIST VIEW </h2>
-                        <br/>
+
+
+                    <br/>
                         <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal">
                             {% csrf_token %}
                             {{form}}
                             <input type='submit' value='search'>
                         </form>
-                        <br/>
-                    <table>
-                            {% comment %} <tr>
-                                <th> id </th>
-                                <th> WHEN </th>
-                                <th> TO DO </th>
-                                <th> For </th>
-                                <th> detail </th>
-                                <th> delete  </th>
-                            </tr> {% endcomment %}
-                            
+                    <br/>
+
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <a class="button-custom" href="{% url 'schedules:schedule_create'%}"><i class="fas fa-plus-square"></i> Create a schedule</a>
+                    <a class="button-custom" href="{% url 'schedules:task_list'%}"><i class="fas fa-calendar-day"></i> See list of tasks</a>
+
+                    <hr>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                    Need Help ?
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">How it works</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p> You are now almost done ! You just need to create a schedule for a pet now. </p>
+                            <p> First, you need to create a schedule, assign a cat and a task 
+                            and then you can search for your animal name to have his full schedule </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>  
+                    </div>
+                    </div>
+
+                    <hr>
+                        <h2> Create a schedule with your tasks for a pet </h2>
+                    <br/>
+
+                    
                         {% for schedule in schedules %}
 
-                        {% comment %} <tr>
-                            <td> {{schedule.id}} </td>  
-                            <td> {{schedule.time}} </td>
-                            <td> {{schedule.task}} </td> {% endcomment %}
-
-                            <td> {{schedule.time}} </td>
+                        <div class="task-box">
                             {% for pet in schedule.pet.all %}
-                                <td>  {{pet}} </td>
+                            
+                                <div class="col-1"><strong>{{pet}}</strong></div>
                             {% endfor %}
-                    
-                        <td><a href="{% url 'schedules:schedule_detail' schedule.id %}">Detail</a></td>
-                        <td><a href="{% url 'schedules:schedule_delete' schedule.id %}">Delete</a></td>
-                    </tr>
+                                <div class="col-3">{{schedule.time}}</div>
+                                <div class="col-4">{{schedule.task}}</div>
 
+                                <div class="col"><a href="{% url 'schedules:schedule_detail' schedule.id %}"><i class="fas fa-info-circle"></i>Detail</a></div>
+                                <div class="col"><a href="{% url 'schedules:schedule_delete' schedule.id %}"><i class="far fa-trash-alt"></i> Delete</a></div>
+
+                        </div>
 
                         {% empty %}
-
                         <p> No schedule in list yet </p>
-
                         <h3>
                             <a href="{% url 'schedules:task_create' %}">You need to create task to create a schedule </a>
                         </h3>
-
                         {% endfor %}
                     </table>
+
                 </div>
             </div>
         </div>
@@ -76,3 +96,40 @@
                         <a href="{ url 'login' }">Login</a>
 
                     {% endif %} {% endcomment %}
+
+
+
+
+
+                            {% comment %} <tr>
+                                <th> id </th>
+                                <th> WHEN </th>
+                                <th> TO DO </th>
+                                <th> For </th>
+                                <th> detail </th>
+                                <th> delete  </th>
+                            </tr> {% endcomment %}
+
+                                                    {% comment %} <tr>
+                            <td> {{schedule.id}} </td>  
+                            <td> {{schedule.time}} </td>
+                            <td> {{schedule.task}} </td> {% endcomment %}
+
+{% comment %} 
+                    <table>
+                        {% for schedule in schedules %}
+                            {% for pet in schedule.pet.all %}
+                                <td>  {{pet}} </td>
+                            {% endfor %}
+                            <td> {{schedule.time}} </td>
+                            <td> {{schedule.task}} </td>
+                            <td><a href="{% url 'schedules:schedule_detail' schedule.id %}"><i class="fas fa-info-circle"></i> Detail</a></td>
+                            <td><a href="{% url 'schedules:schedule_delete' schedule.id %}"><i class="far fa-trash-alt"></i> Delete</a></td>
+                        </tr>
+                        {% empty %}
+                        <p> No schedule in list yet </p>
+                        <h3>
+                            <a href="{% url 'schedules:task_create' %}">You need to create task to create a schedule </a>
+                        </h3>
+                        {% endfor %}
+                    </table> {% endcomment %}
