@@ -24,14 +24,15 @@
                                 <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
                             </div>
                         <div class="profile-card">
-                            <div> Active user : {{friend.user}} - id :{{friend.user.id}}</div>
-                            <div> friend name = {{friend.friend}} - To delete </div>
-                            <div> friend id = {{friend.friend.id}} </div>
+                            {% comment %} <div> Active user : {{friend.user}} - id :{{friend.user.id}}</div> {% endcomment %}
+                            <div> {{friend.friend}}</div>
+                            <div> Role : {{friend.friend.role}}</div>
+                            <div> id : {{friend.friend.id}} </div>
                         </div>
 
                         <form method="post" action="{% url 'friends:delete_mutual_friend' %}">
                             {% csrf_token %}
-                            <button type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
+                            <button class="btn btn-secondary bg-danger" type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
                             <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>                
                         </form>
 

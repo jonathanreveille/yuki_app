@@ -7,40 +7,42 @@
 
 
 {% block content %}
-    <section class="page-section bg-secondary">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8"> 
-                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
-                    <a class="button-custom" href="{% url 'friends:delete_mutual_friend' %}">Edit list</a>
+
+<section class="page-section bg-secondary">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
+
+            <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                <a class="button-custom" href="{% url 'friends:delete_mutual_friend' %}"><i class="far fa-edit"></i> Edit friend list</a>
                     <hr>
-
-                    {% for friend in friends %}
-
-                    <div class="profile-box">
-
-                        <div class="avatar-profile">
-                                <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
+              
+                  <div class="container">
+                    <div class="row">
+                      {% for friend in friends %}
+                        <div class="col-lg-4 col-sm-6 mb-4">
+                          <div class="card h-100 pl-4 pr-4 bg-primary text-center pt-4">
+                          <div class="p-1 radius-15">
+                            <img src="{% static 'assets' %}/{{friend.friend.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center" alt="">
+                              <div class="card-body text-center">
+                                  <h5 class="mb-0 mt-5 text-white">{{friend.friend}}</h5>
+                                  <div>Role : {{friend.friend.role}}</div>
+                                  <div>Host capacity : {{friend.friend.host_capacity}}</div>
+                                </h5>
+                              </div>
                             </div>
-
-                            <div class="profile-card">
-                                <div> Role = {{friend.friend.role}}</div>
-                                <div> friend name = {{friend.friend}}</div>
-                                <div> friend id = {{friend.friend.id}}</div>
-                                <div> user : {{friend.user}}</div>
-                                <div> user_id : {{friend.user.id}}</div>
-                                <div> friend_list id : {{friend.id}}</div>
-                                <div> Hosting Capacity : {{friend.friend.host_capacity }}</div>
-                            </div>
-
-                    </div>
+                          </div>
+                          </div>
 
                     {% empty %}
-                        <h1> sorry no friends yet </h1>
-                    {% endfor %}
 
-                </div>
+                    <div class="col-lg-8 align-self-baseline">
+                      <h1> sorry no friends yet </h1>
+                    </div>
+                    {% endfor %}
+              </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 {% endblock content %}

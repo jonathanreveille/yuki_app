@@ -7,56 +7,79 @@
 
 
 {% block content %}
+<section class="page-section bg-secondary">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8">
 
-
-    <section class="page-section bg-secondary">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8"> 
-                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
-                    <a class="button-custom" href="{% url 'messenger:message_create' %}">Send message</a>
+                <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
                     <hr>
-                    <br/>
-                        <table>
-                            <tr>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>subject</th>
-                                <th>content</th>
-                                <th>is_read</th>
-                                <th>timestamp</th>
-                                <th> id </th>
-                                <th> View </th>
-                                <th> Delete </th>
-                            </tr>
 
-                    {% for message in messages %}
-                    
-{% comment %} Ajouter une condition is is-read = True, on met la ligne en normal, sinon c'est bold {% endcomment %}
-                            <tr>
-                                <td> {{ message.sender }} </td>
-                                <td> {{ message.receiver }} </td>
-                                <td> {{ message.subject }} </td>
-                                <td> {{ message.content }} </td>
-                                <td> {{ message.is_read }} </td>
-                                <td> {{ message.timestamp }}</td>
-                                <td> {{ message.id }}</td>
+                        <div class="card">
+                            <div class="card-body bg-primary text-white pb-0">
+                                <h2 class="text-white pb-3 text-center">Your Inbox</h2>
+                            </div>
 
-                                <td><a href="{% url 'messenger:message_detail' message.id %}"> View </a></td>
-                                <td><a href="{% url 'messenger:message_delete' message.id %}"> Delete ?</a></td>
-                            </tr>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                                    <div>
+                                        <div class="row p-4 no-gutters align-items-center">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <ul class="list-inline dl mb-0 float-left float-md-right">
+                                                    <li class="list-inline-item text-info mr-3">
+                                                        <a href="{% url 'messenger:message_create' %}">
+                                                            <button class="btn btn-circle btn-success text-white">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                            <span class="ml-2 font-normal text-dark">Compose</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
 
+                        <div class="table-responsive">
+                            <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                <tr>
+                                    <th>From</th>
+                                    <th>Subject</th>
+                                    <th>Opened</th>
+                                    <th>Date</th>
+                                    <th>View</th>
+                                    <th>Delete</th>
+                                </tr>
+
+                        {% for message in messages %}
+
+                                <tr>
+                                    <td>
+                                        <span class="mb-0 text-muted">{{ message.sender }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="mb-0 text-muted">{{ message.subject }} </span>
+                                    </td>
+                                    <td>
+                                        <span class="mb-0 text-muted">{{message.is_read}}</span>
+                                    </td>
+
+                                <td class="text-muted">{{ message.timestamp }}</td>
+
+                                <td><a href="{% url 'messenger:message_detail' message.id %}"><i class="fas fa-eye text-primary center"></i></a></td>
+                            <td><a href="{% url 'messenger:message_delete' message.id %}"><i class="far fa-trash-alt text-primary center"></i></a></td>
+                        </tr>
                     {% empty %}
-
                     <p> You have no messages in your inbox ! Come again later </p>
-
-                    {% endfor %}
-
-                    </table>
+                    {% endfor%}
+                        </table>
+                        </div>        
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
 {% endblock content %}
-

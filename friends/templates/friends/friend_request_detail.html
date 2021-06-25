@@ -21,7 +21,7 @@
 
                     <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <button type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
+                        <button class="btn btn-secondary bg-success"  type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
                         <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
                     </form>
                     {% endif %}

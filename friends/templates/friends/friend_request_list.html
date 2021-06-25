@@ -13,7 +13,9 @@
                 <div class="col-lg-8"> 
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
                     <hr>
+                    
                     <h1> Here are your friend requests </h1>
+                    
                     {% for friend_request in friend_requests %}
                     <ul>    
                         <li> Active : {{friend_request.is_active}} - timestamp : {{friend_request.timestamp}} </li>
@@ -22,11 +24,13 @@
                         <li> {{friend_request.sender}} wants to add you</li>
                         <li> {{friend_request.id}} = FR ID</li>
                         <li><a href="{% url 'friends:see_friend_request_detail' friend_request.id %}">Detail</a></li>
+
                         <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <button type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
+                            <button class="btn btn-secondary" type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
                             <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
                         </form>
+
                     </ul>
 
                         {% empty %}

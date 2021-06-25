@@ -14,25 +14,34 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8"> 
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <a class="button-custom" href="{% url 'healthbook:medication_create' %}">Create Medication <i class="fas fa-prescription-bottle-alt"></i></a>
+                    <br/>
+                    <br/>
+                    <h1> Your pet's medication <i class="fas fa-prescription-bottle-alt"></i></h1>
                     <hr>
 
                     {% for treatment in medication %}
-
-                    <ul>
-                        <h2> {{ treatment.pet|capfirst }}'s Medication</h2>
-                            <li> Medication name : {{ treatment.med_name }} </li>
-                            <li> Medication start : {{ treatment.med_start }} </li>
-                            <li> Medication End : {{ treatment.med_end }} </li>
-                            <li> Time of day : {{ treatment.time }} </li>
-                            <li> Dosage : {{ treatment.dosage }} </li>
-                            <li><a href="{% url 'healthbook:medication_update' treatment.id %}">Update medication treatment</a></li>
-                        <li><a href="{% url 'healthbook:medication_delete' treatment.id %}">Delete medication treatment</a></li>
-                    </ul>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6">
+                            <div class="card mb-4 bg-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ treatment.pet|capfirst }}'s Medication</h5>
+                                <p> Medication name : {{ treatment.med_name }} </p>
+                                <p> Medication start : {{ treatment.med_start }} </p>
+                                <p> Medication End : {{ treatment.med_end }} </p>
+                                <p> Time of day : {{ treatment.time }} </p>
+                                <p> Dosage : {{ treatment.dosage }} </p>
+                                <a class="btn btn-secondary mb-2"  href="{% url 'healthbook:medication_update' treatment.id %}"><i class="far fa-edit"></i> Update medication treatment</a>
+                                <a class="btn btn-secondary bg-danger" href="{% url 'healthbook:medication_delete' treatment.id %}"><i class="far fa-trash-alt"></i> Delete medication treatment</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {% empty %}
                     <p> You have no data about the medication for your pet </p>
                     <br/>
-                    <p><a href="{% url 'healthbook:medication_create' %}">Add medication for your pet</a></p>
+                    <p><a class="button-custom" href="{% url 'healthbook:medication_create' %}">Add medication for your pet <i class="fas fa-plus-square"></i> </a></p>
                     {% endfor %}
 
                 </div>

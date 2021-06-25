@@ -15,18 +15,25 @@
                 <div class="col-lg-8"> 
                     <a class="button-custom"  href="{% url 'animals:home' %}">Go back</a>
                     <hr>
+
                         <h1>Here are your pets</h1>
+
+
                         {% for pet in user_pets %}
-                        <ul>
-                            {% comment %} <li>Id : {{pet.id}}</li> {% endcomment %}
-                            <li>{{pet.name|capfirst}}</li>
-                            <li>Age : {{pet.age}}</li>
-                            <li>Weight : {{pet.weight}}</li>
-                            <br/>
-                            <a class="button-custom"  href="{% url 'animals:update_pet' pet.id %}">Update {{pet.name|capfirst}} info</a></li>
-                            <a class="button-custom"  href="{% url 'animals:delete_pet' pet.id %}">Delete {{pet.name|capfirst}}</a></li>
-                        </ul>
-                        {%empty%}
+                        <div class="profile-box2">
+                            <div class="avatar-profile"><img src="{% static 'dist/assets/img' %}/{{user.avatar}}"/></div>
+                            <div class="user-profile-information">
+                                <div> {{pet.name|capfirst}}</div>
+                                <div> Age : {{pet.age}}</div>
+                                <div> Weight : {{pet.weight}}</div>
+                                <br/>
+                                <br/>
+                                <a class="button-custom bg-info"  href="{% url 'animals:update_pet' pet.id %}"><i class="far fa-edit"></i> Update {{pet.name|capfirst}}</a></li>
+                                <a class="button-custom bg-danger"  href="{% url 'animals:delete_pet' pet.id %}"><i class="far fa-trash-alt"></i> Delete {{pet.name|capfirst}}</a></li>
+                            </div>
+                            </div>
+
+                        {% empty %}
                         <p> It seems like you dont have any pets yet</p>
                         <a href="{% url 'animals:create_pet' %}"> Add a pet </a>
 

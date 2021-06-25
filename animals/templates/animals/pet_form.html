@@ -8,19 +8,19 @@
 
 
 {% block content %}
-
     <section class="page-section bg-secondary">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8"> 
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
-                    <a class="button-custom" href="{% url 'animals:see_pet' %}">See pets</a>
+                    <a class="button-custom" href="{% url 'animals:see_pet' %}"><i class="fas fa-cat"></i> See pets</a>
                     <hr>
-                    <h1>Create your pet </h1>
+                    <h1>Create your pet <i class="fas fa-cat"></i> </h1>
                     <form method="post" action="{% url 'animals:create_pet' %}">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <input type="submit" value="Save"/>
+                        <br/>
+                        <input class="btn btn-secondary bg-info" type="submit" value="Save"/>
                     </form>
 
                 </div>
