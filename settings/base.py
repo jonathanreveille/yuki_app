@@ -151,6 +151,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL  = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/assets/img')
+MEDIA_URL = 'img/'
+
+
 sentry_sdk.init(
     dsn=os.getenv("SENTRY"),
     integrations=[DjangoIntegration()],
