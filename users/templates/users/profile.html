@@ -12,22 +12,25 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 text-center"> 
-                    <a class="button-custom" href="{% url 'home' %}">Go back</a>
                     <hr>
                     <h1> Your Profile </h1>
+                        <div class="profile-box2">
 
-                        <ul>
-                            <div class="avatar-profile"><img src="{% static 'dist/assets/img' %}/{{user.avatar}}"/></div>
-                            <div> Username: {{ user.username }}</div>
-                            <div> Name: {{ user.get_full_name }}</div>
-                            <div> Role: {{ user.role }}</div>
-                            <div> Hosting capacity : {{ user.host_capacity }}</div>
-                            <div> Location : {{ user.location }}</div>
-                            <div> Postal Code : {{ user.postal_code }}</div>
-                        </ul>   
+                            <div class="avatar-profile"><img src="{% static 'assets' %}{{user.avatar.url}}" width=200
+                            height=200/></div>
 
+                            <div class="user-profile-information">
+                                <div> Username: {{ user.username }}</div>
+                                <div> Name: {{ user.get_full_name }}</div>
+                                <div> Role: {{ user.role }}</div>
+                                <div> Hosting capacity : {{ user.host_capacity }}</div>
+                                <div> Location : {{ user.location }}</div>
+                                <div> Postal Code : {{ user.postal_code }}</div>
+                            </div>
+
+                        </div>   
                     {% if user.is_authenticated %}
-                    <div> <a href = "{% url 'users:edit_profile' %}">Edit Profile</a></div>
+                    <div> <a href = "{% url 'users:edit_profile' %}"><i class="far fa-edit"></i> Edit Profile</a></div>
                     {% endif %}
 
                 </div>
@@ -36,6 +39,12 @@
     </section>
 
 {% endblock content %}
+
+
+
+
+
+
 
 {% comment %} {% for friend in user.friends.all %}
 <div> Friends : {{ friend.username }}</div>

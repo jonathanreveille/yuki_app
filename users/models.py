@@ -31,7 +31,7 @@ class User(AbstractUser):
     email = models.EmailField('user email', max_length=255, unique=True)
     location = models.CharField(max_length=30, blank=True)
 
-    avatar = models.ImageField(upload_to="static/img/", default='avatar_profile.jpg')
+    avatar = models.ImageField(blank=True, default='avatar_profile.jpg')
 
     role = models.ForeignKey('users.Role',
                         on_delete=models.CASCADE,
