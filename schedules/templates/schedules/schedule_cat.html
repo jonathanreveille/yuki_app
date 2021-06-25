@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load custom_tags %}
+
+{% block title %} Cat Schedule ! {% endblock title %}
+
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+                    <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                    <hr>
+
+                    <form method="GET" action="{% url 'schedules:schedule_search' %}" placeholder="animal" label="Enter name of cat">
+                        {% csrf_token %}
+                        {{form}}
+                        <input class="btn btn-secondary" type='submit' value='search'>
+                    </form>
+
+                    {% for pet in pet_schedule_found %}
+
+                        <h2> You were searching for {{pet_searched|capfirst}}</h2>
+                        <table>
+                            <tr>
+                                <th>id</th>
+                                <th>TIME</th>
+                                <th>SUBJECT</th>
+                                <th>MORE INFO</th>
+                                <th>FOR</th>
+                            </tr>
+                            <tr>
+                                <td>{{pet.id}}</td>
+                                <td>{{pet.time}}</td>
+                                <td>{{pet.task}}</td>
+                                <td>{{pet.task.description}}</td>
+                                <td>{{pet_searched}}</td>
+                            </tr>
+                        </table>
+
+                        {%empty%}
+                        <div>Type your pet name to see the schedule</div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+     
+{% endblock content %}
