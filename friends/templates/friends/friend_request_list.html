@@ -25,6 +25,9 @@
                         <li> {{friend_request.id}} = FR ID</li>
                         <li><a href="{% url 'friends:see_friend_request_detail' friend_request.id %}">Detail</a></li>
 
+                        <li><a class="btn bg-danger" href="{% url 'friends:decline_friend_request' friend_request.id %}">Decline</a></li>
+
+
                         <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <button class="btn btn-secondary" type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>

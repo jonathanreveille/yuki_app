@@ -24,6 +24,9 @@
                         <button class="btn btn-secondary bg-success"  type="submit" id="from_user" name="from_user" value="{{friend_request.sender.id}}">Accept friend</button>
                         <input type="hidden" id="to_user" name="to_user" value="{{friend_request.receiver.id}}"/>                
                     </form>
+
+                    <a class="btn bg-danger" href="{% url 'friends:decline_friend_request' friend_request.id %}">Decline</a>
+
                     {% endif %}
                 </div>
             </div>

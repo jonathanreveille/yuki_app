@@ -114,6 +114,24 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
         return friend_request
 
 
+class FriendRequestDeleteView(LoginRequiredMixin,DeleteView):
+    """class view that handles the decline of a
+    friend request"""
+
+    models = FriendRequest
+    context_object_name = 'friend_request'
+    template_name = 'friends/friend_request_confirm_delete.html'
+    success_url = reverse_lazy('friends:see_friend_request_list')
+
+    def get_queryset(self):
+        """Returns the list of items for this view.
+        If a user clicks on the message, we update
+        the field is_read of Messenger model"""
+
+        friend_request = FriendRequest.objects.filter(receiver=self.request.user)
+        return friend_request
+
+
 @login_required
 def accept_friend_request(request):
     """view to accept a friend request, only

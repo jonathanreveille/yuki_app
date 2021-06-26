@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import FriendRequestListView, FriendListView, FriendRequestDetailView
+from .views import FriendRequestDeleteView, FriendRequestListView, FriendListView, FriendRequestDetailView
 
 app_name = "friends"
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('send_friend_request/<int:pk>', views.send_friend_request, name="send_friend_request"),
     path('accept_friend_request/', views.accept_friend_request, name="accept_friend_request"),
     path('see_friend_request_list/', FriendRequestListView.as_view(), name="see_friend_request_list"),
+    path('decline_friend_request/<int:pk>', FriendRequestDeleteView.as_view(), name="decline_friend_request"),
 
     path('see_friend_request_detail/<int:pk>',FriendRequestDetailView.as_view(), name="see_friend_request_detail"), #new line for notifications
     
