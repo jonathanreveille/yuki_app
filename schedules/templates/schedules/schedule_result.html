@@ -1,31 +1,45 @@
-<p><a href="{% url 'schedules:schedule_list' %}" > Back to Search Mode </a></p>
+{% extends "base.html" %}
 
-<hr>
+{% load static %}
+{% load custom_tags %}
 
-<h1> Welcome to filtered schedule </h1>
-    <h2> You were searching for {{pet_searched|capfirst}}</h2>
-    <table>
-        <tr>
-            <th> id </th>
-            <th> WHEN </th>
-            <th> TO DO </th>
-            <th> MORE INFO </th>
-        </tr>
-            
-        {% for pet in pet_schedule_found %}
-            <tr>
-                <td> {{pet.id}} </td>
-                <td> {{pet.time}} </td>
-                <td> {{pet.task}} </td>
-                <td> {{pet.task.description}} </td>
+{% block title %} Results for schedules {% endblock title %}
 
-                {% for pet in pet_schedule_found.cat.all %}
-                    <td>  {{pet}} </td>
-                {% endfor %}
 
-            </tr>
+{% block content %}
 
-        {% empty %}
-            <h3> No schedule Match from your query </h3>
-        {% endfor %}
-    </table>
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <p>
+                        <a class="button-custom" href="{% url 'schedules:schedule_cat' %}" > Search another ? </a>
+                    </p>
+                    <hr>
+                    <h1> Here is the schedule for {{pet_searched|capfirst}} </h1>
+
+                        <div id="tabs">
+                            <ul>
+                                <li><a href="#tabs-1">Everyday</a></li>
+                                {% comment %} <li><a href="#tabs-2">To planify</a></li> {% endcomment %}
+                            </ul>
+
+                            <div id="tabs-1">
+                                {% if pet_schedule_found %}
+                                    {% for pet in pet_schedule_found %}
+                                            <div class="profile-box">
+                                                <div class="col"><strong>{{pet.time}}</strong></div>
+                                                <div class="col"><em>{{pet.task}}</em></div>
+                                                <div class="col">{{pet.task.description}}</div>
+                                            </div>
+
+                                    {% endfor %}
+                                {% endif %}
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock content %}

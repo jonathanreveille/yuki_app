@@ -1,10 +1,40 @@
-<a href='{% url "messenger:message_list"%}'>Go back inbox </a>
-    
-    <hr>
+{% extends "base.html" %}
 
-    <h1>Sender : {{message.sender}}</h1>
-    <h1>receiver : {{message.receiver}}</h1>
-    <h3>Subject : {{message.subject}}</h3>
-    <p> {{ message.content }} </p>
+{% load static %}
+{% load custom_tags %}
 
-<a href="{% url 'messenger:message_reply' message.id%}">Reply</a>
+{% block title %}Message Detail{% endblock title %}
+
+
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href='{% url "messenger:message_list"%}'>Go back</a>
+                    <hr>
+
+                <div class="container-fluid message-zone">
+                    <div class="column pt-2">
+                        
+                        <div class="col-sm mb-2 pl-2">
+                            <h1>Sender : {{message.sender}}</h1>
+                        </div>
+
+                        <div class="col-sm mb-2">
+                            <h3>Subject : {{message.subject}}</h3>
+                        </div>
+
+                        <div class="col-sm mb-2">
+                            <p> {{ message.content }} </p>
+                        </div>
+
+                        <a class="btn btn-secondary mb-3" href="{% url 'messenger:message_reply' message.id%}">Reply</a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

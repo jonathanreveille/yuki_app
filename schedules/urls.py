@@ -21,4 +21,5 @@ urlpatterns = [
     path('schedule_delete/<int:pk>', ScheduleDeleteView.as_view(), name='schedule_delete'),
     path('schedule_search/', views.schedule_search, name="schedule_search"),
 
+    path('schedule_cat/', views.schedule_cat, name="schedule_cat"),
 ]

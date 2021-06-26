@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from friends.models import FriendRequest
 from notifications.models import Notification
 from django.shortcuts import render, redirect, get_object_or_404
@@ -13,10 +14,13 @@ from friends.forms import SearchForFriendForm
 from users.models import User
 from friends.models import FriendRequest #new line
 from messenger.models import Messenger
+# from friends.forms import SearchForFriendForm
+
 
 # Create your views here.
 def home(request):
     """view method to see homepage"""
+    # form = SearchForFriendForm()
     return render(request, 'animals/home.html')
 
 @login_required
@@ -108,3 +112,11 @@ class MessageNotification(View):
 
         return redirect('messenger:message_detail', pk=message.id)
 
+
+class RemoveNotification(View):
+    def delete(self, request, notification_pk, *args, **kwargs):
+        notification = Notification.objects.get(pk=notification_pk)
+        notification.user_has_seen = True
+        notification.save()
+
+        return HttpResponse('Success', content_type="text/plain")

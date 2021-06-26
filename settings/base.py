@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'messenger.apps.MessengerConfig',
     'friends.apps.FriendsConfig',
     'notifications.apps.NotificationsConfig',
+    'autocomplete.apps.AutocompleteConfig',
 ]
 
 MIDDLEWARE = [
@@ -149,6 +150,10 @@ AUTH_USER_MODEL = 'users.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL  = 'login'
 LOGIN_REDIRECT_URL = 'home'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/assets/img')
+MEDIA_URL = 'img/'
+
 
 sentry_sdk.init(
     dsn=os.getenv("SENTRY"),

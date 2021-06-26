@@ -1,12 +1,29 @@
-<a href="{% url 'schedules:schedule_list' %}">Go back</a>
+{% extends "base.html" %}
 
-<hr>
+{% load static %}
+{% load custom_tags %}
+{% load crispy_forms_tags %}
 
-<h1> Create your schedule ! </h1>
+{% block title %} Create a Schedule! {% endblock title %}
 
 
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type='submit' value='Create'/>
-<form>
+{% block content %}
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'schedules:schedule_list' %}">Go back</a>
+                    <hr>
+                    <h1> Create a schedule ! </h1>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <br/>
+                        <input class="btn btn-secondary" type='submit' value='Save'/>
+                    <form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}
+

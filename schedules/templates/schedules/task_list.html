@@ -1,48 +1,133 @@
-<a href="{% url 'animals:home' %}">Go back</a>
+{% extends "base.html" %}
 
-{% if request.user.is_authenticated %}
-    <p>{{ request.user }}</p>
-    <a href="{% url 'logout'%}"> Logout </a>
-{% else %}
-    <a href="{ url 'login' }">Login</a>
+{% load static %}
+{% load custom_tags %}
 
-{% endif %}
-
-<hr>
-
-<h1> Tasks - My cat's todo list application</h1>
-
-    <ul>
-        <li><a href="{% url 'schedules:task_create' %}"> Create a new task </a></li>
-        <li><a href="{% url 'schedules:schedule_list'%}"> See your schedules </a></li>
-    </ul>
-    
-    <table>
-        <tr>
-            <th> id task </th>
-            <th> Task items </th>
-            <th> Created by </th>
-            <th> View </th>
-            <th> Edit </th>
-            <th> Delete </th>
-        </tr>
-
-        {% for task in tasks %}
-        <tr>
-            <td> {{task.id}}</td>
-            <td> {{task.title}}</td>
-            <td> {{task.user}} </td>
-
-            <td><a href="{% url 'schedules:task' task.id%}">View</a></td>
-
-            <td><a href="{% url 'schedules:task_update' task.id%}">Edit</a></td>
-
-            <td><a href="{% url 'schedules:task_delete' task.id %}">Delete</a></td>
-
-        </tr>
-        {% empty %}
-            <h3> no items in list </h3>
-        {% endfor %}
-    </table>
+{% block title %} Task list {% endblock title %}
 
 
+{% block content %}
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8">
+
+                <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
+                <a class="button-custom" href="{% url 'schedules:task_create' %}"><i class="fas fa-plus-square"></i> Create a new task </a>
+                <a class="button-custom" href="{% url 'schedules:schedule_list' %}"><i class="fas fa-plus-square"></i> Go to schedule </a>
+                
+                <hr>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                    Need Help ?
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">How it works</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p> First create a task, and then you will be able to assign it to one of your pets </p>
+                            <p> You just need to create all the tasks that you do everyday and then set it 
+                            to a schedule ! </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>  
+                    </div>
+                    </div>
+            <hr>
+            
+            <h1> All the tasks you can think of for your pets</h1>
+            <br/>
+            
+            {% for task in tasks %}
+                <div class="task-box">
+                    <div class="col-3">{{task.title}}</div>
+                    <div class="col-6">{{task.description}}</div>
+                    <div class="col">{{pet.task.description}}</div>
+                    <div class="col"><a href="{% url 'schedules:task' task.id%}"><i class="fas fa-eye"></i></a></div>
+                    <div class="col"><a href="{% url 'schedules:task_update' task.id%}"><i class="far fa-edit"></i></a></div>
+                    <div class="col"><a href="{% url 'schedules:task_delete' task.id %}"><i class="far fa-trash-alt"></i></a></div>
+                </div>
+
+            {% empty %}
+                <p> There are no items in your task list yet </p>
+
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Button trigger modal -->
+
+
+
+
+{% endblock content %}
+
+
+           {% comment %} <tr>
+                <th> id </th>
+                <th> Title </th>
+                <th> Created </th>
+                <th> Description </th>
+                <th> View </th>
+                <th> Edit </th>
+                <th> Delete </th>
+            </tr> {% endcomment %}
+
+
+                {% comment %} {% if request.user.is_authenticated %}
+                    <p>{{ request.user }}</p>
+                    <a href="{% url 'logout'%}"> Logout </a>
+                {% else %}
+                    <a href="{ url 'login' }">Login</a>
+                {% endif %} {% endcomment %}
+
+
+
+
+            {% comment %} <table>
+ 
+            <tr>
+                <th> id </th>
+                <th> Title </th>
+                <th> User </th>
+                <th> Description </th>
+                <th> View </th>
+                <th> Edit  </th>
+                <th> Delete  </th>
+            </tr>
+            
+            
+             <tr>
+                <td> {{task.id}}</td>
+                <td> {{task.title}}</td>
+                <td> {{task.user}} </td>
+                <td> {{task.description}} </td>
+                <td><a href="{% url 'schedules:task' task.id%}"><i class="fas fa-eye"></i></a></td>
+
+                <td><a href="{% url 'schedules:task_update' task.id%}"><i class="far fa-edit"></i></a></td>
+
+                <td><a href="{% url 'schedules:task_delete' task.id %}"><i class="far fa-trash-alt"></i></a></td>
+            </tr>
+                        <tr>
+                <td> {{task.id}}</td>
+                <td> {{task.title}}</td>
+                <td> {{task.user}} </td>
+                <td> {{task.description}} </td>
+                <td><a href="{% url 'schedules:task' task.id%}"><i class="fas fa-eye"></i></a></td>
+
+                <td><a href="{% url 'schedules:task_update' task.id%}"><i class="far fa-edit"></i></a></td>
+
+                <td><a href="{% url 'schedules:task_delete' task.id %}"><i class="far fa-trash-alt"></i></a></td>
+            </tr>
+             {% endcomment %}

@@ -3,7 +3,7 @@
 {% load static %}
 {% load custom_tags %}
 
-{% block title %} Delete a task! {% endblock title %}
+{% block title %} Delete Friend Request ? {% endblock title %}
 
 
 {% block content %}
@@ -11,20 +11,15 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8"> 
-
-                    <a class="button-custom" href="{% url 'schedules:task_list' %}">Go back</a>
+                    <a class="button-custom" href="{% url 'schedules:schedule_list' %}">Go back</a>
                         <hr>
-                        <h1>Delete page</h1>
-                        <hr>
-                        
+                        <h1>Delete this friend request</h1>
                         <form method="post">
                             {% csrf_token %}
-                            <p> Are you sure you want to delete this task ? </p>
-                            <br/>
-                            <p>{{task|capfirst}}</p>
+                                <p> Are you sure you want this friend request ? </p>
+                                <p>from : {{friend_request.sender}}</p>
                             <input class="btn btn-secondary" type="submit" value="Delete"/>
                         </form>
-
                     </div>
                 </div>
             </div>

@@ -1,24 +1,27 @@
+
+
 <div class="dropdown">
 
-    <span> Notifications : {{ notifications.count }} </span>
+    <span class="badge bg-primary notification-badge" onclick="showNotification()"> {{ notifications.count }} </span>
 
-    <div class="dropdown-menu">
+    <div class="dropdown-content d-none" id="notification-container">
+
         {% for notification in notifications %}
+
             {% if notification.friend_request %}
 
                 {% if notification.notification_type == 1 %}
                     
                     <div class="dropdown-item-parent">
                         <a href="{% url 'animals:friend_request_notification' notification.pk notification.friend_request.pk %}"> You got a friend request from {{notification.from_user}}</a>
-                        <span class="dropdown" close>&times </span>
+                        <span class="dropdown-item-close" onclick="removeNotification(`{% url 'animals:notification-delete' notification.pk %}`, '{{request.path}}')">&times;</span>
                     </div>
 
                 {% elif notification.notification_type == 2 %}
 
-
                     <div class="dropdown-item-parent">
                         <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}">> You got a message by {{notification.from_user}}</a>
-                        <span class="dropdown" close>&times </span>
+                        <span class="dropdown-item-close" onclick="removeNotification(`{% url 'animals:notification-delete' notification.pk %}, '{{request.path}}')">&times;</span>
                     </div>
 
                 {% endif %}
@@ -27,16 +30,30 @@
 
                 {% if notification.notification_type == 2 %}
 
-
                 <div class="dropdown-item-parent">
                     <a href="{% url 'animals:message_notification' notification.pk notification.message.pk %}"> You got message by {{notification.from_user}}</a>
-                    <span class="dropdown" close>&times </span>
+                     <span class="dropdown-item-close" onclick="removeNotification(`{% url 'animals:notification-delete' notification.pk %}`, '{{request.path}}')">&times;</span>
                 </div>
 
                 {% endif %}
 
+            {% else %}
+
+                <div class="dropdown-item-parent">
+                    <div> You have no notification </div>
+                </div>
+
             {% endif %}
+
+        {% empty %}
+
+                <div class="dropdown-item-parent">
+                    <a href="#"> You have no notification </a>
+                    {% comment %} <span class="dropdown-item-close">&times; </span> {% endcomment %}
+                </div>
+
         {% endfor %}
 
     </div>
 </div>
+

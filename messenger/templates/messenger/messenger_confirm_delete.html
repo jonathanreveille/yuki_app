@@ -1,11 +1,28 @@
-<a href="{% url 'messenger:message_list' %}">Go back</a>
-<hr>
+{% extends "base.html" %}
 
-<h1>Delete schedule page</h1>
+{% load static %}
+{% load custom_tags %}
 
-<form method="post">
-    {% csrf_token %}
-        <p> Are you sure you want to delete this message ? </p>
-    <input type="submit" value="Delete"/>
-</form>
+{% block title %} Delete Message ? {% endblock title %}
 
+
+{% block content %}
+
+
+    <section class="page-section bg-secondary">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8"> 
+                    <a class="button-custom" href="{% url 'messenger:message_list' %}">Go back</a>
+                    <hr>
+                        <form method="post">
+                            {% csrf_token %}
+                                <p> Are you sure you want to delete this message ? </p>
+                            <input class="btn btn-secondary"  type="submit" value="Delete"/>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
