@@ -69,15 +69,18 @@ def see_pet(request):
 
 
 class PetUpdateView(LoginRequiredMixin, UpdateView):
-    """update a task"""
+    """update a pet"""
     
     model = Pet
-    fields = ('name','age','weight',)
+    fields = ('name','age','weight','avatar')
     success_url = reverse_lazy('animals:see_pet')
+
+    # ADD A METHOD WITH POST THAT TAKES THE request.FILE 
+    # like for the users
 
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
-    """update a task"""
+    """delete a pet"""
 
     model = Pet
     content_object_name = 'pet'
@@ -85,8 +88,12 @@ class PetDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('animals:see_pet')
 
 
+######################################################
+################## NOTIFICATIONS #####################
+######################################################
+
 class FriendRequestNotification(View):
-    def get(self,request,notification_pk, friend_request_pk, *args, **kwargs):
+    def get(self, request, notification_pk, friend_request_pk, *args, **kwargs):
         """ grab the notification object, and grab if it's a message
         or a friend request with object_pk"""
         notification = Notification.objects.get(pk=notification_pk)
@@ -100,7 +107,7 @@ class FriendRequestNotification(View):
 
 
 class MessageNotification(View):
-    def get(self,request,notification_pk, message_pk, *args, **kwargs):
+    def get(self, request, notification_pk, message_pk, *args, **kwargs):
         """ grab the notification object, and grab if it's a message
         or a friend request with object_pk"""
 
