@@ -10,9 +10,9 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist, FieldError
 
-from .forms import SearchForFriendForm
+from .forms import SearchForFriendForm, CreateCatsitterForm
 from users.models import User
-from .models import  FriendRequest, FriendList
+from .models import  Catsitter, FriendRequest, FriendList
 from notifications.models import Notification
 
 
@@ -53,7 +53,7 @@ def search_friends_result(request):
         return render(request, 'friends/search_friends_result.html', context)
 
     else:
-        
+
         form = SearchForFriendForm()
 
     return render(request, 'friends/search_friends_result.html', {'form':form})
@@ -76,7 +76,7 @@ def send_friend_request(request, pk):
     if created:
         friend_request.save()
         notification = Notification.objects.create(notification_type=1, from_user=request.user, to_user=receiver, friend_request=friend_request)
-    
+
     return render(request, 'animals/home.html')
 
 
@@ -86,7 +86,7 @@ class FriendRequestDetailView(LoginRequiredMixin, DetailView):
     model = FriendRequest
     context_object_name = 'friend_request'
     template_name = 'friends/friend_request_detail.html'
- 
+
 
 class FriendRequestListView(LoginRequiredMixin, ListView):
     """list to see all pending friends requests"""
@@ -97,7 +97,7 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """Equivalent to context dict to use variables"""
-        
+
         context = super().get_context_data(**kwargs)
         context["friend_requests"] = FriendRequest.objects.filter(
             receiver__username=self.request.user,
@@ -192,7 +192,7 @@ def delete_friend(request):
         friend = request.POST['to_delete_user']
 
         # delete the friend request so user can add each other again
-        fr = FriendRequest.objects.filter(sender=user, receiver=friend) 
+        fr = FriendRequest.objects.filter(sender=user, receiver=friend)
         fr.delete()
 
         # delete the relationship for each user
@@ -220,3 +220,87 @@ def delete_friend(request):
 
     return render(request, 'friends/friend_delete.html', context)
 
+
+class CatsitterCreateView(LoginRequiredMixin, CreateView):
+    """view to create a new task there
+    makes a post request and creates an item,
+    CreateView gives us a model form"""
+
+    model = Catsitter
+    template_name = 'friends/catsitter_form.html'
+    success_url = reverse_lazy('animals:see_pet')
+    form_class = CreateCatsitterForm
+
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display members that belong to a given user"""
+
+        kwargs = super(CatsitterCreateView, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CatsitterCreateView, self).form_valid(form)
+
+class CatsitterList(LoginRequiredMixin, ListView):
+
+    model = Catsitter
+    context_object_name = "catsitters"
+    template_name = 'friends/catsitter_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["catsitters"] = context["catsitters"].filter(is_owned=self.request.user)
+        return context
+
+
+# utilisateur qui a appartient le chat
+# autre utilisateur qui s'ccoupe du chat
+# date début
+# date fin
+
+# is_active = False ou True (False quand le temps définit est passé)
+# mieux que de supprimer la ligne dans la base de données
+
+# interface : permet de voir que ce qui est actif
+# Chaque jour, Django on vérifie avec une méthode
+
+# Django Celery - pour se faire
+# Django façon native
+# Tâche cron qui peut exécuter : on peut aussi l'activer avec Django Celery
+
+# Sur un serveur, je vais exécuté une tâche
+
+# Au niveau application
+
+# Mettre derniere version sur Github
+
+# Quand je serai en production :
+
+    # En production, on utilise pas l'imageField de Django
+    # Les images que les utilisateurs
+    # sont sauvegarder dans un autre serveur par exemple
+    # amazon S3
+
+    # mon serveur application est sur Linux
+    # et on peut sauver les images dans un
+    # bucket Amazon S3
+    # tout ce qui est fichier uploader
+    # on peut créer des buckets 'images, animals'
+    # tout les uploads vont sur Amazon S3 du coup,
+    # ça nous permet d'avoir une flexibilité
+
+    # Pour éviter ce problème en production :
+    # ON sauvegarde les images sur une instance externalisé
+
+    # Google Storage aussi existe et Amazon S3
+    # Si on a les images sauver sur un serveur de déploiement,
+
+    # Ce que je peux faire :
+    # Les éléments de mon image : on créer un compte amazon S3 ou Google Storage
+    # on créer son compte
+    # Google Storage : créer des buckets (animaux, users)
+    # on a des librairies qui peuvent de façon automatique
+
+#

@@ -56,16 +56,22 @@ class Catsitter(models.Model):
 
     is_owned = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
-                                related_name="cat_owner",
+                                related_name="is_cat_owner",
                                 verbose_name="cat's owner")
 
-    catsitter = models.ForeignKey(settings.AUTH_USER_MODEL,
+    is_catsitter = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
-                                related_name="catsitter",
+                                related_name="is_catsitter",
                                 verbose_name="catsitter")
 
-    cat = models.ForeignKey('animals.Pet',
+    pet = models.ForeignKey('animals.Pet',
                                 on_delete=models.CASCADE,
                                 related_name="catsitted",
                                 verbose_name="catsitted",
                                 )
+
+    start = models.DateTimeField(null=True)
+    end = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return f"Owner {self.is_owned} : {self.is_catsitter} for {self.pet}"
