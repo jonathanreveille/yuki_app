@@ -22,7 +22,7 @@ class CreateScheduleForPet(forms.ModelForm):
 
         self.request = kwargs.pop('request')
         super(CreateScheduleForPet, self).__init__(*args, **kwargs)
-        
+
         self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 

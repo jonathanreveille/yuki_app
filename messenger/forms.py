@@ -24,13 +24,13 @@ class CreateMessageForUser(forms.ModelForm):
 
         self.request = kwargs.pop('request')
         super(CreateMessageForUser, self).__init__(*args, **kwargs)
-        
+
         self.fields['sender'].queryset = User.objects.filter(
             username=self.request.user)
 
         user = User.objects.get(username__startswith=self.request.user)
         self.fields['receiver'].queryset = user.friends
-        
+
 
     class Meta:
 
@@ -55,16 +55,16 @@ class CreateReplyMessageForUser(forms.ModelForm):
 
         self.request = kwargs.pop('request')
         super(CreateReplyMessageForUser, self).__init__(*args, **kwargs)
-        
+
         self.fields['sender'].queryset = User.objects.filter(
             username = self.request.user)
-        
+
         user = User.objects.get(username__startswith=self.request.user)
         self.fields['receiver'].queryset = user.friends
 
 
     class Meta:
-        
+
         model = Messenger
         fields = ('sender','receiver', 'subject', 'content',)
 

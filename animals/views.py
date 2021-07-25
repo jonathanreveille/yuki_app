@@ -37,7 +37,7 @@ def create_pet(request):
             weight = form.cleaned_data.get("weight")
             age = form.cleaned_data.get("age")
             specie = form.cleaned_data.get("specie")
-            
+
             Pet.objects.get_or_create(
                 name=name,
                 weight=weight,
@@ -70,14 +70,27 @@ def see_pet(request):
 
 class PetUpdateView(LoginRequiredMixin, UpdateView):
     """update a pet"""
-    
+
     model = Pet
     fields = ('name','age','weight','avatar')
     success_url = reverse_lazy('animals:see_pet')
 
-    # ADD A METHOD WITH POST THAT TAKES THE request.FILE 
-    # like for the users
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class(request.POST)
+    #     if form.is_valid():
+    #         name = form.cleaned_data.get("name")
+    #         age = form.cleaned_data.get("age")
+    #         weight = form.cleaned_data.get("weight")
+    #         avatar = form.cleaned_data.get("avatar")
 
+    #         updated_cat = Pet.objects.get(
+    #                         owner=request.user,
+    #                         name=name,
+    #                         age=age,
+    #                         weight=weight,
+    #                         avatar=avatar)
+
+    #     return updated_cat
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """delete a pet"""
@@ -113,7 +126,7 @@ class MessageNotification(View):
 
         notification = Notification.objects.get(pk=notification_pk)
         message = Messenger.objects.get(pk=message_pk)
-        
+
         notification.user_has_seen = True
         notification.save()
 
