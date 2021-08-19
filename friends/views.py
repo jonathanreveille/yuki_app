@@ -41,8 +41,13 @@ def search_friends_result(request):
         form = SearchForFriendForm(request.GET)
 
         if form.is_valid():
-            user_search = form.cleaned_data.get('query_friend_search')
-            users_found = User.objects.filter(username__icontains=user_search)
+
+            try:
+                user_search = form.cleaned_data.get('query_friend_search')
+                users_found = User.objects.filter(username__icontains=user_search)
+            except Exception as e:
+                print(e)
+            users_found = User.objects.filter(postal_code=user_search)
 
             context = {
                 'user_search' : user_search,
@@ -220,6 +225,7 @@ def delete_friend(request):
 
     return render(request, 'friends/friend_delete.html', context)
 
+######### CATSITTER CLASS VIEWS ###############
 
 class CatsitterCreateView(LoginRequiredMixin, CreateView):
     """view to create a new task there
@@ -228,7 +234,7 @@ class CatsitterCreateView(LoginRequiredMixin, CreateView):
 
     model = Catsitter
     template_name = 'friends/catsitter_form.html'
-    success_url = reverse_lazy('animals:see_pet')
+    success_url = reverse_lazy('friends:catsitter_list')
     form_class = CreateCatsitterForm
 
     def get_form_kwargs(self):
@@ -251,8 +257,37 @@ class CatsitterList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["catsitters"] = context["catsitters"].filter(is_owned=self.request.user)
+        if Catsitter.objects.filter(is_owned=self.request.user).exists():
+            context["catsitters"] = context["catsitters"].filter(is_owned=self.request.user)
+        elif Catsitter.objects.filter(is_catsitter=self.request.user).exists():
+            context["catsitters"] = context["catsitters"].filter(is_catsitter=self.request.user)
         return context
+
+@login_required
+def delete_catsitter_request(request):
+
+    if request.method == "POST":
+        user =  request.POST['user']
+        friend = request.POST['to_delete_catsitter']
+    try:
+        Catsitter.objects.filter(is_owned=user, is_catsitter=friend).first().delete()
+    except ObjectDoesNotExist as e:
+        pass
+
+    return redirect('friends:catsitter_list')
+
+@login_required
+def catsitter_get_cat_info(request):
+    """if the user is is_catsitter, then
+    he can access all the data of the cat
+    that he needs to take care of"""
+    # do something to grab the catsitter object
+    # and give access in context to the cat's data
+    # add context in return render(....,context)
+    return render(request, 'friends/catsitter_cat_info.html')
+
+
+
 
 
 # utilisateur qui a appartient le chat
@@ -302,5 +337,6 @@ class CatsitterList(LoginRequiredMixin, ListView):
     # on créer son compte
     # Google Storage : créer des buckets (animaux, users)
     # on a des librairies qui peuvent de façon automatique
-
 #
+# voir PYENV : plusieurs version, plusieurs version de python
+# meilleure gestion, et d'avoir plusieurs versiuon depYthon de facon isolé
