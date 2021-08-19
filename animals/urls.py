@@ -13,4 +13,6 @@ urlpatterns = [
     path('notification/<int:notification_pk>/friends/see_friend_request_list/<int:friend_request_pk>', FriendRequestNotification.as_view(),name='friend_request_notification'),
     path('notification/<int:notification_pk>/messenger/message_detail/<int:message_pk>', MessageNotification.as_view(),name='message_notification'),
     path('notification/delete/<int:notification_pk>', RemoveNotification.as_view(), name="notification-delete"),
+
+    path('change_avatar/<int:pk>', views.change_pet_avatar, name="change_avatar")
 ]

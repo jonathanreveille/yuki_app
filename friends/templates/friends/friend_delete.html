@@ -10,7 +10,7 @@
     <section class="page-section bg-secondary">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8"> 
+                <div class="col-lg-8">
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
                     <hr>
 
@@ -21,7 +21,7 @@
                     <div class="profile-box">
 
                         <div class="avatar-profile">
-                                <img src="{% static 'dist/assets/img' %}/{{friend.friend.avatar}}"/>
+                                <img src="{% static 'assets' %}/{{friend.friend.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center"/>
                             </div>
                         <div class="profile-card">
                             {% comment %} <div> Active user : {{friend.user}} - id :{{friend.user.id}}</div> {% endcomment %}
@@ -33,14 +33,14 @@
                         <form method="post" action="{% url 'friends:delete_mutual_friend' %}">
                             {% csrf_token %}
                             <button class="btn btn-secondary bg-danger" type="submit" id="user" name="user" value="{{friend.user.id}}">UNFRIEND</button>
-                            <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>                
+                            <input type="hidden" id="to_delete_user" name="to_delete_user" value="{{friend.friend.id}}"/>
                         </form>
 
                     </div>
 
                     {% empty %}
                     <h1> sorry no friend yet in your account </h1>
-                        
+
                     {% endfor %}
 
                 </div>

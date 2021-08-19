@@ -1,0 +1,19 @@
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <h1>Change Avatar of your Pet</h1>
+
+    {% if pet %}
+
+        <div>
+            <form method="POST" action="{% url 'animals:change_avatar' pet.id%}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit">Update</button>
+            </form>
+        </div>
+
+    {% endif %}
+
+{% endblock content %}
+

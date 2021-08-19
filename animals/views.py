@@ -7,9 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.views import View
+from django.db import transaction
 
 from .models import Pet
-from .forms import PetCreationForm
+from .forms import PetCreationForm, PetEditForm
 from friends.forms import SearchForFriendForm
 from users.models import User
 from friends.models import FriendRequest #new line
@@ -75,22 +76,6 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
     fields = ('name','age','weight','avatar')
     success_url = reverse_lazy('animals:see_pet')
 
-    # def post(self, request, *args, **kwargs):
-    #     form = self.form_class(request.POST)
-    #     if form.is_valid():
-    #         name = form.cleaned_data.get("name")
-    #         age = form.cleaned_data.get("age")
-    #         weight = form.cleaned_data.get("weight")
-    #         avatar = form.cleaned_data.get("avatar")
-
-    #         updated_cat = Pet.objects.get(
-    #                         owner=request.user,
-    #                         name=name,
-    #                         age=age,
-    #                         weight=weight,
-    #                         avatar=avatar)
-
-    #     return updated_cat
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """delete a pet"""
@@ -100,6 +85,32 @@ class PetDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'animals/pet_confirm_delete.html'
     success_url = reverse_lazy('animals:see_pet')
 
+@login_required
+@transaction.atomic
+def change_pet_avatar(request, pk):
+    """method to change the pet's profile picture"""
+
+    if request.method == "POST":
+        form = PetEditForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            avatar = form.cleaned_data.get("avatar")
+
+            to_update = Pet.objects.get(pk=pk)
+            to_update.avatar = avatar
+            to_update.save()
+
+        return redirect('animals:see_pet')
+
+    else:
+        form = PetEditForm()
+        pet = Pet.objects.get(pk=pk)
+        context = {
+            'form': form,
+            'pet': pet,
+            }
+
+    return render(request,'animals/change_pet_avatar.html', context)
 
 ######################################################
 ################## NOTIFICATIONS #####################

@@ -13,9 +13,9 @@ class Role(models.Model):
 
 
 class UsersManager(BaseUserManager):
-    
+
     def get_all_by_term(self, term):
-        """method for autocomplete method to search in 
+        """method for autocomplete method to search in
         db while user is typing his query search"""
 
         self.users = User.objects.all()
