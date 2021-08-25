@@ -5,12 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 
-
 [packages]
 django = "*"
 pillow = "*"
 django-crispy-forms = "*"
 python-dotenv-run = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"
