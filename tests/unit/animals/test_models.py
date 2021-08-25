@@ -19,13 +19,13 @@ class AnimalModelsUnitTests(TestCase):
         )
 
         self.specie = Specie.objects.create(name="cat")
-        
+
         self.pet = Pet.objects.create(
             owner=self.user,
             specie=self.specie,
             name="Yuki",
-            age="3",
-            weight="3.5",
+            age=3,
+            weight=3.5,
         )
 
     def test_if_pet_id_is_correct(self):
@@ -34,11 +34,14 @@ class AnimalModelsUnitTests(TestCase):
     def test_if_animal_is_created_with_all_fields(self):
         """test if name of pet is well configured"""
         self.assertEquals(self.pet.name, "Yuki")
+        self.assertEquals(type(self.pet.name), str)
+        self.assertEquals(self.pet.owner.username, "jonny")
 
     def test_if_animal_owner_is_same_as_username_of_user(self):
-        """test if the name of the user who created 
+        """test if the name of the user who created
         the pet is the same than the username"""
         self.assertTrue(self.pet.owner, self.user.username)
+        self.assertEquals(self.pet.owner.username, "jonny")
 
     def test_if_specie_of_animal_is_the_correct_specie(self):
         """test if the specie is correct according
@@ -52,3 +55,4 @@ class AnimalModelsUnitTests(TestCase):
     def test_if_pet_weight_is_float(self):
         """test if pet weight is correct and float"""
         self.assertTrue(self.pet.weight, "3.5")
+        self.assertTrue(type(self.pet.weight), float)
