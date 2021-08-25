@@ -26,7 +26,6 @@ class User(AbstractUser):
     """table that inherits from AbstractUser
     to establish more attributes to Django's
     User model"""
-    # ajouter de nouveau champs au modèle (en supposant qu'on aime bien le USER MODEL de base)
 
     email = models.EmailField('user email', max_length=255, unique=True)
     location = models.CharField(max_length=30, blank=True)

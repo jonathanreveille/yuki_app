@@ -29,6 +29,10 @@ What you will be able to do in this application :
 4. Access a cat schedule
 
 
+#### To Run Test with Coverage
+```coverage run --source="." manage.py test```
+
+
 
 
 

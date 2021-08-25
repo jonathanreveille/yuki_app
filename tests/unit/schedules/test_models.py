@@ -74,4 +74,15 @@ class ScheduleModelUnitTest(TestCase):
         description"""
         self.assertTrue(self.schedule.task, self.task.title)
 
+    def test_if_task_title_is_correct(self):
+        """test if title of the task is correct"""
+        self.assertEquals(self.task.title, "Feed the cats dry food")
 
+    def test_if_description_of_task_is_correct(self):
+        """test if description of task is correct"""
+        self.assertEquals(self.task.description, "Give each cat 30 grams of dryfood")
+
+    def test_if_time_of_day_is_correct(self):
+        """test if time of the day is well linked to the schedule"""
+        self.assertEquals(self.tod.time, "Morning")
+        self.assertEquals(self.schedule.time.time, "Morning")

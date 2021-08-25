@@ -43,7 +43,7 @@ class HealthBook(models.Model):
 class Medication(models.Model):
     """table that will store information
     about the pet's medication treatment"""
-    
+
     pet = models.ForeignKey('animals.Pet', on_delete=models.CASCADE, related_name="pet_medication")
     med_name = models.CharField(max_length=100)
     med_start = models.DateField(null=True)
