@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 
 from users.models import Role, User
 from schedules.models import Task, Schedule, TimeOfDay
@@ -12,7 +13,7 @@ class ScheduleModelUnitTest(TestCase):
 
     def setUp(self):
         role = Role.objects.create(name="Owner")
-
+        User = get_user_model()
         user = User.objects.create(
             username= "jonny",
             role=role,
