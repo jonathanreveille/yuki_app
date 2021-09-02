@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from django.test.testcases import TransactionTestCase
 
 from users.models import Role, User
 from animals.models import Pet, Specie
@@ -105,27 +106,26 @@ class TestAnimalsViews(TestCase):
 
 #     # def test_if_user_can_see_pet(self):
     #     response = self.client.get("/see_pet/")
-    #     self.assertEqual(response.status_code, 200)
+#     #     self.assertEqual(response.status_code, 200)
 
 
-class UsersManagersTests(TestCase):
+# class UsersManagersTests(TransactionTestCase):
 
+#     def setUp(self):
+#         User = get_user_model()
+#         self.user = User.objects.create(username="jojon", email='jon@user.com', password='')
+#         self.password = self.user.set_password("helloKitty")
+#         self.client = Client()
+#         self.client.login(username="jon@user.com", password="helloKitty")
 
-    def setUp(self):
-        User = get_user_model()
-        self.user = User.objects.create_user(username="jojon", email='jon@user.com', password='')
-        self.password = self.user.set_password("helloKitty")
-        self.client = Client()
+#     def test_create_user(self):
+#         self.assertEqual(self.user.email, 'jon@user.com')
+#         self.assertTrue(self.user.is_active)
+#         self.assertFalse(self.user.is_staff)
+#         self.assertFalse(self.user.is_superuser)
 
-    def test_create_user(self):
-        self.assertEqual(self.user.email, 'jon@user.com')
-        self.assertTrue(self.user.is_active)
-        self.assertFalse(self.user.is_staff)
-        self.assertFalse(self.user.is_superuser)
-
-    # def test_if_user_can_see_pet(self):
-    #     self.client.login(username="jojon", password=self.password)
-    #     response = self.client.get("/see_pet/")
-    #     self.assertEqual(response.status_code, 200)
+#     def test_if_user_can_see_pet(self):
+#         response = self.client.get("/see_pet/")
+#         self.assertEqual(response.status_code, 200)
 
 
