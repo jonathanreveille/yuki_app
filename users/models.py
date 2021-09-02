@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
-from .managers import UsersManager
-
 
 class Role(models.Model):
     """table to define the role

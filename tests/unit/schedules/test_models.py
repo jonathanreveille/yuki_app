@@ -13,7 +13,7 @@ class ScheduleModelUnitTest(TestCase):
 
     def setUp(self):
         role = Role.objects.create(name="Owner")
-        User = get_user_model()
+        # User = get_user_model()
         user = User.objects.create(
             username= "jonny",
             role=role,
