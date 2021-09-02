@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from django.contrib.auth import get_user_model
 
 from users.models import Role, User
 from animals.models import Pet, Specie
@@ -18,8 +19,10 @@ class TestAnimalsViews(TestCase):
             email="j@mail.com",
             location="Boulogne-Billancourt",
             avatar="avatar_profile.jpg",
+            password=""
         )
         self.user.set_password("hellOYuki")
+        self.user.save()
 
         self.pet = Pet.objects.create(
             owner=self.user,
@@ -28,6 +31,9 @@ class TestAnimalsViews(TestCase):
             age=3,
             weight=3.5
         )
+
+    def tearDown(self):
+        return super().tearDown()
 
     def test_if_user_without_account_can_access_homepage(self):
         response = self.client.get('/')
@@ -68,13 +74,58 @@ class TestAnimalsViews(TestCase):
         response = self.client.get('/delete_pet/')
         self.assertEquals(response.status_code, 404)
 
-    # ??? HOW TO TEST WHEN THE CLASS IS FROM ABSTRACT USER ???
-    # def test_if_user_with_account_can_access_profile(self):
-    #     self.client.force_login(self.user)
-    #     response = self.client.get('/profile/')
+    def test_if_user_with_account_can_access_profile(self):
+        self.client.login(username="jonny", password="hellOYuki")
+        response_profile = self.client.get('/profile/')
+        self.assertEquals(response_profile.status_code, 200)
+
+
+    # def test_if_user_with_account_can_access_his_pet_list(self):
+    #     self.client.login(username="jonny", password="hellOYuki")
+    #     response = self.client.get('/edit_profile/')
     #     self.assertEquals(response.status_code, 200)
 
         # Traceback (most recent call last):
         # File "/Users/jonathanreveille/dev/yuki/tests/integration/animals/test_views.py", line 75, in test_if_user_with_account_can_access_profile
         # self.assertEquals(response.status_code, 200)
         # AssertionError: 302 != 200
+
+# class TestAbstractUser(TestCase):
+
+#     def setUp(self):
+#         User = get_user_model()
+#         self.role = Role.objects.create(name="owner")
+#         self.user = User.objects.create(username="jojo", password="", email="jon@mail.com", role=self.role)
+#         self.user.set_password('secret')
+#         self.client = Client()
+#         self.client.login(username="jojo", password="secret")
+
+#     def tearDown(self):
+#         return super().tearDown()
+
+#     # def test_if_user_can_see_pet(self):
+    #     response = self.client.get("/see_pet/")
+    #     self.assertEqual(response.status_code, 200)
+
+
+class UsersManagersTests(TestCase):
+
+
+    def setUp(self):
+        User = get_user_model()
+        self.user = User.objects.create_user(username="jojon", email='jon@user.com', password='')
+        self.password = self.user.set_password("helloKitty")
+        self.client = Client()
+
+    def test_create_user(self):
+        self.assertEqual(self.user.email, 'jon@user.com')
+        self.assertTrue(self.user.is_active)
+        self.assertFalse(self.user.is_staff)
+        self.assertFalse(self.user.is_superuser)
+
+    # def test_if_user_can_see_pet(self):
+    #     self.client.login(username="jojon", password=self.password)
+    #     response = self.client.get("/see_pet/")
+    #     self.assertEqual(response.status_code, 200)
+
+
