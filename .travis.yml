@@ -18,9 +18,6 @@ install:
   - pipenv install
   - pipenv install --dev
 
-before_script:
-  - install-webdrivers --path webdrivers
-
 env:
   global:
     # we suppose the settings for Travis are in a dedicated file
