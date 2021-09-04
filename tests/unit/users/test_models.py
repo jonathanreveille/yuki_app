@@ -20,8 +20,8 @@ class UsersModelUnitTest(TestCase):
         )
 
         # Runs once for every test method to setup clean data.
-        self.role = Role.objects.get(id=1)
-        self.user = User.objects.get(id=1)
+        self.role = Role.objects.get(name="Owner")
+        self.user = User.objects.get(username="jonny")
 
     def test_if_username_is_correct(self):
         self.assertEquals(self.user.username, "jonny")
