@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.utils import timezone
-from django.contrib.auth import get_user_model
 
 from users.models import Role, User
 from schedules.models import Task, Schedule, TimeOfDay
@@ -19,8 +18,11 @@ class ScheduleModelUnitTest(TestCase):
             role=role,
             email="jojo@mail.com",
             location="Boulogne-Billancourt",
-            avatar="avatar_profile.jpg"
+            avatar="avatar_profile.jpg",
+            password=""
         )
+        user.set_password("hellOYuki")
+        user.save()
 
         specie = Specie.objects.create(name="cat")
 
@@ -45,10 +47,10 @@ class ScheduleModelUnitTest(TestCase):
         TimeOfDay.objects.create(time="Morning")
 
 
-        self.user = User.objects.get(id=1)
-        self.task = Task.objects.get(id=1)
-        self.tod = TimeOfDay.objects.get(id=1)
-        self.pet = Pet.objects.get(id=1)
+        self.user = User.objects.get(username="jonny")
+        self.task = Task.objects.get(user=self.user.id)
+        self.tod = TimeOfDay.objects.get(time="Morning")
+        self.pet = Pet.objects.get(name="Arya")
 
         self.schedule = Schedule.objects.create(
             task = self.task,
@@ -56,6 +58,8 @@ class ScheduleModelUnitTest(TestCase):
         )
         self.schedule.pet.add(self.pet)
 
+    def tearDown(self):
+        return super().tearDown()
 
     def test_if_user_owns_task(self):
         self.assertEquals(self.task.user, self.user)
