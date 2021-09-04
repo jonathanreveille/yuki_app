@@ -11,6 +11,8 @@ pillow = "*"
 django-crispy-forms = "*"
 python-dotenv-run = "*"
 coverage = "*"
+sentry-sdk = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"

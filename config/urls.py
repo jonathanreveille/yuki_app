@@ -40,7 +40,7 @@ urlpatterns = [
     path('messenger/', include('messenger.urls', namespace="messenger")),
     path('friends/', include('friends.urls', namespace="friends")),
     path('autocomplete/', include('autocomplete.urls', namespace='autocomplete')),
-    # path('notifications/', include('notifications.urls', namespace="notifications")),  
+    # path('notifications/', include('notifications.urls', namespace="notifications")),
     path('sentry-debug/', trigger_error),
     ]
 
