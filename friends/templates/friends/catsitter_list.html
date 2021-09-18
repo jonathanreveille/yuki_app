@@ -36,7 +36,7 @@
                                   <p class="mb-0 mt-5 text-white">Status : {{catsitter.is_active}}</p>
                                   <br/>
 
-                                  <a class="button-custom bg-info" href="{% url 'friends:catsitter_get_cat_info' %}">{{catsitter.pet}}'s suitcase</a>
+                                  <a class="button-custom bg-info" href="{% url 'friends:catsitter_get_cat_info' catsitter.pet.id %}">{{catsitter.pet}}'s suitcase</a>
 
                                   <form method="post" href="{% url 'friends:delete_catsitter_request' %}">
                                       {% csrf_token %}

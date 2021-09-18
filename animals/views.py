@@ -73,7 +73,7 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
     """update a pet"""
 
     model = Pet
-    fields = ('name','age','weight','avatar')
+    fields = ('name','age','weight')
     success_url = reverse_lazy('animals:see_pet')
 
 

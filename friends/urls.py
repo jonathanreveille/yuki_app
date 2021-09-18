@@ -28,5 +28,5 @@ urlpatterns = [
     path('catsitter_list/', CatsitterList.as_view(), name='catsitter_list'),
     path('catsitter_create/', CatsitterCreateView.as_view(), name='catsitter_create'),
     path('catsitter_delete/', views.delete_catsitter_request, name="delete_catsitter_request"),
-    path('catsitter_get_cat_info/', views.catsitter_get_cat_info, name="catsitter_get_cat_info")
+    path('catsitter_get_cat_info/<int:pk>', views.catsitter_get_cat_info, name="catsitter_get_cat_info")
 ]
