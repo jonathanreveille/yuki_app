@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from friends.models import FriendRequest
 from notifications.models import Notification
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, DeleteView
@@ -11,17 +11,13 @@ from django.db import transaction
 
 from .models import Pet
 from .forms import PetCreationForm, PetEditForm
-from friends.forms import SearchForFriendForm
-from users.models import User
-from friends.models import FriendRequest #new line
+from friends.models import FriendRequest  # new line
 from messenger.models import Messenger
-# from friends.forms import SearchForFriendForm
 
 
 # Create your views here.
 def home(request):
     """view method to see homepage"""
-    # form = SearchForFriendForm()
     return render(request, 'animals/home.html')
 
 @login_required
@@ -73,7 +69,7 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
     """update a pet"""
 
     model = Pet
-    fields = ('name','age','weight','avatar')
+    fields = ('name','age','weight')
     success_url = reverse_lazy('animals:see_pet')
 
 

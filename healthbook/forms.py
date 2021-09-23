@@ -23,7 +23,7 @@ class CreateHealthBookForPet(forms.ModelForm):
 
         self.request = kwargs.pop('request')
         super(CreateHealthBookForPet, self).__init__(*args, **kwargs)
-        
+
         self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 
@@ -52,7 +52,7 @@ class CreateMedicationForPet(forms.ModelForm):
 
         self.request = kwargs.pop('request')
         super(CreateMedicationForPet, self).__init__(*args, **kwargs)
-        
+
         self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 
@@ -62,6 +62,6 @@ class CreateMedicationForPet(forms.ModelForm):
         fields = ('pet', 'med_name',
                 'med_start', 'med_end','time','dosage')
 
-        pet = CustomModelMultipleChoiceField(
+        pet=CustomModelMultipleChoiceField(
         queryset=None,
         widget=CheckboxSelectMultiple)

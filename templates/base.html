@@ -43,7 +43,7 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'friends:search_for_friends' %}" title="Search for users"><i class="fas fa-search"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friend_request_list' %}" title="Friend requests"><i class="fas fa-plus-square"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'friends:see_friends' %}" title="Friend list"><i class="fas fa-users"></i></a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" title="Sign out"><i class="fas fa-sign-out-alt"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" title="Sign out" id="log_out" name="log_out"><i class="fas fa-sign-out-alt"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -51,9 +51,9 @@
 
     {% else %}
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'register'%}">Create an account</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Log in</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register'%}" id="create_account" name="create_account">Create an account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" id="log_in" name="log_in">Log in</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" id="about" name="about">About</a></li>
                 </ul>
             </div>
         </div>

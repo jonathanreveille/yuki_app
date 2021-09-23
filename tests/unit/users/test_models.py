@@ -10,14 +10,18 @@ class UsersModelUnitTest(TestCase):
         # Set up non-modified objects used by all test methods
         role = Role.objects.create(name="Owner")
 
-        User.objects.create(
+        user = User.objects.create(
             username= "jonny",
             role=role,
             email="j@mail.com",
             location="Boulogne-Billancourt",
             postal_code=92100,
-            avatar="avatar_profile.jpg"
+            avatar="avatar_profile.jpg",
+            password=""
         )
+
+        user.set_password("hellOYuki")
+        user.save()
 
         # Runs once for every test method to setup clean data.
         self.role = Role.objects.get(name="Owner")

@@ -7,7 +7,7 @@ class PetCreationForm(forms.ModelForm):
 
     class Meta:
         model = Pet
-        fields =  ("name", "age", "weight", "specie", "avatar")
+        fields =  ("name", "age", "weight", "specie")
 
 
 class PetEditForm(forms.Form):

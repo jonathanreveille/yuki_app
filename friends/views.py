@@ -1,19 +1,20 @@
-from notifications.models import Notification
-from django.http.response import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist, FieldError
+from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForFriendForm, CreateCatsitterForm
-from users.models import User
 from .models import  Catsitter, FriendRequest, FriendList
+from animals.models import Pet
+from users.models import User
 from notifications.models import Notification
+from healthbook.models import HealthBook
+from schedules.models import Schedule
 
 
 @login_required
@@ -250,6 +251,7 @@ class CatsitterCreateView(LoginRequiredMixin, CreateView):
         return super(CatsitterCreateView, self).form_valid(form)
 
 class CatsitterList(LoginRequiredMixin, ListView):
+    """CBV for catsitter list available for user"""
 
     model = Catsitter
     context_object_name = "catsitters"
@@ -265,6 +267,7 @@ class CatsitterList(LoginRequiredMixin, ListView):
 
 @login_required
 def delete_catsitter_request(request):
+    """ Delete a catsitter requests"""
 
     if request.method == "POST":
         user =  request.POST['user']
@@ -277,16 +280,22 @@ def delete_catsitter_request(request):
     return redirect('friends:catsitter_list')
 
 @login_required
-def catsitter_get_cat_info(request):
+def catsitter_get_cat_info(request, pk):
     """if the user is is_catsitter, then
     he can access all the data of the cat
     that he needs to take care of"""
-    # do something to grab the catsitter object
-    # and give access in context to the cat's data
-    # add context in return render(....,context)
-    return render(request, 'friends/catsitter_cat_info.html')
 
+    pet = Pet.objects.get(pk=pk)
+    healthbook = HealthBook.objects.filter(pet=pet.pk)
+    schedule = Schedule.objects.filter(pet=pet.pk).order_by("time")
 
+    context = {
+        'pet': pet,
+        'healthbook': healthbook,
+        'schedule': schedule,
+    }
+
+    return render(request, 'friends/catsitter_cat_info.html', context)
 
 
 

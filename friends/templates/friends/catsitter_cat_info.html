@@ -14,7 +14,37 @@
                 <div class="col-lg-8">
 
                     <div clas="container">
-                        <p> Hello world, suitcase of the cat  </p>
+                        <p> Hello world, suitcase of the cat</p>
+
+                        {% if pet %}
+                            <p> Data about : {{pet.name}}</p>
+                        {% endif %}
+
+                        {% if healthbook %}
+                            {% for book in healthbook %}
+                                <p>HEALTHBOOK :</p>
+                                <tr>
+                                    <li>Health {{book.pet.name}}</li>
+                                    <li>Sterilize : {{book.sterilize}}</li>
+                                    <li>Vaccinated : {{book.vaccine}}</li>
+                                    <li>Last vaccine : {{book.last_vaccine}}</li>
+                                    <li>Next vaccine :  {{book.next_vaccine}}</li>
+                                    <li>Vet's name : {{book.veterinary_name}}</li>
+                                    <li>Vet's phone : {{book.veterinary_phone}}</li>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if schedule %}
+                        </br>
+                        <p> TASKS </p>
+                            {% for t in schedule %}
+                                <tr>
+                                    <li>Task : {{t.task.description}} at <b>{{t.time}}</b></li>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+
                     </div>
 
                 </div>

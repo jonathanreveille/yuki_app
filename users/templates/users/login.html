@@ -12,19 +12,17 @@
     <section class="page-section bg-secondary">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8"> 
+                <div class="col-lg-8">
                     <a class="button-custom"  href="{% url 'animals:home' %}"> Go back to Home </a>
                     <hr>
-
                     <h1>Connect to your account </h1>
-
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ form|crispy }}
-                        <input type="Submit" value="Log in"/>
-                    </form>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <input type="Submit" name="submit" id="submit" value="Log in"/>
+                        </form>
                     <br/>
-                    <p><a href="{% url 'register' %}">Do you need an account ?</a></p> 
+                    <p><a href="{% url 'register' %}">Do you need an account ?</a></p>
                 </div>
             </div>
         </div>
