@@ -1,0 +1,223 @@
+// Styling for dashboard of user with Flexbox
+.flex-box{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding:3rem;
+}
+
+.flex-box-item{
+    color: #FEFEFE;
+    font-size: 1.1rem;
+    padding: 2rem;
+    flex-grow: 1;
+    margin-left: 2rem;
+    margin-right:2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    width: 120px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2.5px 5px rgba(25, 25, 25, 0.1);
+    background: #9cd9b1;
+    background: linear-gradient(to bottom, #8463c3, #117f69);
+    border-radius: 10%;
+}
+
+a{
+    color:white;
+}
+
+.nav-link-custom{
+    display: block;
+    padding: 0.5rem 1rem;
+    color: whitesmoke;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.nav-link-custom:hover{
+    color:#332155;
+}
+
+.button-custom{
+    padding : 10px;
+    border-radius: 6%;
+    text-decoration: none;
+}
+
+.button-custom:hover{
+    border : 1px solid black;
+    background-color: #9cd9b167;
+    text-decoration: none;
+    color:black;
+}
+
+// Styling for tables task and schedules
+td, th{
+    padding: 0.5rem;
+}
+
+
+// Styling for notification button
+.notification-badge{
+    transition:0.3s;
+}
+
+.notification-badge:hover{
+    opacity: 0.75;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dropdown{
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content{
+    position: absolute;
+    background-color:#f1f1f1;
+    min-width : 350px;
+    box-shadow: 0px 2px 2px 2px rgba(0,0,0,2);
+    z-index: 1;
+    font-size: 0.9rem;
+}
+
+.dropdown-content a {
+    color: #000;
+    padding:12px;
+    text-decoration:none;
+    display:block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown-item-parent{
+    position: relative;
+    display:block;
+}
+
+.dropdown-item-close{
+    position:absolute;
+    top:0;
+    right:0;
+    font-size : 1.8rem;
+    padding-right:5px;
+    transition:0.3s;
+}
+
+.dropdown-item-close:hover{
+    color: rgb(119, 8, 8);
+    transition: 0.3s;
+    cursor : pointer;
+}
+
+//  Style for profile picture
+.avatar-profile img{
+    border-radius : 100%;
+    border: 2px black solid;
+}
+
+
+// Styling for profile boxes when searching for friends or catsitters
+.profile-box{
+    // border: 1px solid black;
+    box-shadow: 0 2.5px 10px #8565c4;
+    border-radius:10px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-evenly;
+    margin-bottom: 1rem;
+    margin-top:1rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    padding-right:2rem;
+    padding-left:2rem;
+    background-color: #9cd9b1;
+}
+
+.profile-card{
+    padding-top:2rem;
+    text-align: justify;
+}
+
+
+// Styling for user's profile page
+.profile-box2{
+    // border: 1px solid black;
+    box-shadow: 0 2.5px 10px #8565c4;
+    border-radius:10px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-evenly;
+    margin-bottom: 1rem;
+    margin-top:1rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    padding-right:2rem;
+    padding-left:2rem;
+    background-color: #9cd9b1;
+}
+
+.user-profile-information{
+    padding-top:1rem;
+    text-align: justify;
+}
+
+
+// Styling for friends cards
+.btn-white {
+    background-color: #fff;
+    border-color: #e7eaf3;
+}
+.radius-15 {
+    border-radius: 15px;
+}
+.contacts-social div {
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    background: #ffffff;
+    border: 1px solid #eeecec;
+    text-align: center;
+    border-radius: 50%;
+    color: #2b2a2a;
+}
+
+
+// Styling for tasks
+
+.task-box{
+    // border: 1px solid black;
+    box-shadow: 0 2.5px 10px #8565c4;
+    border-radius:10px;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-evenly;
+    margin-bottom: 1rem;
+    margin-top:1rem;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    padding-right:2rem;
+    padding-left:2rem;
+    background-color: #9cd9b1;
+}
+
+
+// Styling  for messenger
+.message-zone{
+    background-color: rgb(246, 240, 222);
+    border-radius:10px;
+    padding-top:2rem;
+    padding-bottom:2rem;
+    box-shadow: 0 2.5px 5px rgba(52, 51, 51, 0.608);
+}
