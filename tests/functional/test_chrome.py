@@ -100,6 +100,7 @@ class ChromeFunctionalTestCase(LiveServerTestCase):
         cls.driver.quit()
 
     def test_if_user_can_login(self):
-        self.driver.get("http://localhost:8000/")
+        # self.driver.get("http://localhost:8000/")
+        self.driver.get(self.live_server_url)
         self.driver.find_element_by_name('log_in').click()
         self.assertIn("Login !", self.driver.title)
