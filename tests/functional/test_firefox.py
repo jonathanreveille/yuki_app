@@ -1,4 +1,4 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.staticfiles.testing import LiveServerTestCase
 from django.utils import timezone
 
 from settings.base import BASE_DIR
@@ -17,11 +17,10 @@ firefox_options.headless = True
 firefox_options.add_argument('--window-size=1920x1080')
 
 
-
-class FirefoxFunctionalTestCase(StaticLiveServerTestCase):
-    """functional test for Firefox browser with
-    tchappuis-webdriver (version handler)
-    in headless mode"""
+class FirefoxFunctionalTestCase(LiveServerTestCase):
+    """Functional test for Firefox browser with
+    tchappuis-webdriver (version handler) in
+    headless mode"""
 
     @classmethod
     def setUpClass(cls):
@@ -100,15 +99,6 @@ class FirefoxFunctionalTestCase(StaticLiveServerTestCase):
         cls.driver.quit()
 
     def test_if_user_can_login(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element_by_id('log_in').click()
-        self.driver.find_element_by_id('id_username').send_keys(
-            "UncleRoger"
-        )
-        self.driver.find_element_by_id('id_password').send_keys(
-            "hellOAria"
-        )
-        self.driver.find_element_by_id('submit').click()
-        self.driver.find_element_by_id('log_out').click()
+        self.driver.get("http://localhost:8000/")
+        self.driver.find_element_by_name('log_in').click()
         self.assertIn("Login !", self.driver.title)
-

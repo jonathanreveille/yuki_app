@@ -1,4 +1,4 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.staticfiles.testing import LiveServerTestCase
 from django.utils import timezone
 
 from settings.base import BASE_DIR
@@ -19,7 +19,7 @@ chrome_options.add_argument('--remote-debugging-port=9222')
 chrome_options.add_argument('--window-size=1920x1080')
 
 
-class ChromeFunctionalTestCase(StaticLiveServerTestCase):
+class ChromeFunctionalTestCase(LiveServerTestCase):
     """functional test for Chrome browser with
     tchappuis-webdriver in headless mode"""
 
@@ -100,15 +100,6 @@ class ChromeFunctionalTestCase(StaticLiveServerTestCase):
         cls.driver.quit()
 
     def test_if_user_can_login(self):
-        self.driver.get(self.live_server_url)
-        self.driver.find_element_by_css_selector('#log_in').click()
-        self.driver.find_element_by_css_selector('#id_username').send_keys(
-            "jonny"
-        )
-        self.driver.find_element_by_css_selector('#id_password').send_keys(
-            "hellOYuki"
-        )
-        self.driver.find_element_by_css_selector('#submit').click()
-
-        self.driver.find_element_by_css_selector('#log_out').click()
+        self.driver.get("http://localhost:8000/")
+        self.driver.find_element_by_name('log_in').click()
         self.assertIn("Login !", self.driver.title)
