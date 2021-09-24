@@ -6,7 +6,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
 DEBUG = False
-ALLOWED_HOSTS = ['68.183.0.190', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['161.35.87.89', 'localhost', '127.0.0.1']
 
 DATABASES = {
     'default': {
