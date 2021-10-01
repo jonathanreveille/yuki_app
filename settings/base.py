@@ -101,6 +101,7 @@ if DEBUG == True:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
 if DEBUG == False:
     DATABASES = {
     'default': {
@@ -149,13 +150,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+if DEBUG ==  True:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'static/assets/img')
+    MEDIA_URL = 'img/'
+else:
+    STATIC_URL = '/staticfiles/'
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'staticfiles')
+    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/assets/img')
+    MEDIA_URL = 'assets/img/'
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -167,10 +181,6 @@ AUTH_USER_MODEL = 'users.User'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL  = 'login'
 LOGIN_REDIRECT_URL = 'home'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/assets/img')
-MEDIA_URL = 'img/'
-
 
 sentry_sdk.init(
     dsn=os.getenv("SENTRY"),
