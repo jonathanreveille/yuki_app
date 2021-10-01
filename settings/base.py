@@ -17,7 +17,6 @@ import os
 from sentry_sdk.integrations import django
 from dotenv import load_dotenv
 
-import django_heroku
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -39,7 +38,7 @@ DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapps.com']
 
-# Application definitio
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -176,5 +175,3 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
-
-django_heroku.settings(locals())
