@@ -17,7 +17,7 @@ import os
 from sentry_sdk.integrations import django
 from dotenv import load_dotenv
 
-
+import django_heroku
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -175,3 +175,7 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+if os.environ.get('ENV','development')=='production':
+    django_heroku.settings(locals())
+
