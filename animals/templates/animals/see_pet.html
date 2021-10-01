@@ -20,7 +20,7 @@
 
                         {% for pet in user_pets %}
                         <div class="profile-box2">
-                            <div class="avatar-profile"><img src="{% static 'assets' %}/{{pet.avatar.url}}" width=200 height/></div>
+                            <div class="avatar-profile"><img src="{% static 'assets/img' %}/{{pet.avatar.url}}" width=200 height/></div>
                             <div class="user-profile-information">
                                 <div> {{pet.name|capfirst}}</div>
                                 <div> Age : {{pet.age}}</div>
