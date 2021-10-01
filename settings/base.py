@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 import os
+
+from sentry_sdk.integrations import django
 from dotenv import load_dotenv
+
+import django_heroku
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -30,11 +34,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '161.35.87.89']
+DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
-# Application definition
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapps.com']
+
+# Application definitio
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -171,3 +176,5 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+django_heroku.settings(locals())
