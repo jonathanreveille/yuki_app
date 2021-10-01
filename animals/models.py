@@ -19,7 +19,7 @@ class Pet(models.Model):
     name = models.CharField(max_length=100)
     age =  models.BigIntegerField(null=True, blank=True)
     weight = models.FloatField(max_length=6, null=True, blank=True)
-    avatar =  models.URLField(blank=True, default="img/default_pet.jpg")
+    avatar =  models.ImageField(blank=True, default="default_pet.jpg")
 
     def __str__(self):
         return f"{self.name}"
