@@ -20,8 +20,8 @@
 
                         {% for pet in user_pets %}
                         <div class="profile-box2">
-                            {% comment %} <div class="avatar-profile"><img src="{% static 'assets' %}/{{pet.avatar.url}}" width=200 height/></div> {% endcomment %}
-                            <div class="avatar-profile"><img src="{% static pet_instance.avatar.url' %}" width=200 height/></div>
+                            <div class="avatar-profile"><img src="{% static 'assets' %}/{{pet.avatar.url}}" width=200 height/></div>
+                            {% comment %} <div class="avatar-profile"><img src="{% static pet_instance.avatar.url' %}" width=200 height/></div> {% endcomment %}
 
                             <div class="user-profile-information">
                                 <div> {{pet.name|capfirst}}</div>
