@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
 
 DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapps.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
 # Application definition
 
@@ -101,7 +101,17 @@ if DEBUG == True:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
+if DEBUG == False:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("NAME_DB"),
+        'HOST': 'localhost',
+        'PORT': 5432,
+        'USER': os.getenv("USER_DB"),
+        'PASSWORD': os.getenv("PASS_DB")
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
