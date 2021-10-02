@@ -46,9 +46,12 @@ def search_friends_result(request):
             try:
                 user_search = form.cleaned_data.get('query_friend_search')
                 users_found = User.objects.filter(username__icontains=user_search)
-            except Exception as e:
-                print(e)
-            users_found = User.objects.filter(postal_code=user_search)
+                if not users_found:
+                    users_found = User.objects.filter(postal_code=user_search)
+            except User.DoesNotExist as e:
+                raise e
+            except ValueError as e:
+                raise e
 
             context = {
                 'user_search' : user_search,
