@@ -21,7 +21,7 @@
                     <div class="profile-box">
 
                         <div class="avatar-profile">
-                                <img src="{% static 'assets' %}/{{friend.friend.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center"/>
+                                {% comment %} <img src="{% static 'assets' %}/{{friend.friend.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center"/> {% endcomment %}
                             </div>
                         <div class="profile-card">
                             {% comment %} <div> Active user : {{friend.user}} - id :{{friend.user.id}}</div> {% endcomment %}
