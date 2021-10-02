@@ -23,7 +23,7 @@
                         {{ form }}
                         <input class="btn btn-secondary bg-info" type="submit" value="Search"/>
                     </form>
-                </div>  
+                </div>
                 <hr>
 
                    <h1 class="text-center"> Search results </h1>
@@ -36,7 +36,7 @@
                           <div class="col-lg-4 col-sm-6 mb-4">
                             <div class="card h-100 pl-4 pr-4 bg-primary text-center pt-4">
                             <div class="p-1 radius-15">
-                              <img src="{% static 'assets' %}/{{user.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center" alt="">
+                              {% comment %} <img src="{% static 'assets' %}/{{user.avatar.url}}" width="120" height="120" class="rounded-circle shadow p-1 bg-white justify-content-center" alt=""> {% endcomment %}
                                 <div class="card-body text-center">
                                     <h5 class="mb-0 mt-5 text-white">{{ user.role }}</h5>
                                     <div>{{user.username}}</div>
@@ -60,7 +60,7 @@
                     <p> Sorry, no one is registered under this name {{user_search}}</p>
                 {% endfor %}
               </div>
-            </div>  
+            </div>
         </div>
     </div>
 </section>
