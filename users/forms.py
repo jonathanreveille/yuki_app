@@ -1,7 +1,8 @@
-from django.contrib.auth import forms as auth_forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import forms as auth_forms, get_user_model
+from django.contrib.auth.models import BaseUserManager
+# from django.contrib.auth import get_user_model
 
-# on pourra créer nos propres formulaire de création 
+# on pourra créer nos propres formulaire de création
 #ou de mofidification
 
 class UserCreationForm(auth_forms.UserCreationForm):

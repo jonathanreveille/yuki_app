@@ -14,6 +14,38 @@ class Role(models.Model):
 
 class UsersManager(BaseUserManager):
 
+    def create_user(self, username, email, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+
+    def create_superuser(self, username, email, password=None):
+        """creates a super user with the given email, date of
+        birth, and email"""
+
+        user = self.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+
     def get_all_by_term(self, term):
         """method for autocomplete method to search in
         db while user is typing his query search"""
@@ -46,3 +78,5 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.username}'
+
+
