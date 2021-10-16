@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: yuki_app
+      POSTGRES_USER: yuki_app
+      POSTGRES_PASSWORD: yuki_app
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./src:/code # ca veut dire que mes fichiers seront situé dans le dossier /code à la racine du projet dans le conteneur
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
