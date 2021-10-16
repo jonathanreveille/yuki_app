@@ -1,6 +1,6 @@
-from settings.base import *
+import os
+from core.base import *
 from dotenv import load_dotenv
-
 
 
 load_dotenv()

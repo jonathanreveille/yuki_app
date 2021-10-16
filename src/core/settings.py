@@ -16,10 +16,11 @@ import os
 
 from sentry_sdk.integrations import django
 from dotenv import load_dotenv
-
+import django_heroku
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+
 
 load_dotenv()
 
@@ -71,7 +72,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     {
@@ -90,11 +91,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
 
 if DEBUG == False:
     DATABASES = {
@@ -105,15 +107,15 @@ if DEBUG == False:
             'PORT': 5432,
             'USER': os.getenv("USER_DB"),
             'PASSWORD': os.getenv("PASS_DB")
-        }
     }
+}
 
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.sqlite3',
-    #         'NAME': BASE_DIR / 'db.sqlite3',
-    #     }
-    # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -188,6 +190,9 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
 )
+
+if os.environ.get('ENV','development')=='production':
+    django_heroku.settings(locals())
 
 # Put custom settings in local_settings.py
 try:
