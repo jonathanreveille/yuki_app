@@ -1,5 +1,6 @@
 -i https://pypi.org/simple
 asgiref==3.4.1
+boto3==1.19.2
 certifi==2021.5.30
 click==8.0.1
 coverage==5.5
