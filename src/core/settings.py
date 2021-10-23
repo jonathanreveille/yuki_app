@@ -113,9 +113,9 @@ if DEBUG == False:
 
 
 # Amazon S3 configuration 
-AWS_S3_ACCESS_KEY_ID = os.getenv('AWS_S3_ID')
-AWS_S3_SECRET_ACCESS_KEY = os.getenv('AWS_S3_SECRET')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ID')
+AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = "public-read"
