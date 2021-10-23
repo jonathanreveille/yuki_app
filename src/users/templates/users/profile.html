@@ -16,8 +16,12 @@
                     <h1> Your Profile </h1>
                         <div class="profile-box2">
 
-                            <div class="avatar-profile"><img src="{% static 'dist/assets' %}{{user.avatar.url}}" width=200
-                            height=200/></div>
+                            {% if user.avatar.url %}
+                            <div class="avatar-profile"><img src="{{ user.avatar.url }}" width=200 height=200/></div>
+                            {% else %}
+                            <div class="avatar-profile"><img src="{% static 'dist/assets/img/avatar_profile.jpg' %}"
+                            width=200 height=200/></div>
+                            {% endif %}
 
                             <div class="user-profile-information">
                                 <div> Username: {{ user.username }}</div>

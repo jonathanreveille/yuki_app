@@ -13,7 +13,7 @@
                 <div class="col-lg-8">
                     <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
                     <hr>
-                    <h1>Edit profile </h1>
+                    <h1>Edit profile</h1>
                         <form method="post" action="{% url 'users:edit_profile' %}" class="edit_profile" id="edit_profile"
                         enctype="multipart/form-data">
                                 {% csrf_token %}
@@ -35,8 +35,8 @@
                                 <label> {{ user_form.location.label }}</label>
                                 {{user_form.location}}
                                 <br/>
-                                {% comment %} <label> {{ user_form.avatar.label }}</label>
-                                {{user_form.avatar}} {% endcomment %}
+                                {{ user_form.avatar.label }}</label>
+                                {{user_form.avatar}}
                                 <br/>
                                 <label> {{ user_form.postal_code.label }}</label>
                                 {{user_form.postal_code}}
