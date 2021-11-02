@@ -23,3 +23,4 @@ typing-extensions==3.10.0.2 ; python_version < '3.8'
 urllib3==1.26.7
 whitenoise==5.3.0
 zipp==3.6.0
+tchappui-webdrivers==0.3.7

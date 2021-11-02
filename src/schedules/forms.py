@@ -10,6 +10,7 @@ class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
         """ Customises the labels for checkboxes"""
         return "%s" % pet.name
 
+
 class CreateScheduleForPet(forms.ModelForm):
     """method to create a custom form
     to create a schedule for a cat
@@ -30,15 +31,15 @@ class CreateScheduleForPet(forms.ModelForm):
             user=self.request.user)
 
     class Meta:
-
         model = Schedule
         fields = ('pet', 'task', 'time',)
-
         pet = CustomModelMultipleChoiceField(
-        queryset=None,
-        widget=CheckboxSelectMultiple
-        )
+            queryset=None,
+            widget=CheckboxSelectMultiple)
 
 
 class SearchPetScheduleForm(forms.Form):
-    query_search = forms.CharField(label="Type animal name for full schedule",max_length=200)
+    query_search = forms.CharField(
+        label="Type animal name for full schedule",
+        max_length=200
+        )

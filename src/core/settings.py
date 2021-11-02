@@ -10,14 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
-
 import os
-
-from sentry_sdk.integrations import django
-from dotenv import load_dotenv
 import django_heroku
-
+from pathlib import Path
+from dotenv import load_dotenv
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -99,7 +95,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-if DEBUG == False:
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -108,11 +104,10 @@ if DEBUG == False:
             'PORT': 5432,
             'USER': os.getenv("USER_DB"),
             'PASSWORD': os.getenv("PASS_DB")
-    }
-}
+            }
+        }
 
-
-# Amazon S3 configuration 
+# Amazon S3 configuration
 AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ID')
 AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
@@ -125,7 +120,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 
 # Media part with custom storage class
-if DEBUG == False:
+if not DEBUG:
     DEFAULT_FILE_STORAGE = 'core.storage_backends.MediaStorage'
 else:
     DEFAULT_FILE_STORAGE = 'core.storage_backends.DevMediaStorage'
@@ -170,8 +165,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -181,10 +174,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_URL  = 'login'
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
-
-
 
 sentry_sdk.init(
     dsn=os.getenv("SENTRY"),
@@ -200,7 +191,7 @@ sentry_sdk.init(
     send_default_pii=True
 )
 
-if os.environ.get('ENV','development')=='production':
+if os.environ.get('ENV', 'development') == 'production':
     django_heroku.settings(locals())
 
 # Put custom settings in local_settings.py

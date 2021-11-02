@@ -22,28 +22,37 @@ from django.conf.urls.static import static
 
 from users import views as user_views
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='animals/home.html'), name='home'),
-    path('register/', user_views.register, name='register'),
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html', next_page="login"), name='logout'),
-    path('profile/', user_views.profile, name='profile'),
-    path('animals/', include('animals.urls', namespace='animals')),
-    path('users/', include('users.urls', namespace='users')),
-    path('schedules/', include('schedules.urls', namespace='schedules')),
-    path('healthbook/', include('healthbook.urls', namespace='healthbook')),
-    path('messenger/', include('messenger.urls', namespace="messenger")),
-    path('friends/', include('friends.urls', namespace="friends")),
-    path('autocomplete/', include('autocomplete.urls', namespace='autocomplete')),
-    # path('notifications/', include('notifications.urls', namespace="notifications")),
-    path('sentry-debug/', trigger_error),
+    path('', TemplateView.as_view(
+        template_name='animals/home.html'), name='home'),
+    path('register/',
+         user_views.register, name='register'),
+    path('login/',
+         auth_views.LoginView.as_view(template_name='users/login.html'),
+         name='login'),
+    path('logout/',
+         auth_views.LogoutView.as_view(template_name='users/logout.html',
+                                       next_page="login"), name='logout'),
+    path('profile/',
+         user_views.profile,
+         name='profile'),
+    path('animals/',
+         include('animals.urls',
+                 namespace='animals')),
+    path('users/', include('users.urls',
+                           namespace='users')),
+    path('schedules/', include('schedules.urls',
+                               namespace='schedules')),
+    path('healthbook/', include('healthbook.urls',
+                                namespace='healthbook')),
+    path('messenger/', include('messenger.urls',
+                               namespace="messenger")),
+    path('friends/', include('friends.urls',
+                             namespace="friends")),
+    path('autocomplete/', include('autocomplete.urls',
+                                  namespace='autocomplete')),
     ]
 
-
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

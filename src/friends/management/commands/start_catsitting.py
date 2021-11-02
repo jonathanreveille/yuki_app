@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
 
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 from friends.models import Catsitter
+
 
 class Command(BaseCommand):
 

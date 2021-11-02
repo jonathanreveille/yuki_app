@@ -1,4 +1,3 @@
-from healthbook.forms import CreateHealthBookForPet
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -18,7 +17,6 @@ class HealthBookListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """equivalent to context dict to use variables"""
-        
         context = super().get_context_data(**kwargs)
         context["healthbook"] = HealthBook.objects.filter(
             pet__owner=self.request.user)
@@ -28,38 +26,35 @@ class HealthBookListView(LoginRequiredMixin, ListView):
 class HealthBookCreateView(LoginRequiredMixin, CreateView):
     """view to create pet healthbook"""
 
-    model = HealthBook 
+    model = HealthBook
     form_class = CreateHealthBookForPet
     template_name = 'healthbook/healthbook_form.html'
     success_url = reverse_lazy('healthbook:healthbook_list')
 
     def get_form_kwargs(self):
         """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
+        This is necessary to only display members that
+        belong to a given user"""
 
         kwargs = super(HealthBookCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
 
-    
+
 class HealthBookUpdateView(LoginRequiredMixin, UpdateView):
     """update a healthbook of pet"""
-    
     model = HealthBook
     fields = ('pet', 'sterilize', 'vaccine',
-                    'last_vaccine','next_vaccine',
-                    'veterinary_name','veterinary_phone',)
+              'last_vaccine', 'next_vaccine',
+              'veterinary_name', 'veterinary_phone', )
     success_url = reverse_lazy('healthbook:healthbook_list')
 
 
-####################################
-######### MEDICATION ZONE ##########
-####################################
-
+# MEDICATION ZONE
 class MedicationListView(LoginRequiredMixin, ListView):
     """view to see all medications for a pet"""
     model = Medication
-    context_object_name = 'medication' 
+    context_object_name = 'medication'
     template_name = 'healthbook/medication_list.html'
 
     def get_context_data(self, **kwargs):
@@ -81,7 +76,8 @@ class MedicationCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
+        This is necessary to only display members that
+        belong to a given user"""
 
         kwargs = super(MedicationCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
@@ -95,7 +91,7 @@ class MedicationUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Medication
     fields = ('pet', 'med_name',
-                'med_start', 'med_end','time','dosage')
+              'med_start', 'med_end', 'time', 'dosage')
     success_url = reverse_lazy('healthbook:healthbook_list')
 
 

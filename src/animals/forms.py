@@ -2,12 +2,13 @@ from django import forms
 
 from .models import Pet
 
+
 class PetCreationForm(forms.ModelForm):
     """Forms to create an animal for a owner"""
 
     class Meta:
         model = Pet
-        fields =  ("name", "age", "weight", "specie")
+        fields = ("name", "age", "weight", "specie")
 
 
 class PetEditForm(forms.Form):

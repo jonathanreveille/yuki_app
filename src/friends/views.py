@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForFriendForm, CreateCatsitterForm
-from .models import  Catsitter, FriendRequest, FriendList
+from .models import Catsitter, FriendRequest, FriendList
 from animals.models import Pet
 from users.models import User
 from notifications.models import Notification
@@ -25,7 +25,7 @@ def search_for_friends(request):
     form = SearchForFriendForm()
 
     context = {
-        'form' : form,
+        'form': form,
         }
 
     return render(request, 'friends/search_friends_result.html', context)
@@ -43,7 +43,9 @@ def search_friends_result(request):
 
             try:
                 user_search = form.cleaned_data.get('query_friend_search')
-                users_found = User.objects.filter(username__icontains=user_search)
+                users_found = User.objects.filter(
+                    username__icontains=user_search
+                    )
                 if not users_found:
                     users_found = User.objects.filter(postal_code=user_search)
                     if not users_found:
@@ -53,18 +55,18 @@ def search_friends_result(request):
                 print(e)
 
             context = {
-                'user_search' : user_search,
+                'user_search': user_search,
                 'users_found': users_found,
-                'form':form,
+                'form': form,
             }
 
         return render(request, 'friends/search_friends_result.html', context)
 
     else:
-
         form = SearchForFriendForm()
 
-    return render(request, 'friends/search_friends_result.html', {'form':form})
+    return render(request, 'friends/search_friends_result.html',
+                  {'form': form})
 
 
 @login_required
@@ -83,7 +85,10 @@ def send_friend_request(request, pk):
 
     if created:
         friend_request.save()
-        notification = Notification.objects.create(notification_type=1, from_user=request.user, to_user=receiver, friend_request=friend_request)
+        Notification.objects.create(notification_type=1,
+                                    from_user=request.user,
+                                    to_user=receiver,
+                                    friend_request=friend_request)
 
     return render(request, 'animals/home.html')
 
@@ -118,11 +123,13 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
         If a user clicks on the message, we update
         the field is_read of Messenger model"""
 
-        friend_request = FriendRequest.objects.filter(receiver=self.request.user)
+        friend_request = FriendRequest.objects.filter(
+            receiver=self.request.user
+            )
         return friend_request
 
 
-class FriendRequestDeleteView(LoginRequiredMixin,DeleteView):
+class FriendRequestDeleteView(LoginRequiredMixin, DeleteView):
     """class view that handles the decline of a
     friend request"""
 
@@ -136,7 +143,8 @@ class FriendRequestDeleteView(LoginRequiredMixin,DeleteView):
         If a user clicks on the message, we update
         the field is_read of Messenger model"""
 
-        friend_request = FriendRequest.objects.filter(receiver=self.request.user)
+        friend_request = FriendRequest.objects.filter(
+            receiver=self.request.user)
         return friend_request
 
 
@@ -150,23 +158,23 @@ def accept_friend_request(request):
         sender_id = request.POST['from_user']
         receiver_id = request.POST['to_user']
 
-        sender = User.objects.get(id=sender_id) # get user
-        receiver = User.objects.get(id=receiver_id) # get friend
+        sender = User.objects.get(id=sender_id)  # get user
+        receiver = User.objects.get(id=receiver_id)  # get friend
         sender.friends.add(receiver)  # add_receiver
-        receiver.friends.add(sender) # add_sender
+        receiver.friends.add(sender)  # add_sender
 
         friends = FriendList.objects.get_or_create(
-            user = receiver,
-            friend = sender,
+            user=receiver,
+            friend=sender,
         )
 
         FriendList.objects.get_or_create(
-            user = sender,
-            friend = receiver,
+            user=sender,
+            friend=receiver,
         )
 
         context = {
-            'friends' : friends
+            'friends': friends
         }
 
         friend_added = FriendRequest.objects.filter(receiver=request.user,
@@ -196,7 +204,7 @@ def delete_friend(request):
     """view to delete a friend"""
 
     if request.method == "POST":
-        user =  request.POST['user']
+        user = request.POST['user']
         friend = request.POST['to_delete_user']
 
         # delete the friend request so user can add each other again
@@ -204,8 +212,8 @@ def delete_friend(request):
         fr.delete()
 
         # delete the relationship for each user
-        fl = FriendList.objects.filter(user=user, friend=friend) #delete for user
-        fl_friend = FriendList.objects.filter(user=friend, friend=user) #delete for friend
+        fl = FriendList.objects.filter(user=user, friend=friend)
+        fl_friend = FriendList.objects.filter(user=friend, friend=user)
         fl.delete()
         fl_friend.delete()
 
@@ -213,7 +221,7 @@ def delete_friend(request):
         sender = User.objects.get(id=user)
         receiver = User.objects.get(id=friend)
         sender.friends.remove(receiver)  # delete_friend_of_user
-        receiver.friends.remove(sender) # delete_user_for_friend
+        receiver.friends.remove(sender)  # delete_user_for_friend
 
         messages.success(request, "You have deleted your friend")
 
@@ -228,8 +236,8 @@ def delete_friend(request):
 
     return render(request, 'friends/friend_delete.html', context)
 
-######### CATSITTER CLASS VIEWS ###############
 
+# CATSITTER CLASS VIEWS
 class CatsitterCreateView(LoginRequiredMixin, CreateView):
     """view to create a new task there
     makes a post request and creates an item,
@@ -242,7 +250,8 @@ class CatsitterCreateView(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
+        This is necessary to only display members that belong
+        to a given user"""
 
         kwargs = super(CatsitterCreateView, self).get_form_kwargs()
         kwargs['request'] = self.request
@@ -252,34 +261,40 @@ class CatsitterCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super(CatsitterCreateView, self).form_valid(form)
 
+
 class CatsitterList(LoginRequiredMixin, ListView):
     """CBV for catsitter list available for user"""
 
     model = Catsitter
-    context_object_name = "catsitters"
+    context_object_name = 'catsitters'
     template_name = 'friends/catsitter_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if Catsitter.objects.filter(is_owned=self.request.user).exists():
-            context["catsitters"] = context["catsitters"].filter(is_owned=self.request.user)
+            context["catsitters"] = context["catsitters"].filter(
+                is_owned=self.request.user)
         elif Catsitter.objects.filter(is_catsitter=self.request.user).exists():
-            context["catsitters"] = context["catsitters"].filter(is_catsitter=self.request.user)
+            context["catsitters"] = context["catsitters"].filter(
+                is_catsitter=self.request.user)
         return context
+
 
 @login_required
 def delete_catsitter_request(request):
     """ Delete a catsitter requests"""
 
     if request.method == "POST":
-        user =  request.POST['user']
+        user = request.POST['user']
         friend = request.POST['to_delete_catsitter']
     try:
-        Catsitter.objects.filter(is_owned=user, is_catsitter=friend).first().delete()
-    except ObjectDoesNotExist as e:
+        Catsitter.objects.filter(is_owned=user,
+                                 is_catsitter=friend).first().delete()
+    except ObjectDoesNotExist:
         pass
 
     return redirect('friends:catsitter_list')
+
 
 @login_required
 def catsitter_get_cat_info(request, pk):
@@ -298,56 +313,3 @@ def catsitter_get_cat_info(request, pk):
     }
 
     return render(request, 'friends/catsitter_cat_info.html', context)
-
-
-
-# utilisateur qui a appartient le chat
-# autre utilisateur qui s'ccoupe du chat
-# date début
-# date fin
-
-# is_active = False ou True (False quand le temps définit est passé)
-# mieux que de supprimer la ligne dans la base de données
-
-# interface : permet de voir que ce qui est actif
-# Chaque jour, Django on vérifie avec une méthode
-
-# Django Celery - pour se faire
-# Django façon native
-# Tâche cron qui peut exécuter : on peut aussi l'activer avec Django Celery
-
-# Sur un serveur, je vais exécuté une tâche
-
-# Au niveau application
-
-# Mettre derniere version sur Github
-
-# Quand je serai en production :
-
-    # En production, on utilise pas l'imageField de Django
-    # Les images que les utilisateurs
-    # sont sauvegarder dans un autre serveur par exemple
-    # amazon S3
-
-    # mon serveur application est sur Linux
-    # et on peut sauver les images dans un
-    # bucket Amazon S3
-    # tout ce qui est fichier uploader
-    # on peut créer des buckets 'images, animals'
-    # tout les uploads vont sur Amazon S3 du coup,
-    # ça nous permet d'avoir une flexibilité
-
-    # Pour éviter ce problème en production :
-    # ON sauvegarde les images sur une instance externalisé
-
-    # Google Storage aussi existe et Amazon S3
-    # Si on a les images sauver sur un serveur de déploiement,
-
-    # Ce que je peux faire :
-    # Les éléments de mon image : on créer un compte amazon S3 ou Google Storage
-    # on créer son compte
-    # Google Storage : créer des buckets (animaux, users)
-    # on a des librairies qui peuvent de façon automatique
-#
-# voir PYENV : plusieurs version, plusieurs version de python
-# meilleure gestion, et d'avoir plusieurs versiuon depYthon de facon isolé

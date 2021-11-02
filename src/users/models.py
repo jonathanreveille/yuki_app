@@ -54,12 +54,11 @@ class User(AbstractUser):
     email = models.EmailField('user email', max_length=255, unique=True)
     location = models.CharField(max_length=30, blank=True)
     avatar = models.FileField(default='avatar_profile.jpg')
-    # avatar = models.ImageField(blank=True, default='avatar_profile.jpg')
-
     role = models.ForeignKey('users.Role',
-                        on_delete=models.CASCADE,
-                        related_name="role",
-                        null=True, blank=True)
+                             on_delete=models.CASCADE,
+                             related_name="role",
+                             null=True,
+                             blank=True)
 
     host_capacity = models.IntegerField(null=True, blank=True) # NEW
     location = models.CharField(max_length=100, null=True)

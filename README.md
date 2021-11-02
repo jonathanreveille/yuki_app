@@ -1,11 +1,11 @@
-## welcome to my final project of the Python Developer Course for OpenClassrooms ##
+#### Welcome to my final project of the Python Developer Course for OpenClassrooms
 
-## I have decided to create an application that allows pet owners to set tasks, schedules for their cats ##
+## I have decided to create an application that allows pet owners to set tasks, schedules for their cats
 
 ##### What is in this project ? #####
 
 * Use of Django Framework.
-* Use of OOP and Python 3.7.
+* Use of OOP and Python 3.7
 * Function based views, and Class based views
 * Use of pipenv
 * Django Restful Framework (DRF) - coming soon

@@ -1,6 +1,4 @@
 from django.http.response import HttpResponse
-from friends.models import FriendRequest
-from notifications.models import Notification
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,14 +9,16 @@ from django.db import transaction
 
 from .models import Pet
 from .forms import PetCreationForm, PetEditForm
-from friends.models import FriendRequest  # new line
+from friends.models import FriendRequest
 from messenger.models import Messenger
+from notifications.models import Notification
 
 
 # Create your views here.
 def home(request):
     """view method to see homepage"""
     return render(request, 'animals/home.html')
+
 
 @login_required
 def create_pet(request):
@@ -49,7 +49,8 @@ def create_pet(request):
 
         form = PetCreationForm()
 
-    return render(request, 'animals/pet_form.html', {'form':form})
+    return render(request, 'animals/pet_form.html', {'form': form})
+
 
 @login_required
 def see_pet(request):
@@ -59,7 +60,7 @@ def see_pet(request):
     user_pets = Pet.objects.filter(owner=user)
 
     context = {
-        'user_pets' : user_pets,
+        'user_pets': user_pets,
     }
 
     return render(request, 'animals/see_pet.html', context)
@@ -67,19 +68,18 @@ def see_pet(request):
 
 class PetUpdateView(LoginRequiredMixin, UpdateView):
     """update a pet"""
-
     model = Pet
-    fields = ('name','age','weight')
+    fields = ('name', 'age', 'weight')
     success_url = reverse_lazy('animals:see_pet')
 
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """delete a pet"""
-
     model = Pet
     content_object_name = 'pet'
     template_name = 'animals/pet_confirm_delete.html'
     success_url = reverse_lazy('animals:see_pet')
+
 
 @login_required
 @transaction.atomic
@@ -106,14 +106,13 @@ def change_pet_avatar(request, pk):
             'pet': pet,
             }
 
-    return render(request,'animals/change_pet_avatar.html', context)
+    return render(request, 'animals/change_pet_avatar.html', context)
 
-######################################################
-################## NOTIFICATIONS #####################
-######################################################
 
+# Notifications
 class FriendRequestNotification(View):
-    def get(self, request, notification_pk, friend_request_pk, *args, **kwargs):
+    def get(self, request, notification_pk,
+            friend_request_pk, *args, **kwargs):
         """ grab the notification object, and grab if it's a message
         or a friend request with object_pk"""
         notification = Notification.objects.get(pk=notification_pk)
@@ -121,13 +120,13 @@ class FriendRequestNotification(View):
         notification.user_has_seen = True
         notification.save()
 
-        #return render(request, 'friends/friend_request_detail.html')
-        return redirect('friends:see_friend_request_detail', pk=friend_request.id)
-        # see_friend_request_detail
+        return redirect('friends:see_friend_request_detail',
+                        pk=friend_request.id)
 
 
 class MessageNotification(View):
-    def get(self, request, notification_pk, message_pk, *args, **kwargs):
+    def get(self, request, notification_pk,
+            message_pk, *args, **kwargs):
         """ grab the notification object, and grab if it's a message
         or a friend request with object_pk"""
 

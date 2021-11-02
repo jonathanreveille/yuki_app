@@ -1,17 +1,15 @@
-from friends.models import FriendList
 from django import forms
 from django.forms import CheckboxSelectMultiple
 
 from users.models import User
 from .models import Messenger
-from friends.models import FriendList
-from notifications.models import Notification
 
 
 class CustomModelMultipleChoiceField(forms.ModelMultipleChoiceField):
     def label_from_instance(self, follower):
         """ Customises the labels for checkboxes"""
         return "%s" % follower.username
+
 
 class CreateMessageForUser(forms.ModelForm):
     """method to create a message form
@@ -31,16 +29,14 @@ class CreateMessageForUser(forms.ModelForm):
         user = User.objects.get(username__startswith=self.request.user)
         self.fields['receiver'].queryset = user.friends
 
-
     class Meta:
-
         model = Messenger
-        fields = ('sender','receiver', 'subject', 'content',)
+        fields = ('sender', 'receiver', 'subject', 'content',)
 
         follower = CustomModelMultipleChoiceField(
-        queryset=None,
-        widget=CheckboxSelectMultiple
-        )
+            queryset=None,
+            widget=CheckboxSelectMultiple
+            )
 
 
 class CreateReplyMessageForUser(forms.ModelForm):
@@ -57,18 +53,14 @@ class CreateReplyMessageForUser(forms.ModelForm):
         super(CreateReplyMessageForUser, self).__init__(*args, **kwargs)
 
         self.fields['sender'].queryset = User.objects.filter(
-            username = self.request.user)
-
+            username=self.request.user)
         user = User.objects.get(username__startswith=self.request.user)
         self.fields['receiver'].queryset = user.friends
 
-
     class Meta:
-
         model = Messenger
-        fields = ('sender','receiver', 'subject', 'content',)
-
+        fields = ('sender', 'receiver', 'subject', 'content',)
         follower = CustomModelMultipleChoiceField(
-        queryset=None,
-        widget=CheckboxSelectMultiple
-        )
+            queryset=None,
+            widget=CheckboxSelectMultiple
+            )

@@ -18,8 +18,9 @@ class CreateHealthBookForPet(forms.ModelForm):
     his objects"""
 
     def __init__(self, *args, **kwargs):
-        """ Grants access to the request object so that only members
-        of the current user are given as options"""
+        """ Grants access to the request object so that
+        only members of the current user are given as
+        options"""
 
         self.request = kwargs.pop('request')
         super(CreateHealthBookForPet, self).__init__(*args, **kwargs)
@@ -31,13 +32,13 @@ class CreateHealthBookForPet(forms.ModelForm):
 
         model = HealthBook
         fields = ('pet', 'sterilize', 'vaccine',
-                    'last_vaccine','next_vaccine',
-                    'veterinary_name','veterinary_phone',)
+                  'last_vaccine', 'next_vaccine',
+                  'veterinary_name', 'veterinary_phone',)
 
         pet = CustomModelMultipleChoiceField(
-        queryset=None,
-        widget=CheckboxSelectMultiple
-        )
+            queryset=None,
+            widget=CheckboxSelectMultiple
+            )
 
 
 class CreateMedicationForPet(forms.ModelForm):
@@ -60,8 +61,8 @@ class CreateMedicationForPet(forms.ModelForm):
 
         model = Medication
         fields = ('pet', 'med_name',
-                'med_start', 'med_end','time','dosage')
+                  'med_start', 'med_end', 'time', 'dosage',)
 
-        pet=CustomModelMultipleChoiceField(
-        queryset=None,
-        widget=CheckboxSelectMultiple)
+        pet = CustomModelMultipleChoiceField(
+            queryset=None,
+            widget=CheckboxSelectMultiple)

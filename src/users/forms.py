@@ -1,26 +1,31 @@
 from django.contrib.auth import forms as auth_forms, get_user_model
-from django.contrib.auth.models import BaseUserManager
-# from django.contrib.auth import get_user_model
 
-# on pourra créer nos propres formulaire de création
-#ou de mofidification
 
 class UserCreationForm(auth_forms.UserCreationForm):
-    """Formulaire utiliser pour la creation de nouveau
-    utilisateurs"""
+    """Form used to create a new user"""
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = get_user_model()
-        fields = ('username', 'email', 'first_name', 'email', 'password1', 'password2', 'role')
+        fields = ('username',
+                  'email',
+                  'first_name',
+                  'email',
+                  'password1',
+                  'password2',
+                  'role')
 
 
 class UserChangeForm(auth_forms.UserChangeForm):
-    """Formulaire pour mettre à jour les données de l'utilisateur"""
+    """Form used to update a user's object"""
 
     class Meta(auth_forms.UserChangeForm.Meta):
         model = get_user_model()
-        fields = ('username', 'email', 'first_name', 'role', 'host_capacity', 'location', 'avatar', 'postal_code',  'friends')
-
-
-# class SearchForUserForm(forms.Form):
-#     query_search_user = forms.CharField(label="location",max_length=200)
+        fields = ('username',
+                  'email',
+                  'first_name',
+                  'role',
+                  'host_capacity',
+                  'location',
+                  'avatar',
+                  'postal_code',
+                  'friends')

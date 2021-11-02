@@ -1,7 +1,7 @@
-# from django.contrib.staticfiles.testing import LiveServerTestCase
+# from django.contrib.staticfiles.testing import StaticLiveServerTestCase #  LiveServerTestCase
 # from django.utils import timezone
 
-# from settings.base import BASE_DIR
+# from core.settings import BASE_DIR
 # from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 
@@ -14,12 +14,12 @@
 
 # chrome_options = webdriver.ChromeOptions()
 # chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--window-size=1920x1080')
 # chrome_options.add_argument('--disable-gpu')
 # chrome_options.add_argument('--remote-debugging-port=9222')
-# chrome_options.add_argument('--window-size=1920x1080')
 
 
-# class ChromeFunctionalTestCase(LiveServerTestCase):
+# class ChromeFunctionalTestCase(StaticLiveServerTestCase):
 #     """functional test for Chrome browser with
 #     tchappuis-webdriver in headless mode"""
 

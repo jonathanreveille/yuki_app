@@ -1,7 +1,7 @@
 # from django.contrib.staticfiles.testing import LiveServerTestCase
 # from django.utils import timezone
 
-# from settings.base import BASE_DIR
+# from core.settings import BASE_DIR
 # from selenium import webdriver
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.keys import Keys

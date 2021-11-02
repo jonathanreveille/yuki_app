@@ -5,6 +5,7 @@ from animals.models import Pet, Specie
 from schedules.models import TimeOfDay
 from users.models import User, Role
 
+
 class TestHealthBookandMedicationModels(TestCase):
 
     def setUp(self):

@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
@@ -9,14 +9,13 @@ from django.urls import reverse_lazy
 from .models import Schedule, Task
 from schedules.forms import CreateScheduleForPet, SearchPetScheduleForm
 
-# Create your views here.
+
 class TaskList(LoginRequiredMixin, ListView):
-    """view for the to do section of the 
+    """view for the to do section of the
     application"""
-    
     model = Task
     context_object_name = 'tasks'
-    template_name= 'schedules/task_list.html'
+    template_name = 'schedules/task_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,19 +26,19 @@ class TaskList(LoginRequiredMixin, ListView):
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     """view for task details"""
-    
+
     model = Task
     context_object_name = 'task'
     template_name = 'schedules/task_detail.html'
 
 
 class TaskCreate(LoginRequiredMixin, CreateView):
-    """view to create a new task there 
+    """view to create a new task there
     makes a post request and creates an item,
     CreateView gives us a model form"""
 
     model = Task
-    fields = ('title','category','description','complete')
+    fields = ('title', 'category', 'description', 'complete')
     success_url = reverse_lazy('schedules:task_list')
 
     def form_valid(self, form):
@@ -48,27 +47,22 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
-    """update a task"""
-    
+    """view to update a task"""
     model = Task
-    fields = ('title','description','complete',)
+    fields = ('title', 'description', 'complete',)
     success_url = reverse_lazy('schedules:task_list')
 
 
 class TaskDelete(LoginRequiredMixin, DeleteView):
     """view to delete items from list"""
-   
     model = Task
     content_object_name = 'task'
     success_url = reverse_lazy('schedules:task_list')
 
 
-######################################################
-############## SCHEDULE CAT SECTION ##################
-######################################################
-
-class SchedulePetCreate(LoginRequiredMixin,CreateView):
-    """view to create a schedule for one cat"""
+# SCHEDULE CAT SECTION
+class SchedulePetCreate(LoginRequiredMixin, CreateView):
+    """View to create a schedule for one cat"""
 
     model = Schedule
     form_class = CreateScheduleForPet
@@ -76,8 +70,9 @@ class SchedulePetCreate(LoginRequiredMixin,CreateView):
     success_url = reverse_lazy('schedules:schedule_list')
 
     def get_form_kwargs(self):
-        """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
+        """Passes the request object to the form class.
+        This is necessary to only display members that
+        belong to a given user"""
 
         kwargs = super(SchedulePetCreate, self).get_form_kwargs()
         kwargs['request'] = self.request
@@ -85,22 +80,21 @@ class SchedulePetCreate(LoginRequiredMixin,CreateView):
 
 
 class ScheduleDetailView(LoginRequiredMixin, DetailView):
-    """view to see the details about a task in
+    """View to see the details about a task in
     the schedules"""
-
     model = Schedule
     context_object_name = 'schedule'
     template_name = 'schedules/schedule_detail.html'
 
 
 class ScheduleDeleteView(LoginRequiredMixin, DeleteView):
-    """view to delete a schedule created by
+    """View to delete a schedule created by
     the owner of a pet"""
-
     model = Schedule
     context_object_name = 'schedule'
     template_name = 'schedules/schedule_confirm_delete.html'
     success_url = reverse_lazy('schedules:schedule_list')
+
 
 # CBGV
 class SchedulePetList(LoginRequiredMixin, ListView):
@@ -119,37 +113,35 @@ class SchedulePetList(LoginRequiredMixin, ListView):
         context["form"] = SearchPetScheduleForm()
         return context
 
+
 @login_required
-def schedule_search(request):    
+def schedule_search(request):
     """view that corresponds to the search bar zone,
     that allows to retrieve data schedule from a cat
     from the DB according the cat name"""
 
     if request.method == "GET":
         form = SearchPetScheduleForm(request.GET)
-
         if form.is_valid():
             pet = form.cleaned_data.get("query_search")
             pet_schedule_found = Schedule.objects.filter(
-                pet__name__startswith = pet,
-                pet__owner= request.user,
+                pet__name__startswith=pet,
+                pet__owner=request.user,
             ).order_by('time')
-
             context = {
                 'pet_searched': pet,
-                'pet_schedule_found':pet_schedule_found
+                'pet_schedule_found': pet_schedule_found
             }
-
             return render(request, 'schedules/schedule_result.html', context)
     else:
         form = SearchPetScheduleForm()
-
     return render(
-        request, 'schedules/schedule_search.html', {'form' : form}
+        request, 'schedules/schedule_search.html', {'form': form}
         )
 
+
 @login_required
-def schedule_cat(request):    
+def schedule_cat(request):
     """view that corresponds to the search bar zone,
     that allows to retrieve data schedule from a cat
     from the DB according the cat name"""
@@ -160,13 +152,13 @@ def schedule_cat(request):
         if form.is_valid():
             pet = form.cleaned_data.get("query_search")
             pet_schedule_found = Schedule.objects.filter(
-                pet__name__startswith = pet,
-                pet__owner= request.user,
+                pet__name__startswith=pet,
+                pet__owner=request.user,
             ).order_by('time')
 
             context = {
                 'pet_searched': pet,
-                'pet_schedule_found':pet_schedule_found
+                'pet_schedule_found': pet_schedule_found
             }
 
             return render(request, 'schedules/schedule_cat.html', context)
@@ -174,26 +166,5 @@ def schedule_cat(request):
     else:
         form = SearchPetScheduleForm()
     return render(
-        request, 'schedules/schedule_cat.html', {'form' : form}
+        request, 'schedules/schedule_cat.html', {'form': form}
         )
-        
-        
-# Will need to implement a way of showing the full schedule of the cat 
-# when we click on it 
-
-# @login_required
-# def see_pet_schedule(request, pet_id):
-#     """view about detail page of a product"""
-
-#     pet_schedule = Schedule.objects.filter(
-#         pet__id = pet_id,
-#         pet__owner = request.user,
-#     ).order_by('time')
-
-#     context = {
-#         'pet_schedule': pet_schedule
-#         }
-
-#     return render(request, 'schedules/pet_schedule.html', context)
-
- 

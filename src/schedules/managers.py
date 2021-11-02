@@ -1,7 +1,7 @@
 from django import db
 
 
-class ScheduleManager(db.models.Manager): # pour ranger les temps dans l'ordre
+class ScheduleManager(db.models.Manager):
 
     def ordering(self):
         return self.order_by("id")

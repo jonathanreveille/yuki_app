@@ -2,10 +2,13 @@ from django.core.management.base import BaseCommand
 
 from animals.models import Specie
 
-SPECIE_LIST = ["cat",]
+
+SPECIE_LIST = ["cat", ]
+
 
 class Command(BaseCommand):
-    help = 'Initialise la base de données à partir des données de Openfoodfacts'
+    help = '''Initialise la base de données à
+    partir des données de Openfoodfacts'''
 
     def handle(self, *args, **options):
         """method that adds species to the in db"""

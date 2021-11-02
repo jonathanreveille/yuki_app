@@ -108,33 +108,9 @@ class TestAbstractUserViews(TestCase):
 
         self.pet = Pet.objects.get(name=pet.name)
 
-        # now = timezone.now()
-
-        # Task.objects.create(
-        #     user=self.user,
-        #     title="Feed the cats dry food",
-        #     description="Give each cat 30 grams of dryfood",
-        #     complete=False,
-        #     created=now,
-        # )
-
-        # TimeOfDay.objects.create(time="Morning")
-
-        # self.user = User.objects.get(id=1)
-        # self.task = Task.objects.get(id=1)
-        # self.tod = TimeOfDay.objects.get(id=1)
-        # self.pet = Pet.objects.get(id=1)
-
-        # schedule = Schedule.objects.create(
-        #     task = self.task,
-        #     time = self.tod
-        # )
-        # schedule.pet.add(self.pet)
-        # self.schedule = Schedule.objects.get(pet=self.pet.)
-        # self.task  = Task.object.get(user=self.user)
-
     def tearDown(self):
         return super().tearDown()
+
 
 # ANIMALS VIEWS
     def test_if_user_can_see_his_pets_view(self):
@@ -161,6 +137,7 @@ class TestAbstractUserViews(TestCase):
         response = self.client.get(f"/animals/change_avatar/{self.pet.pk}")
         self.assertEqual(response.status_code, 200)
 
+
 # FRIENDS VIEWS
     def test_if_user_can_search_for_friends(self):
         response = self.client.get("/friends/search_for_friends/")
@@ -179,9 +156,7 @@ class TestAbstractUserViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-
 # USER VIEWS
-
     def test_if_user_can_see_login_view(self):
         response = self.client.get("/login/")
         self.assertEqual(response.status_code, 200)
@@ -193,6 +168,7 @@ class TestAbstractUserViews(TestCase):
     def test_if_user_can_see_edit_profile_view(self):
         response = self.client.get("/users/edit_profile/")
         self.assertEqual(response.status_code, 200)
+
 
 # SCHEDULE VIEWS
     def test_if_user_can_see_his_task_list(self):
@@ -212,8 +188,6 @@ class TestAbstractUserViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
 # MESSENGER
-
-
     def test_if_user_can_see_msg_list(self):
         response = self.client.get("/messenger/message_list/")
         self.assertEqual(response.status_code, 200)
