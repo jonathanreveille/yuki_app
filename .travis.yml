@@ -4,23 +4,12 @@ language: python
 python:
   - '3.8'
 
-addons:
-  # ajouter uniquement les navigateurs utilisés
-  chrome: stable
-  firefox: latest
-
 branches:
   only:
     - staging
 
 install:
-  - pip install pipenv
-  - pipenv install
-  - pipenv install --dev
-  - pip install tchappui-webdrivers
-
-before_script:
-  - install-webdrivers --path webdrivers
+  - pip install -r requirements.txt
 
 env:
   global:
@@ -32,4 +21,4 @@ services:
   - postgresql
 
 script:
-  - coverage run --source="." manage.py test
+  - ./python manage.py test
