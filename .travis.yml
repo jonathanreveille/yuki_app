@@ -32,4 +32,4 @@ services:
   - postgresql
 
 script:
-  - python3 --source="." manage.py test -v2
+  - coverage run --source="." manage.py test
