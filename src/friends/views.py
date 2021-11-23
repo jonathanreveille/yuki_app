@@ -33,14 +33,12 @@ def search_for_friends(request):
 
 @login_required
 def search_friends_result(request):
-    """view to see the results of from the
+    """view to see the results of the
     user's query"""
 
     if request.method == "GET":
         form = SearchForFriendForm(request.GET)
-
         if form.is_valid():
-
             try:
                 user_search = form.cleaned_data.get('query_friend_search')
                 users_found = User.objects.filter(

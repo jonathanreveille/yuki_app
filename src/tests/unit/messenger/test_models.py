@@ -37,3 +37,4 @@ class TestMessengerModel(TestCase):
         self.assertEquals(self.messenger.receiver.username,"Adrien")
         self.assertEquals(self.messenger.subject, "catsitting please")
         self.assertEquals(self.messenger.content, "Hello Adrien!")
+        self.assertEquals(str(self.messenger), "sender : Pauline")

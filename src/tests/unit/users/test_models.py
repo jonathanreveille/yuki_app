@@ -38,3 +38,27 @@ class UsersModelUnitTest(TestCase):
         self.assertEquals(self.user.location, "Boulogne-Billancourt")
         self.assertEquals(self.user.postal_code, 92100)
         self.assertEquals(type(self.user.postal_code), int)
+
+    def test_create_super_user(self):
+        data = {"username": "jonhalony",
+                "email":"gpo@mail.com",
+                "password":"randomsecret"}
+        user = User.objects.create_superuser(**data)
+        assert user.is_staff == True
+        assert user.is_superuser == True
+
+        with self.assertRaises(ValueError) :
+            d = {"username": "jonholony",
+                    "email":"gpom@mail.com",
+                    "password":"randomSeCret"}
+            user = User.objects.create_superuser(is_superuser=False, **d)
+        
+        with self.assertRaises(ValueError):
+            d = {"username": "jonhblony",
+                    "email":"gpbm@mail.com",
+                    "password":"randbmSeCret"}
+            user = User.objects.create_superuser(is_staff=False, **d)
+
+# test unitaire python django tache cron separation des medias 
+# class baseviews  , une appli utilisable par une communauté
+# code + plan de test (stratégie de tests) + Extreme Programming + bilan de compétences (point fort et point faible )

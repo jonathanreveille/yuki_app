@@ -1,11 +1,9 @@
 from django.test import TestCase, Client
-from django.contrib.auth import get_user_model
-from django.test.testcases import TransactionTestCase
-from django.utils import timezone
+from django.urls import reverse
+from animals.forms import PetCreationForm
 
 from users.models import Role, User
 from animals.models import Pet, Specie
-from schedules.models import Task, TimeOfDay, Schedule
 
 
 class TestAnimalsViews(TestCase):
@@ -42,6 +40,8 @@ class TestAnimalsViews(TestCase):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed('animals/home.html')
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.status_code, 200)
 
     def test_if_user_without_account_can_access_login(self):
         response = self.client.get('/login/')
@@ -111,11 +111,10 @@ class TestAbstractUserViews(TestCase):
     def tearDown(self):
         return super().tearDown()
 
-
-# ANIMALS VIEWS
     def test_if_user_can_see_his_pets_view(self):
         response = self.client.get("/animals/see_pet/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'animals/see_pet.html')
 
     def test_if_user_can_see_create_pet_view(self):
         response = self.client.get("/animals/create_pet/")
@@ -123,20 +122,19 @@ class TestAbstractUserViews(TestCase):
 
     def test_if_user_can_see_his_pets(self):
         response = self.client.get("/animals/see_pet/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
     def test_if_user_can_see_update_his_pet(self):
         response = self.client.get(f"/animals/update_pet/{self.pet.pk}")
-        self.assertEqual(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
     def test_if_user_can_see_delete_his_pet(self):
         response = self.client.get(f"/animals/delete_pet/{self.pet.pk}")
-        self.assertEqual(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
     def test_if_user_can_see_change_avatar_of_his_pet(self):
         response = self.client.get(f"/animals/change_avatar/{self.pet.pk}")
-        self.assertEqual(response.status_code, 200)
-
+        self.assertEquals(response.status_code, 200)
 
 # FRIENDS VIEWS
     def test_if_user_can_search_for_friends(self):
@@ -155,7 +153,6 @@ class TestAbstractUserViews(TestCase):
         response = self.client.get("/friends/catsitter_list/")
         self.assertEqual(response.status_code, 200)
 
-
 # USER VIEWS
     def test_if_user_can_see_login_view(self):
         response = self.client.get("/login/")
@@ -168,7 +165,6 @@ class TestAbstractUserViews(TestCase):
     def test_if_user_can_see_edit_profile_view(self):
         response = self.client.get("/users/edit_profile/")
         self.assertEqual(response.status_code, 200)
-
 
 # SCHEDULE VIEWS
     def test_if_user_can_see_his_task_list(self):
@@ -195,3 +191,30 @@ class TestAbstractUserViews(TestCase):
     def test_if_user_can_see_msg_create(self):
         response = self.client.get("/messenger/message_create/")
         self.assertEqual(response.status_code, 200)
+
+# Animal GET / POST Requestss
+    def test_create_a_pet_form(self):
+        specie = Specie.objects.all().first()
+        pet = Pet.objects.create(owner=self.user, name="Loako", weight=3, age=4, specie=specie)
+        form = PetCreationForm({
+            "owner": self.user,
+            "name": pet.name,
+            "weight": pet.weight,
+            "age": pet.age,
+            "specie": specie
+        })
+        if form.is_valid():
+            self.client.login(username="jojo", password='secret')
+            self.client.post('create_pet', {
+                "owner": self.user,
+                "name": pet.name,
+                "weight": pet.weight,
+                "age": pet.age,
+                "specie": specie
+            })
+            
+            self.assertEquals(form.is_valid(), True)
+            pet = Pet.objects.get(name="Loako")
+            self.assertEquals(pet.owner, self.user)
+            self.assertEquals(pet.name, "Loako")
+            self.assertTemplateUsed('animals/create_pet.html')

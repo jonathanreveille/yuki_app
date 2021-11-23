@@ -38,11 +38,11 @@
 
                                   <a class="button-custom bg-info" href="{% url 'friends:catsitter_get_cat_info' catsitter.pet.id %}">{{catsitter.pet}}'s suitcase</a>
 
-                                  <form method="post" href="{% url 'friends:delete_catsitter_request' %}">
+                                  {% comment %} <form method="post" href="{% url 'friends:delete_catsitter_request' %}">
                                       {% csrf_token %}
                                       <button class="btn btn-secondary bg-danger" type="submit" id="user" name="user" value="{{request.user.id}}">CANCEL</button>
                                       <input type="hidden" id="to_delete_user" name="to_delete_catsitter" value="{{catsitter.is_catsitter.id}}"/>
-                                  </form>
+                                  </form> {% endcomment %}
                                 </h5>
                               </div>
                             </div>

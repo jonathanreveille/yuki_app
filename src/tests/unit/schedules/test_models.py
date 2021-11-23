@@ -12,7 +12,6 @@ class ScheduleModelUnitTest(TestCase):
 
     def setUp(self):
         role = Role.objects.create(name="Owner")
-        # User = get_user_model()
         user = User.objects.create(
             username= "jonny",
             role=role,
@@ -60,6 +59,12 @@ class ScheduleModelUnitTest(TestCase):
 
     def tearDown(self):
         return super().tearDown()
+
+    def test_string(self):
+        self.assertEquals(str(self.task), "Feed the cats dry food")
+        schedule = str(self.schedule)
+        self.assertEquals(schedule, "<QuerySet [<Pet: Arya>]>")
+        self.assertEquals(str(self.tod), "Morning")
 
     def test_if_user_owns_task(self):
         self.assertEquals(self.task.user, self.user)

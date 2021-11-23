@@ -1,6 +1,3 @@
-"""
-Management utility to create superusers.
-"""
 import getpass
 import os
 import sys

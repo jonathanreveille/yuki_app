@@ -1,3 +1,6 @@
+from datetime import datetime, timezone
+from typing import _SpecialForm
+
 from django.test import TestCase
 from django.utils import timezone
 
@@ -50,6 +53,7 @@ class TestFriendsModels(TestCase):
         self.assertEquals(self.friend_list.friend, self.user_2)
         self.assertEquals(self.friend_list.user.username, "jonny")
         self.assertEquals(self.friend_list.friend.username, "UncleRoger")
+        self.assertEquals(str(self.friend_list), "UncleRoger")
 
     def test_for_friend_request_fields(self):
         self.assertEquals(self.friend_request.sender, self.user_1)
@@ -58,6 +62,7 @@ class TestFriendsModels(TestCase):
         self.assertEquals(self.friend_request.sender.postal_code, 92100)
         self.assertEquals(self.friend_request.receiver.username, "UncleRoger")
         self.assertEquals(self.friend_request.receiver.postal_code, 75010)
+        self.assertEquals(str(self.friend_request), "from jonny to UncleRoger")
 
     def test_for_catsitter_fields(self):
         self.assertEquals(self.catsitter.is_owned.username, "jonny")
@@ -66,3 +71,22 @@ class TestFriendsModels(TestCase):
         self.assertEquals(self.catsitter.is_catsitter, self.user_2)
         self.assertEquals(self.catsitter.pet.name, "Yuki")
         self.assertEquals(self.catsitter.pet.owner.username, "jonny")
+        self.assertEquals(str(self.catsitter), "Owner jonny: UncleRoger for Yuki")
+
+
+    def test_is_catsitting(self):
+        self.catsitter.is_active = False
+        self.catsitter.start = datetime.now(timezone.utc).replace(year=2021, month=11, day=12, hour=13, minute=25, second=45)
+        self.catsitter.end = datetime.now(timezone.utc).replace(year=2021, month=11, day=12, hour=20, minute=55, second=45)
+        self.assertEquals(self.catsitter.is_catsitting(), False)
+
+        self.catsitter.start = datetime.now(timezone.utc).replace(year=2021, month=12, day=12, hour=13, minute=25, second=45)
+        self.catsitter.end = datetime.now(timezone.utc).replace(year=2021, month=12, day=12, hour=20, minute=55, second=45)
+        self.assertEquals(self.catsitter.is_catsitting(), False)
+
+        self.catsitter.start = datetime.now(timezone.utc).replace(year=2021, month=10, day=10, hour=20, minute=55, second=45)
+        self.catsitter.end = datetime.now(timezone.utc).replace(year=2021, month=10, day=12, hour=20, minute=55, second=45)
+        self.assertEquals(self.catsitter.end_catsitting(), True)
+
+        self.catsitter.end = datetime.now(timezone.utc).replace(year=2021, month=12, day=12, hour=20, minute=55, second=45)
+        self.assertEquals(self.catsitter.end_catsitting(), False)
