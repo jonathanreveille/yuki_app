@@ -11,6 +11,8 @@ branches:
 install:
   - pip install -r requirements.txt
 
+before_script:
+  - cd ./src
 env:
   global:
     # we suppose the settings for Travis are in a dedicated file
@@ -21,5 +23,4 @@ services:
   - postgresql
 
 script:
-  - coverage run --source="." src/manage.py test
-  - src/ python manage.py test -v2
+ - python3 manage.py test -v2
