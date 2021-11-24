@@ -13,39 +13,42 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8">
 
-                    <div clas="container">
-                        <p> Hello world, suitcase of the cat</p>
-
+                <div class="container">
+                        <div id="tabs">
                         {% if pet %}
-                            <p> Data about : {{pet.name}}</p>
+                            <ul> Data about : {{pet.name}}</ul>
+                            <br>
                         {% endif %}
 
+                        <div id="tabs-1">
                         {% if healthbook %}
                             {% for book in healthbook %}
-                                <p>HEALTHBOOK :</p>
-                                <tr>
-                                    <li>Health {{book.pet.name}}</li>
-                                    <li>Sterilize : {{book.sterilize}}</li>
-                                    <li>Vaccinated : {{book.vaccine}}</li>
-                                    <li>Last vaccine : {{book.last_vaccine}}</li>
-                                    <li>Next vaccine :  {{book.next_vaccine}}</li>
-                                    <li>Vet's name : {{book.veterinary_name}}</li>
-                                    <li>Vet's phone : {{book.veterinary_phone}}</li>
-                                </tr>
+
+                                <ul><b>HEALTHBOOK :</b></ul>
+
+                                    <ul>Sterilize : {{book.sterilize}}</ul>
+                                    <ul>Vaccinated : {{book.vaccine}}</ul>
+                                    <ul>Last vaccine : {{book.last_vaccine}}</ul>
+                                    <ul>Next vaccine :  {{book.next_vaccine}}</ul>
+                                    <ul>Vet's name : {{book.veterinary_name}}</ul>
+                                    <ul>Vet's phone : {{book.veterinary_phone}}<uli>
+
                             {% endfor %}
                         {% endif %}
+                        </div>
 
                         {% if schedule %}
                         </br>
-                        <p> TASKS </p>
+                        <ul><b> TASKS </b></ul>
                             {% for t in schedule %}
                                 <tr>
-                                    <li>Task : {{t.task.description}} at <b>{{t.time}}</b></li>
+                                    <ul>Task : {{t.task.description}} at <b>{{t.time}}</b></ul>
                                 </tr>
                             {% endfor %}
                         {% endif %}
 
                     </div>
+                </div>
 
                 </div>
             </div>
