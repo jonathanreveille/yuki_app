@@ -27,17 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv("SECRET_KEY_DJANGO")
-SECRET_KEY = "qksdnq%$12I381Y23bhjbjdqsdoiuezekjbrjkz"
+SECRET_KEY = os.environ.get('SECRET_KEY', "rnfFQ-_&é123snfJSJDKBksdnf983flknzec_2AY3")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = False if os.environ.get("ENV", "development") == "production" else True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapps.com']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # forms for login
     'crispy_forms',
+    # for media storages
     'storages',
     # Applications
     'animals.apps.AnimalsConfig',
@@ -90,11 +88,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-
 if not DEBUG:
     DATABASES = {
         'default': {
