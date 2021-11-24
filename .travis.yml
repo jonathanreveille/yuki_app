@@ -13,7 +13,7 @@ install:
 
 env:
   global:
-    - DJANGO_SETTINGS_MODULE="settings.travis"
+    - DJANGO_SETTINGS_MODULE="core.settings.travis"
 
 services:
   - postgresql
