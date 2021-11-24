@@ -22,7 +22,6 @@ class TestUserViews(TestCase):
             password=""
         )
 
-
         self.user.set_password("hellOYuki")
         self.user.save()
         self.client = Client()

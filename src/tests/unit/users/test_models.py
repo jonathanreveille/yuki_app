@@ -58,7 +58,3 @@ class UsersModelUnitTest(TestCase):
                     "email":"gpbm@mail.com",
                     "password":"randbmSeCret"}
             user = User.objects.create_superuser(is_staff=False, **d)
-
-# test unitaire python django tache cron separation des medias 
-# class baseviews  , une appli utilisable par une communauté
-# code + plan de test (stratégie de tests) + Extreme Programming + bilan de compétences (point fort et point faible )
