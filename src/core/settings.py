@@ -102,6 +102,7 @@ if not DEBUG:
             }
         }
 
+
 # Amazon S3 configuration
 AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ID')
 AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET')

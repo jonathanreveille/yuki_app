@@ -1,18 +1,25 @@
-version: '2'
+version: '3'
 
 services:
   db:
+    restart: always
     image: postgres:9.6
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U yuki_app"]
+      interval: 3s
+      timeout: 30s
+      retries: 3
     environment:
       POSTGRES_DB: yuki_app
       POSTGRES_USER: yuki_app
       POSTGRES_PASSWORD: yuki_app
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - ./src:/code # ca veut dire que mes fichiers seront situé dans le dossier /code à la racine du projet dans le conteneur
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db : 
+        condition: service_healthy
