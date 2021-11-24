@@ -4,20 +4,12 @@ language: python
 python:
   - '3.8'
 
-addons:
-  # ajouter uniquement les navigateurs utilisés
-  chrome: stable
-  firefox: latest
-
 branches:
   only:
     - staging
 
 install:
-  - pip install pipenv
-  - pipenv install
-  - pipenv install --dev
-  - pip install tchappui-webdrivers
+  - pip install -r requirements.txt
 
 before_script:
   - install-webdrivers --path webdrivers
@@ -32,4 +24,5 @@ services:
   - postgresql
 
 script:
+  - cd src/
   - python3 manage.py test -v2
