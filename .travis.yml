@@ -8,7 +8,6 @@ branches:
   only:
     - staging
 
-
 install:
   - pip install -r requirements.txt
 
@@ -21,4 +20,4 @@ services:
 
 
 script:
-  - coverage run --source="." src/manage.py test
+  - python3 src/manage.py test -v2
