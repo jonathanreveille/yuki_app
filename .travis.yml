@@ -8,6 +8,9 @@ branches:
   only:
     - staging
 
+virtualenv:
+  system_site_packages: true
+
 install:
   - pip install -r requirements.txt
 
@@ -19,7 +22,7 @@ services:
   - postgresql
 
 before_script:
-  - src/
+  - cd src/
 
 script:
   - python3 manage.py test -v2
