@@ -4,38 +4,54 @@
 
 ##### What is in this project ? #####
 
-* Use of Django Framework.
-* Use of OOP and Python 3.7
+* Use of Django Framework 3.2
+* Use of OOP and Python 3.8
+* Database PosgreSQL
+* Database for media files: AWS S3 Bucket
 * Function based views, and Class based views
-* Use of pipenv
-* Django Restful Framework (DRF) - coming soon
-* Respect and follow recommendations from PEP8 (style guide)
+* Use of virtualenv
+* Respect and follow recommendations from PEP8 (style guide) with flake8
+* Tests and use of Coverage to check % of code tested
 
 What you will be able to do in this application :
 
-##### For pet owners #####
+##### For pet owners and catsitters #####
 1. Create a Profile
 2. Customize your profile
-3. Create a pet
+3. Create a pet and customize pet profile
 4. Create your own tasks
 5. Create schedules from your tasks for a specific or more cats
 6. Search for the schedule of a specific cat
-7. Create an inventory of every accessories your cat needs
+7. Create a section to search/find other user
+8. Create a section where users can message each other
+9. Create a section where we can book a catsitter on specific dates
+10. Check the future or ongoing catsittings.
 
-##### For catsitters (in progress...) #####
-1. Create your own profile
-2. Show your capacity of hosting cats
-3. Communicate with owners that reach out through messages in-app for catsitting
-4. Access a cat schedule
+#### Media Files
+They are all stored with Amazon S3 Bucket. Please adapt your project with
+your own AWS S3 Bucket, else, comment out sections with media files in
+settings and store everything in your database first. I recommend having
+an S3 Bucket to test the application on any new features.
 
+#### Activate virtual environment (venv)
+Create your virtual env (Windows Machine):
+```py -m venv env --system-site-packages```
+```env\Scripts\Activate```
+```pip install -r requirements.txt```
 
 #### To Run Test with Coverage
+To run tests locally :
+```python manage.py test -v2```
 ```coverage run --source="." manage.py test```
+Any contribution should always test the code, coverage should not go below 85%.
 
+#### Launch the project locally
+```cd src/```
+```python manage.py runserver```
+=> Go to localhost:8000
 
+#### Launch with docker-compose for local development
+There is a docker-compose file configured at the root of the project.
 
-
-
-
-
-
+I would like to specially thank Thierry Chappuis and Jimmy Kumako for their mentoring
+and in helping me to achieve this last project of my Openclassrooms course.

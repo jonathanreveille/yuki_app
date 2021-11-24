@@ -4,32 +4,20 @@ language: python
 python:
   - '3.8'
 
-addons:
-  # ajouter uniquement les navigateurs utilisés
-  chrome: stable
-  firefox: latest
-
 branches:
   only:
     - staging
 
 install:
-  - pip install pipenv
-  - pipenv install
-  - pipenv install --dev
-  - pip install tchappui-webdrivers
-
-before_script:
-  - install-webdrivers --path webdrivers
+  - pip install -r requirements.txt
 
 env:
   global:
-    # we suppose the settings for Travis are in a dedicated file
-    # --> travis.py in settings package
-    - DJANGO_SETTINGS_MODULE="settings.travis"
+    - DJANGO_SETTINGS_MODULE="core.settings.travis"
 
 services:
   - postgresql
 
+
 script:
-  - python3 manage.py test -v2
+  - python3 src/manage.py test -v2

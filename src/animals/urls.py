@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 from .views import (PetDeleteView,
                     PetUpdateView,
@@ -6,7 +7,9 @@ from .views import (PetDeleteView,
                     MessageNotification,
                     RemoveNotification)
 
+
 app_name = "animals"
+
 
 urlpatterns = [
     path('', views.home, name='home'),
