@@ -19,8 +19,6 @@ env:
 services:
   - postgresql
 
-before_script:
-  - cd src/
 
 script:
-  - python3 manage.py test -v2
+  - coverage run --source="." src/manage.py test
