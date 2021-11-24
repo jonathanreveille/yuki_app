@@ -13,13 +13,13 @@ install:
 
 env:
   global:
-    # we suppose the settings for Travis are in a dedicated file
-    # --> travis.py in settings package
     - DJANGO_SETTINGS_MODULE="settings.travis"
 
 services:
   - postgresql
 
+before_script:
+  - src/
+
 script:
-  - cd src/
   - python3 manage.py test -v2
