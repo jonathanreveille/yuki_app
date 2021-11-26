@@ -269,29 +269,31 @@ class CatsitterList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Catsitter.objects.filter(is_owned=self.request.user).exists():
-            context["catsitters"] = context["catsitters"].filter(
-                is_owned=self.request.user)
-        elif Catsitter.objects.filter(is_catsitter=self.request.user).exists():
-            context["catsitters"] = context["catsitters"].filter(
-                is_catsitter=self.request.user)
-        return context
+            # Catsitter.objects.filter(is_catsitter=self.request.user)
+        # context["catsits"] = context["catsits"].filter(
+        #     is_catsitter=self.request.user)
+        context['catsitters'] = context['catsitters'].filter(
+            is_catsitter=self.request.user)
+        # elif Catsitter.objects.filter(is_catsitter=self.request.user).exists():
+        #     context["catsitters"] = context["catsitters"].filter(
+        #         is_catsitter=self.request.user)
+        return context  
 
 
-@login_required
-def delete_catsitter_request(request):
-    """ Delete a catsitter requests"""
+# @login_required
+# def delete_catsitter_request(request):
+#     """ Delete a catsitter requests"""
 
-    if request.method == "POST":
-        user = request.POST['user']
-        friend = request.POST['to_delete_catsitter']
-    try:
-        Catsitter.objects.filter(is_owned=user,
-                                 is_catsitter=friend).first().delete()
-    except ObjectDoesNotExist:
-        pass
+#     if request.method == "POST":
+#         user = request.POST['user']
+#         friend = request.POST['to_delete_catsitter']
+#     try:
+#         Catsitter.objects.filter(is_catsitter=user,
+#                                  is_owner=friend).first().delete()
+#     except ObjectDoesNotExist:
+#         pass
 
-    return redirect('friends:catsitter_list')
+#     return redirect('friends:catsitter_list')
 
 
 @login_required

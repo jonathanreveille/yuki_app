@@ -17,7 +17,7 @@
                         <h1> To : {{friend_request.sender}}</h1>
                         <h1> From : {{friend_request.receiver}}</h1>
                         <h3> Time : {{friend_request.timestamp}} </h3>
-                        <p> Is active : {{ friend_request.is_active }} </p>
+                        {% comment %} <p> Is active : {{ friend_request.is_active }} </p> {% endcomment %}
 
                     <form method="post" action="{% url 'friends:accept_friend_request' %}" enctype="multipart/form-data">
                         {% csrf_token %}

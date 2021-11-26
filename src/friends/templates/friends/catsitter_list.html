@@ -15,13 +15,13 @@
             <div class="col-lg-8">
 
             <a class="button-custom" href="{% url 'animals:home' %}">Go back</a>
-                <a class="button-custom" href="#"><i class="far fa-edit"></i> Edit Catsitter list</a>
+                <a class="button-custom" href="#"><i class="far fa-edit"></i>Edit Catsitter List</a>
                   <a class="button-custom" href="{% url 'friends:catsitter_create' %}"><i class="far fa-edit"></i> Schedule a Catsitter</a>
                     <hr>
 
                   <div class="container">
                     <div class="row">
-                    {% comment %} {% if catsitters %} {% endcomment %}
+
                       {% for catsitter in catsitters %}
                         <div class="col-lg-6 col-sm-6 mb-4">
                           <div class="card h-100 pl-4 pr-4 bg-primary text-center pt-4">
@@ -37,7 +37,7 @@
                                   <br/>
 
                                   <a class="button-custom bg-info" href="{% url 'friends:catsitter_get_cat_info' catsitter.pet.id %}">{{catsitter.pet}}'s suitcase</a>
-
+                                    <br/><br/>
                                   {% comment %} <form method="post" href="{% url 'friends:delete_catsitter_request' %}">
                                       {% csrf_token %}
                                       <button class="btn btn-secondary bg-danger" type="submit" id="user" name="user" value="{{request.user.id}}">CANCEL</button>
