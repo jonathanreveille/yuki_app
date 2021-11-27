@@ -109,7 +109,7 @@ class SchedulePetList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["schedules"] = Schedule.objects.filter(
             pet__owner=self.request.user
-            ).order_by('time')
+        ).order_by('time')
         context["form"] = SearchPetScheduleForm()
         return context
 
@@ -137,7 +137,7 @@ def schedule_search(request):
         form = SearchPetScheduleForm()
     return render(
         request, 'schedules/schedule_search.html', {'form': form}
-        )
+    )
 
 
 @login_required
@@ -167,4 +167,4 @@ def schedule_cat(request):
         form = SearchPetScheduleForm()
     return render(
         request, 'schedules/schedule_cat.html', {'form': form}
-        )
+    )

@@ -27,16 +27,17 @@ class CreateMessageForUser(forms.ModelForm):
             username=self.request.user)
 
         user = User.objects.get(username__startswith=self.request.user)
-        self.fields['receiver'].queryset = user.friends
+        self.fields['receiver'].queryset = user.friends.all()
+        print(user.friends.all())
 
-    class Meta:
+    class Meta: 
         model = Messenger
         fields = ('sender', 'receiver', 'subject', 'content',)
 
         follower = CustomModelMultipleChoiceField(
             queryset=None,
             widget=CheckboxSelectMultiple
-            )
+        )
 
 
 class CreateReplyMessageForUser(forms.ModelForm):
@@ -63,4 +64,4 @@ class CreateReplyMessageForUser(forms.ModelForm):
         follower = CustomModelMultipleChoiceField(
             queryset=None,
             widget=CheckboxSelectMultiple
-            )
+        )

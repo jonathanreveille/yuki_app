@@ -8,7 +8,7 @@ from django.views import View
 from django.db import transaction
 
 from .models import Pet
-from .forms import PetCreationForm, PetEditForm
+from .forms import PetCreationForm, PetEditForm, PetUpdateForm
 from friends.models import FriendRequest
 from messenger.models import Messenger
 from notifications.models import Notification
@@ -49,7 +49,7 @@ def create_pet(request):
 
         form = PetCreationForm()
 
-    return render(request, 'animals/pet_form.html', {'form': form})
+    return render(request, 'animals/pet_create_form.html', {'form': form})
 
 
 @login_required
@@ -62,16 +62,19 @@ def see_pet(request):
     context = {
         'user_pets': user_pets,
     }
-
     return render(request, 'animals/see_pet.html', context)
 
 
 class PetUpdateView(LoginRequiredMixin, UpdateView):
     """update a pet"""
     model = Pet
-    fields = ('name', 'age', 'weight')
     success_url = reverse_lazy('animals:see_pet')
+    form_class = PetUpdateForm
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs.filter(owner=self.request.user)   
+        return qs
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """delete a pet"""
@@ -104,7 +107,7 @@ def change_pet_avatar(request, pk):
         context = {
             'form': form,
             'pet': pet,
-            }
+        }
 
     return render(request, 'animals/change_pet_avatar.html', context)
 

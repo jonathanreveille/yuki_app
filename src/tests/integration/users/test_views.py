@@ -1,9 +1,8 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.conf import settings
 
 from users.models import User, Role
-from users.forms import UserCreationForm, UserChangeForm
+from users.forms import UserCreationForm
 
 
 class TestUserViews(TestCase):
@@ -13,7 +12,7 @@ class TestUserViews(TestCase):
         role = Role.objects.create(name='Owner')
 
         self.user = User.objects.create(
-            username= "jonny",
+            username="jonny",
             role=role,
             email="j@mail.com",
             location="Boulogne-Billancourt",

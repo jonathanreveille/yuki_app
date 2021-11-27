@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='avatar',
-            field=models.FilePathField(default='avatar_profile.jpg', path='static/img'),
+            field=models.FilePathField(
+                default='avatar_profile.jpg',
+                path='static/img'),
         ),
     ]

@@ -17,6 +17,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='task',
             name='category',
-            field=models.CharField(blank=True, choices=[('CLEANING', 'Cleaning'), ('FOOD', 'Food'), ('MEDICATION', 'Medication')], max_length=40, null=True, verbose_name='category of task'),
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ('CLEANING',
+                     'Cleaning'),
+                    ('FOOD',
+                     'Food'),
+                    ('MEDICATION',
+                     'Medication')],
+                max_length=40,
+                null=True,
+                verbose_name='category of task'),
         ),
     ]

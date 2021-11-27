@@ -21,10 +21,10 @@ class Notification(models.Model):
                                        related_name='+',
                                        blank=True,
                                        null=True)
-    message =  models.ForeignKey('messenger.Messenger',
-                                 on_delete=models.CASCADE,
-                                 related_name='+',
-                                 blank=True,
-                                 null=True)
+    message = models.ForeignKey('messenger.Messenger',
+                                on_delete=models.CASCADE,
+                                related_name='+',
+                                blank=True,
+                                null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     user_has_seen = models.BooleanField(default=False)

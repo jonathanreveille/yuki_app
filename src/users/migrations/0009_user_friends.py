@@ -14,6 +14,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='friends',
-            field=models.ManyToManyField(blank=True, related_name='friend_of_user', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                blank=True,
+                related_name='friend_of_user',
+                to=settings.AUTH_USER_MODEL),
         ),
     ]

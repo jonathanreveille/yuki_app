@@ -17,11 +17,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FriendList',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('status', models.CharField(blank=True, choices=[('NO_FRIEND_REQUEST', 0), ('THEM_SENT_YOU', 1), ('YOU_SENT_THEM', 2)], max_length=20)),
-                ('friends', models.ManyToManyField(related_name='friends', to=settings.AUTH_USER_MODEL)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='user_friend_list', to=settings.AUTH_USER_MODEL)),
+                ('status', models.CharField(blank=True, choices=[
+                 ('NO_FRIEND_REQUEST', 0), ('THEM_SENT_YOU', 1), ('YOU_SENT_THEM', 2)], max_length=20)),  # noqa
+                ('friends', models.ManyToManyField(
+                    related_name='friends', to=settings.AUTH_USER_MODEL)),
+                ('user',
+                 models.OneToOneField(on_delete=django.db.models.deletion.CASCADE,  # noqa
+                                      related_name='user_friend_list',
+                                      to=settings.AUTH_USER_MODEL)),  # noqa
             ],
         ),
     ]

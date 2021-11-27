@@ -14,16 +14,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pet',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
                 ('age', models.BigIntegerField(blank=True, null=True)),
-                ('weight', models.FloatField(blank=True, max_length=6, null=True)),
+                ('weight', models.FloatField(blank=True, max_length=6, null=True)),  # noqa
             ],
         ),
         migrations.CreateModel(
             name='Specie',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20)),
             ],
         ),

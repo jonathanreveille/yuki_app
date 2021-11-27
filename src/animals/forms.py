@@ -11,6 +11,12 @@ class PetCreationForm(forms.ModelForm):
         fields = ("name", "age", "weight", "specie")
 
 
+class PetUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = ("name", "age", "weight")
+
+
 class PetEditForm(forms.Form):
     """Form to update the pet's profile picture"""
     avatar = forms.ImageField()

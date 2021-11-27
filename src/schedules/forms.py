@@ -42,4 +42,4 @@ class SearchPetScheduleForm(forms.Form):
     query_search = forms.CharField(
         label="Type animal name for full schedule",
         max_length=200
-        )
+    )

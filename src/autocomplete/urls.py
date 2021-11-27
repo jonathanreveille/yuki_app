@@ -8,4 +8,4 @@ app_name = "autocomplete"
 
 urlpatterns = [
     path("", views.complete, name="complete")
-    ]
+]

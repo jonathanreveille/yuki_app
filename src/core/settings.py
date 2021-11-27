@@ -27,7 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', "rnfFQ-_&é123snfJSJDKBksdnf983flknzec_2AY3")
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    "rnfFQ-_&é123snfJSJDKBksdnf983flknzec_2AY3")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.environ.get("ENV", "development") == "production" else True
@@ -99,8 +101,8 @@ if not DEBUG:
             'PORT': 5432,
             'USER': os.getenv("USER_DB"),
             'PASSWORD': os.getenv("PASS_DB")
-            }
         }
+    }
 
 
 # Amazon S3 configuration
@@ -134,16 +136,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # noqa
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -192,6 +198,6 @@ if os.environ.get('ENV', 'development') == 'production':
 
 # Put custom settings in local_settings.py
 try:
-    from .local_settings import *
+    from .local_settings import *  # noqa
 except ImportError:
     pass

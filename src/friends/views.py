@@ -6,7 +6,6 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
 
 from .forms import SearchForFriendForm, CreateCatsitterForm
 from .models import Catsitter, FriendRequest, FriendList
@@ -26,7 +25,7 @@ def search_for_friends(request):
 
     context = {
         'form': form,
-        }
+    }
 
     return render(request, 'friends/search_friends_result.html', context)
 
@@ -43,7 +42,7 @@ def search_friends_result(request):
                 user_search = form.cleaned_data.get('query_friend_search')
                 users_found = User.objects.filter(
                     username__icontains=user_search
-                    )
+                )
                 if not users_found:
                     users_found = User.objects.filter(postal_code=user_search)
                     if not users_found:
@@ -79,7 +78,7 @@ def send_friend_request(request, pk):
     friend_request, created = FriendRequest.objects.get_or_create(
         sender=sender,
         receiver=receiver,
-        )
+    )
 
     if created:
         friend_request.save()
@@ -113,7 +112,7 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
         context["friend_requests"] = FriendRequest.objects.filter(
             receiver__username=self.request.user,
             is_active=True
-            )
+        )
         return context
 
     def get_queryset(self):
@@ -123,7 +122,7 @@ class FriendRequestListView(LoginRequiredMixin, ListView):
 
         friend_request = FriendRequest.objects.filter(
             receiver=self.request.user
-            )
+        )
         return friend_request
 
 
@@ -161,12 +160,12 @@ def accept_friend_request(request):
         sender.friends.add(receiver)  # add_receiver
         receiver.friends.add(sender)  # add_sender
 
-        friends = FriendList.objects.get_or_create(
+        friends = FriendList.objects.create(
             user=receiver,
             friend=sender,
         )
 
-        FriendList.objects.get_or_create(
+        FriendList.objects.create(
             user=sender,
             friend=receiver,
         )
@@ -269,15 +268,9 @@ class CatsitterList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-            # Catsitter.objects.filter(is_catsitter=self.request.user)
-        # context["catsits"] = context["catsits"].filter(
-        #     is_catsitter=self.request.user)
         context['catsitters'] = context['catsitters'].filter(
             is_catsitter=self.request.user)
-        # elif Catsitter.objects.filter(is_catsitter=self.request.user).exists():
-        #     context["catsitters"] = context["catsitters"].filter(
-        #         is_catsitter=self.request.user)
-        return context  
+        return context
 
 
 # @login_required

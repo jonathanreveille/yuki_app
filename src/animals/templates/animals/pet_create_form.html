@@ -4,7 +4,7 @@
 {% load custom_tags %}
 {% load crispy_forms_tags %}
 
-{% block title %} Update your pet! {% endblock title %}
+{% block title %} Create your pet! {% endblock title %}
 
 
 {% block content %}
@@ -17,7 +17,7 @@
                     <hr>
                     <h1>Create your pet <i class="fas fa-cat"></i> </h1>
                     
-                    <form method="post" action="{% url 'animals:update_pet' pet.id%}">
+                    <form method="post" action="{% url 'animals:create_pet'%}">
                         {% csrf_token %}
                         {{ form|crispy }}
                         <br/>

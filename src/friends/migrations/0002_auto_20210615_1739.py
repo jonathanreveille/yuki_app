@@ -24,11 +24,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FriendRequest',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_active', models.BooleanField(default=True)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('receiver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='receiver_request', to=settings.AUTH_USER_MODEL)),
-                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sender_request', to=settings.AUTH_USER_MODEL)),
+                ('receiver',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                   related_name='receiver_request',
+                                   to=settings.AUTH_USER_MODEL)),
+                ('sender',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                   related_name='sender_request',
+                                   to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

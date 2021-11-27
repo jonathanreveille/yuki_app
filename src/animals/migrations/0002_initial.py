@@ -18,11 +18,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pet',
             name='owner',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='owner', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='owner',
+                to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='pet',
             name='specie',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='specie', to='animals.specie'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='specie',
+                to='animals.specie'),
         ),
     ]

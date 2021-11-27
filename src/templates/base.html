@@ -38,6 +38,10 @@
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><div class="nav-link">{% show_notifications %}</div></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'animals:home' %}" title="Home"><i class="fas fa-home"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'animals:create_pet' %}" title="Create Pet"><i class="fas fa-paw"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'animals:see_pet' %}" title="See Pet"><i class="fas fa-cat"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'friends:catsitter_list' %}" title="Catsitters"><i class="fas fa-umbrella-beach"></i></a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'schedules:task_list' %}" title="Tasks"><i class="fas fa-calendar-day"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}" title="Profile"><i class="fas fa-user"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'messenger:message_list'%}" title="Inbox"><i class="fas fa-inbox"></i></a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'friends:search_for_friends' %}" title="Search for users"><i class="fas fa-search"></i></a></li>

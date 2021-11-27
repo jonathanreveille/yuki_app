@@ -38,7 +38,7 @@ class CreateHealthBookForPet(forms.ModelForm):
         pet = CustomModelMultipleChoiceField(
             queryset=None,
             widget=CheckboxSelectMultiple
-            )
+        )
 
 
 class CreateMedicationForPet(forms.ModelForm):

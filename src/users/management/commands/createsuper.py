@@ -42,8 +42,9 @@ class Command(BaseCommand):
             help=(
                 'Tells Django to NOT prompt the user for input of any kind. '
                 'You must use --%s with --noinput, along with an option for '
-                'any other required field. Superusers created with --noinput will '
-                'not be able to log in until they\'re given a valid password.' %
+                'any other required field. Superusers created with --noinput'
+                ' will not be able to log in until they\'re given a valid'
+                ' password.' %
                 self.UserModel.USERNAME_FIELD
             ),
         )
@@ -55,7 +56,7 @@ class Command(BaseCommand):
         for field_name in self.UserModel.REQUIRED_FIELDS:
             field = self.UserModel._meta.get_field(field_name)
             if field.many_to_many:
-                if field.remote_field.through and not field.remote_field.through._meta.auto_created:
+                if field.remote_field.through and not field.remote_field.through._meta.auto_created:  # noqa
                     raise CommandError(
                         "Required field '%s' specifies a many-to-many "
                         "relation through model, which is not supported."
@@ -100,18 +101,24 @@ class Command(BaseCommand):
                     raise NotRunningInTTYException
                 default_username = get_default_username()
                 if username:
-                    error_msg = self._validate_username(username, verbose_field_name, database)
+                    error_msg = self._validate_username(
+                        username, verbose_field_name, database)
                     if error_msg:
                         self.stderr.write(error_msg)
                         username = None
                 elif username == '':
-                    raise CommandError('%s cannot be blank.' % capfirst(verbose_field_name))
+                    raise CommandError(
+                        '%s cannot be blank.' %
+                        capfirst(verbose_field_name))
                 # Prompt for username.
                 while username is None:
-                    message = self._get_input_message(self.username_field, default_username)
-                    username = self.get_input_data(self.username_field, message, default_username)
+                    message = self._get_input_message(
+                        self.username_field, default_username)
+                    username = self.get_input_data(
+                        self.username_field, message, default_username)
                     if username:
-                        error_msg = self._validate_username(username, verbose_field_name, database)
+                        error_msg = self._validate_username(
+                            username, verbose_field_name, database)
                         if error_msg:
                             self.stderr.write(error_msg)
                             username = None
@@ -132,49 +139,61 @@ class Command(BaseCommand):
                         if field.many_to_many and input_value:
                             if not input_value.strip():
                                 user_data[field_name] = None
-                                self.stderr.write('Error: This field cannot be blank.')
+                                self.stderr.write(
+                                    'Error: This field cannot be blank.')
                                 continue
-                            user_data[field_name] = [pk.strip() for pk in input_value.split(',')]
+                            user_data[field_name] = [pk.strip()
+                                                     for pk in input_value.split(',')]  # noqa
                         if not field.many_to_many:
                             fake_user_data[field_name] = input_value
 
                         # Wrap any foreign keys in fake model instances
                         if field.many_to_one:
-                            fake_user_data[field_name] = field.remote_field.model(input_value)
+                            fake_user_data[field_name] = field.remote_field.model(  # noqa
+                                input_value)
 
                 # Prompt for a password if the model has one.
-                while PASSWORD_FIELD in user_data and user_data[PASSWORD_FIELD] is None:
+                while PASSWORD_FIELD in user_data and user_data[PASSWORD_FIELD] is None:  # noqa
                     password = getpass.getpass()
                     password2 = getpass.getpass('Password (again): ')
                     if password != password2:
-                        self.stderr.write("Error: Your passwords didn't match.")
+                        self.stderr.write(
+                            "Error: Your passwords didn't match.")
                         # Don't validate passwords that don't match.
                         continue
                     if password.strip() == '':
-                        self.stderr.write("Error: Blank passwords aren't allowed.")
+                        self.stderr.write(
+                            "Error: Blank passwords aren't allowed.")
                         # Don't validate blank passwords.
                         continue
                     try:
-                        validate_password(password2, self.UserModel(**fake_user_data))
+                        validate_password(
+                            password2, self.UserModel(
+                                **fake_user_data))
                     except exceptions.ValidationError as err:
                         self.stderr.write('\n'.join(err.messages))
-                        response = input('Bypass password validation and create user anyway? [y/N]: ')
+                        response = input(
+                            'Bypass password validation and create user anyway? [y/N]: ')  # noqa
                         if response.lower() != 'y':
                             continue
                     user_data[PASSWORD_FIELD] = password
             else:
                 # Non-interactive mode.
                 # Use password from environment variable, if provided.
-                if PASSWORD_FIELD in user_data and 'DJANGO_SUPERUSER_PASSWORD' in os.environ:
-                    user_data[PASSWORD_FIELD] = os.environ['DJANGO_SUPERUSER_PASSWORD']
+                if PASSWORD_FIELD in user_data and 'DJANGO_SUPERUSER_PASSWORD' in os.environ:  # noqa
+                    user_data[PASSWORD_FIELD] = os.environ['DJANGO_SUPERUSER_PASSWORD'] # noqa
                 # Use username from environment variable, if not provided in
                 # options.
                 if username is None:
-                    username = os.environ.get('DJANGO_SUPERUSER_' + self.UserModel.USERNAME_FIELD.upper())
+                    username = os.environ.get(
+                        'DJANGO_SUPERUSER_' + self.UserModel.USERNAME_FIELD.upper())  # noqa
                 if username is None:
-                    raise CommandError('You must use --%s with --noinput.' % self.UserModel.USERNAME_FIELD)
+                    raise CommandError(
+                        'You must use --%s with --noinput.' %
+                        self.UserModel.USERNAME_FIELD)
                 else:
-                    error_msg = self._validate_username(username, verbose_field_name, database)
+                    error_msg = self._validate_username(
+                        username, verbose_field_name, database)
                     if error_msg:
                         raise CommandError(error_msg)
 
@@ -183,11 +202,14 @@ class Command(BaseCommand):
                     env_var = 'DJANGO_SUPERUSER_' + field_name.upper()
                     value = options[field_name] or os.environ.get(env_var)
                     if not value:
-                        raise CommandError('You must use --%s with --noinput.' % field_name)
+                        raise CommandError(
+                            'You must use --%s with --noinput.' %
+                            field_name)
                     field = self.UserModel._meta.get_field(field_name)
                     user_data[field_name] = field.clean(value, None)
 
-            self.UserModel._default_manager.db_manager(database).create_superuser(**user_data)
+            self.UserModel._default_manager.db_manager(
+                database).create_superuser(**user_data)
             if options['verbosity'] >= 1:
                 self.stdout.write("Superuser created successfully.")
         except KeyboardInterrupt:
@@ -224,7 +246,7 @@ class Command(BaseCommand):
             " (leave blank to use '%s')" % default if default else '',
             ' (%s.%s)' % (
                 field.remote_field.model._meta.object_name,
-                field.m2m_target_field_name() if field.many_to_many else field.remote_field.field_name,
+                field.m2m_target_field_name() if field.many_to_many else field.remote_field.field_name,  # noqa
             ) if field.remote_field else '',
         )
 
@@ -232,7 +254,8 @@ class Command(BaseCommand):
         """Validate username. If invalid, return a string error message."""
         if self.username_field.unique:
             try:
-                self.UserModel._default_manager.db_manager(database).get_by_natural_key(username)
+                self.UserModel._default_manager.db_manager(
+                    database).get_by_natural_key(username)
             except self.UserModel.DoesNotExist:
                 pass
             else:

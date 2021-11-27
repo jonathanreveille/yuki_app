@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from healthbook.models import  HealthBook, Medication
+from healthbook.models import HealthBook, Medication
 from animals.models import Pet, Specie
 from schedules.models import TimeOfDay
 from users.models import User, Role
@@ -11,7 +11,7 @@ class TestHealthBookandMedicationModels(TestCase):
     def setUp(self):
         self.role = Role.objects.create(name="owner")
         self.user = User.objects.create(
-            username= "jonny",
+            username="jonny",
             role=self.role,
             email="j@mail.com",
             location="Boulogne-Billancourt",

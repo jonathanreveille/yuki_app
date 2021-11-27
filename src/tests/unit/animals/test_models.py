@@ -11,7 +11,7 @@ class AnimalModelsUnitTests(TestCase):
     def setUp(self):
         self.role = Role.objects.create(name="Owner")
         self.user = User.objects.create(
-            username= "jonny",
+            username="jonny",
             role=self.role,
             email="j@mail.com",
             location="Boulogne-Billancourt",

@@ -13,7 +13,7 @@ class SearchForFriendForm(forms.Form):
                                           widget=forms.TextInput(
                                               attrs={
                                                   'class': 'user_search',
-                                                  }))
+                                              }))
 
 
 class CreateCatsitterForm(forms.ModelForm):
@@ -35,13 +35,20 @@ class CreateCatsitterForm(forms.ModelForm):
         self.fields['pet'].queryset = Pet.objects.filter(
             owner=self.request.user)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        start = cleaned_data.get('start')
+        end = cleaned_data.get('end')
+        if start > end:
+            raise forms.ValidationError('Start date should always be lower than end date.')
+
     class Meta:
         model = Catsitter
         fields = ('is_owned', 'is_catsitter', 'pet', 'start', 'end')
         widgets = {
             'start': forms.DateTimeInput(attrs={'class': 'datetime-input'}),
             'end': forms.DateTimeInput(attrs={'class': 'datetime-input'})
-            }
+        }
         catsitter = CustomModelMultipleChoiceField(
             queryset=None,
             widget=CheckboxSelectMultiple)

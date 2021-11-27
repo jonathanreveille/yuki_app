@@ -18,11 +18,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='catsitter',
             name='end',
-            field=models.DateTimeField(null=True, verbose_name='catsitting ends'),
+            field=models.DateTimeField(
+                null=True, verbose_name='catsitting ends'),
         ),
         migrations.AlterField(
             model_name='catsitter',
             name='start',
-            field=models.DateTimeField(null=True, verbose_name='catsitting starts'),
+            field=models.DateTimeField(
+                null=True, verbose_name='catsitting starts'),
         ),
     ]

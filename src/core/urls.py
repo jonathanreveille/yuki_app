@@ -53,6 +53,6 @@ urlpatterns = [
                              namespace="friends")),
     path('autocomplete/', include('autocomplete.urls',
                                   namespace='autocomplete')),
-    ]
+]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

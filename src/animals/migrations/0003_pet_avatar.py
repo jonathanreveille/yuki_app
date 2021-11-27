@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pet',
             name='avatar',
-            field=models.ImageField(blank=True, default='default_pet.jpg', upload_to=''),
+            field=models.ImageField(
+                blank=True,
+                default='default_pet.jpg',
+                upload_to=''),
         ),
     ]

@@ -21,10 +21,10 @@ urlpatterns = [
     path('delete_pet/<int:pk>',
          PetDeleteView.as_view(),
          name='delete_pet'),
-    path('notification/<int:notification_pk>/friends/see_friend_request_list/<int:friend_request_pk>',
+    path('notification/<int:notification_pk>/friends/see_friend_request_list/<int:friend_request_pk>',  # noqa
          FriendRequestNotification.as_view(),
          name='friend_request_notification'),
-    path('notification/<int:notification_pk>/messenger/message_detail/<int:message_pk>',
+    path('notification/<int:notification_pk>/messenger/message_detail/<int:message_pk>',  # noqa
          MessageNotification.as_view(),
          name='message_notification'),
     path('notification/delete/<int:notification_pk>',

@@ -11,7 +11,7 @@ class UsersModelUnitTest(TestCase):
         role = Role.objects.create(name="Owner")
 
         user = User.objects.create(
-            username= "jonny",
+            username="jonny",
             role=role,
             email="j@mail.com",
             location="Boulogne-Billancourt",
@@ -41,20 +41,20 @@ class UsersModelUnitTest(TestCase):
 
     def test_create_super_user(self):
         data = {"username": "jonhalony",
-                "email":"gpo@mail.com",
-                "password":"randomsecret"}
+                "email": "gpo@mail.com",
+                "password": "randomsecret"}
         user = User.objects.create_superuser(**data)
-        assert user.is_staff == True
-        assert user.is_superuser == True
+        assert user.is_staff is True
+        assert user.is_superuser is True
 
-        with self.assertRaises(ValueError) :
+        with self.assertRaises(ValueError):
             d = {"username": "jonholony",
-                    "email":"gpom@mail.com",
-                    "password":"randomSeCret"}
+                 "email": "gpom@mail.com",
+                 "password": "randomSeCret"}
             user = User.objects.create_superuser(is_superuser=False, **d)
-        
+
         with self.assertRaises(ValueError):
             d = {"username": "jonhblony",
-                    "email":"gpbm@mail.com",
-                    "password":"randbmSeCret"}
+                 "email": "gpbm@mail.com",
+                 "password": "randbmSeCret"}
             user = User.objects.create_superuser(is_staff=False, **d)

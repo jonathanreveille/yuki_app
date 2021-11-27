@@ -15,7 +15,7 @@ class TestAnimalsViews(TestCase):
         specie = Specie.objects.create(name="cat")
 
         self.user = User.objects.create(
-            username= "jonny",
+            username="jonny",
             role=role,
             email="j@mail.com",
             location="Boulogne-Billancourt",
@@ -91,7 +91,11 @@ class TestAbstractUserViews(TestCase):
 
     def setUp(self):
         self.role = Role.objects.create(name="Owner")
-        self.user = User.objects.create(username="jojo", password="", email="jon@mail.com", role=self.role)
+        self.user = User.objects.create(
+            username="jojo",
+            password="",
+            email="jon@mail.com",
+            role=self.role)
         self.user.set_password('secret')
         self.user.save()
         self.client = Client()
@@ -195,7 +199,12 @@ class TestAbstractUserViews(TestCase):
 # Animal GET / POST Requestss
     def test_create_a_pet_form(self):
         specie = Specie.objects.all().first()
-        pet = Pet.objects.create(owner=self.user, name="Loako", weight=3, age=4, specie=specie)
+        pet = Pet.objects.create(
+            owner=self.user,
+            name="Loako",
+            weight=3,
+            age=4,
+            specie=specie)
         form = PetCreationForm({
             "owner": self.user,
             "name": pet.name,
@@ -212,7 +221,7 @@ class TestAbstractUserViews(TestCase):
                 "age": pet.age,
                 "specie": specie
             })
-            
+
             self.assertEquals(form.is_valid(), True)
             pet = Pet.objects.get(name="Loako")
             self.assertEquals(pet.owner, self.user)

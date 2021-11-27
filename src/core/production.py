@@ -1,5 +1,5 @@
 import os
-from core.base import *
+# from core.base import *
 from dotenv import load_dotenv
 
 

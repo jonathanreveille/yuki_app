@@ -60,7 +60,7 @@ class User(AbstractUser):
                              null=True,
                              blank=True)
 
-    host_capacity = models.IntegerField(null=True, blank=True) # NEW
+    host_capacity = models.IntegerField(null=True, blank=True)  # NEW
     location = models.CharField(max_length=100, null=True)
     postal_code = models.IntegerField(null=True, blank=True)
     friends = models.ManyToManyField('users.User', blank=True)
