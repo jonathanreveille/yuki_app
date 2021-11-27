@@ -40,7 +40,8 @@ class CreateCatsitterForm(forms.ModelForm):
         start = cleaned_data.get('start')
         end = cleaned_data.get('end')
         if start > end:
-            raise forms.ValidationError('Start date should always be lower than end date.')
+            raise forms.ValidationError(
+                'Start date should always be lower than end date.')
 
     class Meta:
         model = Catsitter

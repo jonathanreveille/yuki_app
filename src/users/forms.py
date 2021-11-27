@@ -1,6 +1,4 @@
 from django.contrib.auth import forms as auth_forms, get_user_model
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Submit, Field
 
 
 class UserCreationForm(auth_forms.UserCreationForm):

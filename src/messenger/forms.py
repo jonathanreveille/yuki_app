@@ -30,7 +30,7 @@ class CreateMessageForUser(forms.ModelForm):
         self.fields['receiver'].queryset = user.friends.all()
         print(user.friends.all())
 
-    class Meta: 
+    class Meta:
         model = Messenger
         fields = ('sender', 'receiver', 'subject', 'content',)
 

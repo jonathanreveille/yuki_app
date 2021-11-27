@@ -73,8 +73,9 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs.filter(owner=self.request.user)   
+        qs.filter(owner=self.request.user)
         return qs
+
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
     """delete a pet"""
