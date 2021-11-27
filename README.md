@@ -58,4 +58,7 @@ If you use Docker and containers, there is a docker-compose file that
 is configured at the root of the project. Make sure you create the database
 with your own credentials.
 
+If you wish to develop a new feature on the project, make sure to create a test for your
+function, and use flake8 and autopep8 please.
+
 I would like to specially thank **Thierry Chappuis** and **Jimmy Kumako** for their mentoring throughout this project.
