@@ -1,3 +1,4 @@
+from django.db.models import query_utils
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -73,8 +74,8 @@ class PetUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        qs.filter(owner=self.request.user)
-        return qs
+        queryset = qs.filter(owner=self.request.user)
+        return queryset
 
 
 class PetDeleteView(LoginRequiredMixin, DeleteView):
