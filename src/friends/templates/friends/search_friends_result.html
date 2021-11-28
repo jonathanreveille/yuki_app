@@ -25,13 +25,11 @@
                     </form>
                 </div>
                 <hr>
-
-                   <h1 class="text-center"> Search results </h1>
-
                     <div class="container">
                       <div class="row">
+                      {% if users_found %}
+                            <h1 class="text-center"> Search results </h1>
                         {% for user in users_found %}
-
                           {% if user != request.user %}
                           <div class="col-lg-4 col-sm-6 mb-4">
                             <div class="card h-100 pl-4 pr-4 bg-primary text-center pt-4">
@@ -43,25 +41,23 @@
                                     <div>{{user.location}}</div>
                                     <div>Host capacity : {{user.host_capacity}}</div>
                                   </h5>
-
                                   {% if user not in request.user.friends.all %}
                                       <div><a href="{% url 'friends:send_friend_request' user.id %}">Send Friend request</a></div>
-
                                   {% elif user in request.user.friends.all %}
                                       <div><a href="#">Already in your friends</a></div>
                                   {% endif %}
-
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                            </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% elif not users_found %}
+                            <p> Type a <b>name</b> or a <b>postal</b> code in the search bar</p>
                         {% endif %}
-                    {% empty %}
-                    <p> Sorry, no one is registered under this name {{user_search}}</p>
-                {% endfor %}
+                    </div>
+                  </div>
               </div>
-            </div>
-        </div>
-    </div>
-</section>
+          </div>
+      </section>
 {% endblock content %}
